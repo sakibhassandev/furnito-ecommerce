@@ -1,6 +1,10 @@
+import { useState } from "react";
+
 export const Header = () => {
+  const [isDropdown, setIsDropDown] = useState(false);
+
   return (
-    <header className="flex items-center justify-between max-w-screen-xl mx-5 lg:mx-10 xl:mx-auto my-7">
+    <header className="relative flex items-center justify-between max-w-screen-xl mx-5 lg:mx-10 xl:mx-auto my-7">
       <div className="flex items-center gap-1 logo">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,8 +40,12 @@ export const Header = () => {
         </a>
       </div>
 
-      <ul className="flex gap-10 lg:gap-[75px]">
-        <li>
+      <ul
+        className={`${
+          isDropdown ? "h-[171px]" : "h-0"
+        } overflow-y-hidden transition-all md:h-auto ease-in-out duration-200 md:static absolute top-8 md:bg-inherit bg-white md:shadow-none shadow-[0px_5px_10px_#14303a15] md:w-['auto'] w-full md:px-0 px-4 md:flex justify-center gap-10 lg:gap-[75px]`}
+      >
+        <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
           <a
             href="/"
             className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
@@ -46,7 +54,7 @@ export const Header = () => {
           </a>
         </li>
 
-        <li>
+        <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
           <a
             href="/shop"
             className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
@@ -55,7 +63,7 @@ export const Header = () => {
           </a>
         </li>
 
-        <li>
+        <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
           <a
             href="/about"
             className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
@@ -64,7 +72,7 @@ export const Header = () => {
           </a>
         </li>
 
-        <li>
+        <li className="md:p-[unset] py-2">
           <a
             href="/contact"
             className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
@@ -127,6 +135,27 @@ export const Header = () => {
             fill="currentColor"
           />
         </svg>
+
+        <button
+          className="block space-y-1 cursor-pointer md:hidden"
+          onClick={() => setIsDropDown(!isDropdown)}
+        >
+          <span
+            className={`${
+              isDropdown ? "rotate-45" : "rotate-0"
+            } w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
+          ></span>
+          <span
+            className={`${
+              isDropdown ? "-rotate-45 absolute top-[12px]" : "-rotate-0"
+            } w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
+          ></span>
+          <span
+            className={`${
+              isDropdown ? "opacity-0" : "opacity-100"
+            } w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
+          ></span>
+        </button>
       </div>
     </header>
   );
