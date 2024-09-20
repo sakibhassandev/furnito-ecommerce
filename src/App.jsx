@@ -1,5 +1,5 @@
 import { Header } from "./components/Header";
-import { Hero } from "./components/Hero";
+import { Home } from "./components/Home";
 
 import "./App.css";
 
@@ -7,7 +7,7 @@ export const App = () => {
   return (
     <>
       <Header />
-      <Hero />
+      <Home />
     </>
   );
 };
