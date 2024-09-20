@@ -6,6 +6,9 @@ export default {
       screens: {
         xsm: "428px",
       },
+      backgroundImage: {
+        "hero-bg": "url('/src/assets/images/hero-img.png')",
+      },
     },
   },
   plugins: [],

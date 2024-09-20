@@ -5,7 +5,7 @@ export const Header = () => {
 
   return (
     <div className="w-full shadow-md">
-      <header className="relative flex items-center justify-between max-w-screen-2xl px-5 py-2 lg:px-10 xl:mx-auto xsm:py-7">
+      <header className="relative z-10 flex items-center justify-between px-5 py-2 max-w-screen-2xl lg:px-10 xl:mx-auto xsm:py-7">
         <a
           href="/"
           className="flex flex-col items-center gap-1 xsm:flex-row logo"
@@ -48,7 +48,7 @@ export const Header = () => {
         <ul
           className={`${
             isDropdown ? "h-[171px]" : "h-0"
-          } overflow-y-hidden transition-all md:h-auto ease-in-out duration-200 md:static absolute top-12 xsm:top-8 md:bg-inherit bg-white md:shadow-none shadow-[0px_5px_10px_#14303a15] md:w-['auto'] w-full md:px-0 px-4 md:flex justify-center gap-10 lg:gap-[75px]`}
+          } overflow-y-hidden transition-all md:h-auto ease-in-out duration-200 md:static absolute top-14 md:bg-inherit bg-white md:shadow-none shadow-[0px_5px_10px_#14303a15] md:w-['auto'] w-full md:px-0 px-4 md:flex left-0 justify-center gap-10 lg:gap-[75px]`}
         >
           <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
             <a
@@ -157,7 +157,7 @@ export const Header = () => {
             ></span>
             <span
               className={`${
-                isDropdown ? "opacity-0 m-0" : "opacity-100"
+                isDropdown ? "opacity-0" : "opacity-100"
               } w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
             ></span>
           </button>
