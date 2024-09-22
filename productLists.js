@@ -42,7 +42,7 @@ export const productLists = [
     ],
     images: {
       blue: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726924916/blue-1_vslxtn.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto,c_crop,h_540/v1726924916/blue-1_vslxtn.webp",
         "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726924917/blue-2_o97459.webp",
         "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726924918/blue-3_xfd7ba.webp",
         "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726924923/blue-4_gk91zv.webp",
@@ -556,5 +556,325 @@ export const productLists = [
       ],
     },
     price: 299.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Longsum Pillow",
+    title: "Stylish & Beautiful Pillow",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M", "L", "XL"],
+    colors: [
+      {
+        color: "blackWhiteHoney",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004315/longsum-pillow-black-white-honey_fkdbeg.webp",
+      },
+    ],
+    images: {
+      blackWhiteHoney: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004586/longsum-pillow-black-white-honey1_j0pt7k.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004585/longsum-pillow-black-white-honey2_q2fwdf.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004585/longsum-pillow-black-white-honey3_vg5eja.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004585/longsum-pillow-black-white-honey4_ejn61b.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004584/longsum-pillow-black-white-honey5_ujlmlm.webp",
+      ],
+    },
+    price: 29.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Gierburg Table Lamp",
+    title: "Stylish & Beautiful Lamp",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M", "L", "XL"],
+    colors: [
+      {
+        color: "ochre",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004919/gierburg-table-lamp-ochre_ery3rg.webp",
+      },
+      {
+        color: "teal",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005184/gierburg-table-lamp-teal_nf83zg.webp",
+      },
+    ],
+    images: {
+      ochre: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005052/gierburg-table-lamp-ochre1_dxnvcd.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005051/gierburg-table-lamp-ochre2_gz0scp.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005051/gierburg-table-lamp-ochre3_frut8c.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005050/gierburg-table-lamp-ochre4_mne5uz.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005048/gierburg-table-lamp-ochre5_z4jiom.webp",
+      ],
+      teal: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005303/gierburg-table-lamp-teal1_obuxkl.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005300/gierburg-table-lamp-teal2_tcaom6.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005300/gierburg-table-lamp-teal3_lehyhv.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005299/gierburg-table-lamp-teal4_by9sd6.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005299/gierburg-table-lamp-teal5_qtourv.webp",
+      ],
+    },
+    price: 39.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Crosley Tribute Radio",
+    title: "Stylish & Beautiful Radio",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M", "L", "XL"],
+    colors: [
+      {
+        color: "navy",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005684/tribute-radio-navy_sm3n2x.webp",
+      },
+      {
+        color: "whiteSand",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005684/tribute-radio-white-sand_mnxc4t.webp",
+      },
+      {
+        color: "charcoal",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005684/tribute-radio-charcoal_tgffi7.webp",
+      },
+    ],
+    images: {
+      navy: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005902/tribute-radio-navy1_qtawvk.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005901/tribute-radio-navy2_c7vrm5.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005900/tribute-radio-navy3_nqtnzm.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005899/tribute-radio-navy4_wteilg.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005899/tribute-radio-navy5_cmowoa.webp",
+      ],
+      whiteSand: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006165/tribute-radio-white-sand1_wi7kze.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006164/tribute-radio-white-sand2_jxlir3.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006163/tribute-radio-white-sand3_twsan9.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006162/tribute-radio-white-sand4_musdsx.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006161/tribute-radio-white-sand5_qtphul.webp",
+      ],
+      charcoal: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006401/tribute-radio-charcoal1_to5xnr.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006399/tribute-radio-charcoal2_tybgdm.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006398/tribute-radio-charcoal3_qfq4al.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006397/tribute-radio-charcoal4_spflqe.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006396/tribute-radio-charcoal5_y9sr4i.webp",
+      ],
+    },
+    price: 53.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Garville Desk Lamp",
+    title: "Stylish & Beautiful Desk Lamp",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M", "L", "XL"],
+    colors: [
+      {
+        color: "black",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006594/desk-lamp-black_tglyrm.webp",
+      },
+    ],
+    images: {
+      black: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006746/desk-lamp-black1_mkcpkq.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006746/desk-lamp-black2_kdzxqh.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006746/desk-lamp-black3_botstd.webp",
+      ],
+    },
+    price: 49.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Handmade Hexagon Shelves 3-Pack",
+    title: "Stylish & Beautiful Shelves",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M", "L", "XL"],
+    colors: [
+      {
+        color: "walnut",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727007103/hexagon-shelves-walnut_ecmxhm.webp",
+      },
+      {
+        color: "whiteWash",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727007102/hexagon-shelves-white-wash_emt8dr.webp",
+      },
+      {
+        color: "black",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727007102/hexagon-shelves-black_khciv9.webp",
+      },
+    ],
+    images: {
+      walnut: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008279/hexagon-shelves-walnut1_tueei1.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008279/hexagon-shelves-walnut2_x2ldcy.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008279/hexagon-shelves-walnut3_nxshme.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008278/hexagon-shelves-walnut4_ovhcrs.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008277/hexagon-shelves-walnut5_u3sajd.webp",
+      ],
+      whiteWash: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008461/hexagon-shelves-white-wash1_dvutat.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008460/hexagon-shelves-white-wash2_hynzn9.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008459/hexagon-shelves-white-wash3_dvgdzo.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008458/hexagon-shelves-white-wash4_ukyxja.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008458/hexagon-shelves-white-wash5_u2gjyi.webp",
+      ],
+      black: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008666/hexagon-shelves-black1_n7hwxe.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008665/hexagon-shelves-black2_rz17lc.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008664/hexagon-shelves-black3_shfskl.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008664/hexagon-shelves-black4_nqqzjk.webp",
+      ],
+    },
+    price: 82.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Crosley Musician Entertainment Center",
+    title: "Stylish & Beautiful Musician Entertainment",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M", "L", "XL"],
+    colors: [
+      {
+        color: "walnut",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008979/crosley-musician-entertainment-walnut_c3xx8b.webp",
+      },
+      {
+        color: "paprika",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008978/crosley-musician-entertainment-paprika_fbnogs.webp",
+      },
+    ],
+    images: {
+      walnut: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009102/crosley-musician-entertainment-walnut1_eq2bfu.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009099/crosley-musician-entertainment-walnut2_dwprio.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009099/crosley-musician-entertainment-walnut3_glw0md.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009098/crosley-musician-entertainment-walnut4_yukw1k.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009098/crosley-musician-entertainment-walnut5_fahhph.webp",
+      ],
+      paprika: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009296/crosley-musician-entertainment-paprika1_glskyq.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009296/crosley-musician-entertainment-paprika2_bcuf3o.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009295/crosley-musician-entertainment-paprika3_ktwnul.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009294/crosley-musician-entertainment-paprika4_m5s0ov.webp",
+      ],
+    },
+    price: 140.99,
   },
 ];
