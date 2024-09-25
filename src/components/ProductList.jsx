@@ -4,7 +4,7 @@ console.log(productLists);
 
 export const ProductList = () => {
   return (
-    <div className="flex flex-wrap justify-between gap-10 mt-10 productContainer">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] max-sm:justify-items-center gap-10 mt-10 productContainer">
       {productLists.map((product) => {
         console.log();
         return (
