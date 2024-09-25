@@ -4,3 +4,8 @@ body {
   font-family: "Poppins", sans-serif;
 }
 /* font-family: "Montserrat", sans-serif; */
+
+.transition-card {
+  transition: visibility 0.3s ease-out 0.1s, opacity 0.3s ease-out 0.15s,
+    transform 0.3s ease-out 0.1s;
+}

@@ -1,7 +1,7 @@
 export const Hero = () => {
   return (
     <section
-      className={`max-w-screen-2xl mx-auto relative min-h-[700px] 2xl:min-h-[1000px] bg-hero-bg bg-no-repeat bg-cover bg-center`}
+      className={`max-w-[1920px] mx-auto relative min-h-[700px] 2xl:min-h-[1000px] bg-hero-bg bg-no-repeat bg-cover bg-center`}
     >
       <div className="bg-[#FFF3E3] px-4 py-4 xsm:px-7 xsm:py-6 md:px-12 md:py-10 absolute right-8 md:right-14 top-1/2 -translate-y-1/2 rounded-md">
         <p className="text-[#333] text-sm xsm:text-base mb-2 font-bold">

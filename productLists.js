@@ -1,8 +1,22 @@
+// Polyfill for generating random UUIDs
+if (!crypto.randomUUID) {
+  crypto.randomUUID = function () {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        const r =
+          (crypto.getRandomValues(new Uint8Array(1))[0] & 0x0f) >>
+          (c === "x" ? 0 : 4);
+        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+      }
+    );
+  };
+}
+
 export const productLists = [
   {
     id: crypto.randomUUID(),
-    name: "Cashton Loveseat",
-    title: "Stylish & Beautiful Sofa",
+    name: "Mahoney Sofa",
     description:
       "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
     reviews: [
@@ -22,865 +36,44 @@ export const productLists = [
         message: "Everything seems great, delivery was fast.",
       },
     ],
+    hasOffer: "-15%",
     sizes: ["L", "X", "XL"],
     colors: [
       {
-        color: "ice",
+        id: "pebble",
+        name: "Pebble",
         image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726923588/ice-color_fhqkp5.webp",
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272257/mahoney-sofa-pebble_whfcrj.webp",
       },
       {
-        color: "snow",
+        id: "chocolate",
+        name: "Chocolate",
         image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726923579/snow-color_nncer4.webp",
-      },
-      {
-        color: "blue",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726923584/blue-color_mjkvms.webp",
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272256/mahoney-sofa-chocolate_riduxj.webp",
       },
     ],
     images: {
-      blue: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto,c_crop,h_540/v1726924916/blue-1_vslxtn.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726924917/blue-2_o97459.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726924918/blue-3_xfd7ba.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726924923/blue-4_gk91zv.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726924927/blue-5_bzpoul.webp",
-      ],
-      ice: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726925697/ice-1_kfw2vm.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726925697/ice-2_lodxfj.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726925697/ice-3_ypz7t9.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726925696/ice-4_acsxkk.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726925697/ice-5_senxco.webp",
-      ],
-      snow: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726926272/snow-1_op4nch.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726926274/snow-2_fzq0vr.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726926276/snow-3_ef256p.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726926278/snow-4_bhhnoa.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726926279/snow-5_zqaqji.webp",
-      ],
-    },
-    price: 49.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Johnelle Coffee Table",
-    title: "Stylish & Beautiful Coffee Table",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["S", "L", "XL"],
-    colors: [
-      {
-        color: "gray",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726944092/coffee-table-gray_pht50r.webp",
-      },
-      {
-        color: "black",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726944104/coffee-table-black_eiuq5n.webp",
-      },
-      {
-        color: "antiqueWhite",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726944105/coffee-table-antique-white_g6x3ho.webp",
-      },
-    ],
-    images: {
-      gray: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726944341/coffee-table-gray1_uffpna.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726944392/coffee-table-gray2_sfsriu.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726944346/coffee-table-gray3_ivxeqw.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726944350/coffee-table-gray4_ltz2qy.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726944359/coffee-table-gray5_rxfnf3.webp",
-      ],
-      black: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945027/coffee-table-black1_gipqcr.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945032/coffee-table-black2_rzpr8g.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945038/coffee-table-black3_eve1it.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945049/coffee-table-black4_iug1ax.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945046/coffee-table-black5_mhv6bj.webp",
-      ],
-      antiqueWhite: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945549/coffee-table-antique-white1_nrveka.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945555/coffee-table-antique-white2_ietomu.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945616/coffee-table-antique-white3_hyvx96.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945636/coffee-table-antique-white4_ts0tie.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726945640/coffee-table-antique-white5_eam5tc.webp",
-      ],
-    },
-    price: 399.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: 'Redmond 72" TV Stand',
-    title: "Stylish & Beautiful Tv Stand",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["S", "L", "XL"],
-    colors: [
-      {
-        color: "gray",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726946556/tv-stand-gray_s7p9ms.webp",
-      },
-      {
-        color: "black",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726946569/tv-stand-black_jkvsjc.webp",
-      },
-      {
-        color: "brown",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726946575/tv-stand-brown_hclnmp.webp",
-      },
-    ],
-    images: {
-      gray: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947138/tv-stand-gray1_ftbzks.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947158/tv-stand-gray2_zfnr1h.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947163/tv-stand-gray3_dophqa.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947167/tv-stand-gray4_eq0osc.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947171/tv-stand-gray5_zzhchn.webp",
-      ],
-      black: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947656/tv-stand-black1_qrgdwc.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947663/tv-stand-black2_o8ijac.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947667/tv-stand-black3_uhhbfu.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947672/tv-stand-black4_yjqn1w.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726947676/tv-stand-black5_vctmjx.webp",
-      ],
-      brown: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726948196/tv-stand-brown1_tnbgjy.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726948206/tv-stand-brown2_zdksxo.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726948210/tv-stand-brown3_mrlnhp.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726948214/tv-stand-brown4_aotslq.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726948201/tv-stand-brown5_ud5ms3.webp",
-      ],
-    },
-    price: 549.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Longsum Pillow",
-    title: "Stylish & Beautiful Pillow",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["M", "L", "XL"],
-    colors: [
-      {
-        color: "blackWhiteHoney",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004315/longsum-pillow-black-white-honey_fkdbeg.webp",
-      },
-    ],
-    images: {
-      blackWhiteHoney: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004586/longsum-pillow-black-white-honey1_j0pt7k.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004585/longsum-pillow-black-white-honey2_q2fwdf.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004585/longsum-pillow-black-white-honey3_vg5eja.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004585/longsum-pillow-black-white-honey4_ejn61b.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004584/longsum-pillow-black-white-honey5_ujlmlm.webp",
-      ],
-    },
-    price: 29.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Gierburg Table Lamp",
-    title: "Stylish & Beautiful Lamp",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["M", "L", "XL"],
-    colors: [
-      {
-        color: "ochre",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727004919/gierburg-table-lamp-ochre_ery3rg.webp",
-      },
-      {
-        color: "teal",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005184/gierburg-table-lamp-teal_nf83zg.webp",
-      },
-    ],
-    images: {
-      ochre: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005051/gierburg-table-lamp-ochre3_frut8c.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005052/gierburg-table-lamp-ochre1_dxnvcd.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005051/gierburg-table-lamp-ochre2_gz0scp.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005050/gierburg-table-lamp-ochre4_mne5uz.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005048/gierburg-table-lamp-ochre5_z4jiom.webp",
-      ],
-      teal: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005303/gierburg-table-lamp-teal1_obuxkl.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005300/gierburg-table-lamp-teal2_tcaom6.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005300/gierburg-table-lamp-teal3_lehyhv.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005299/gierburg-table-lamp-teal4_by9sd6.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005299/gierburg-table-lamp-teal5_qtourv.webp",
-      ],
-    },
-    price: 39.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Garville Desk Lamp",
-    title: "Stylish & Beautiful Desk Lamp",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["M", "L", "XL"],
-    colors: [
-      {
-        color: "black",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006594/desk-lamp-black_tglyrm.webp",
-      },
-    ],
-    images: {
-      black: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006746/desk-lamp-black3_botstd.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006746/desk-lamp-black1_mkcpkq.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006746/desk-lamp-black2_kdzxqh.webp",
-      ],
-    },
-    price: 49.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Crosley Tribute Radio",
-    title: "Stylish & Beautiful Radio",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["M", "L", "XL"],
-    colors: [
-      {
-        color: "navy",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005684/tribute-radio-navy_sm3n2x.webp",
-      },
-      {
-        color: "whiteSand",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005684/tribute-radio-white-sand_mnxc4t.webp",
-      },
-      {
-        color: "charcoal",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005684/tribute-radio-charcoal_tgffi7.webp",
-      },
-    ],
-    images: {
-      navy: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005902/tribute-radio-navy1_qtawvk.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005901/tribute-radio-navy2_c7vrm5.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005900/tribute-radio-navy3_nqtnzm.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005899/tribute-radio-navy4_wteilg.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727005899/tribute-radio-navy5_cmowoa.webp",
-      ],
-      whiteSand: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006165/tribute-radio-white-sand1_wi7kze.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006164/tribute-radio-white-sand2_jxlir3.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006163/tribute-radio-white-sand3_twsan9.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006162/tribute-radio-white-sand4_musdsx.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006161/tribute-radio-white-sand5_qtphul.webp",
-      ],
-      charcoal: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006401/tribute-radio-charcoal1_to5xnr.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006399/tribute-radio-charcoal2_tybgdm.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006398/tribute-radio-charcoal3_qfq4al.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006397/tribute-radio-charcoal4_spflqe.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727006396/tribute-radio-charcoal5_y9sr4i.webp",
-      ],
-    },
-    price: 53.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Lyncott Dining Table and 4 Chairs",
-    title: "Stylish & Beautiful Dining Table",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["L", "XL", "XXL"],
-    colors: [
-      {
-        color: "gray",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726929980/lyncott-dining-table-gray_cvhf4f.webp",
-      },
-      {
-        color: "charcoal",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726929986/lyncott-dining-table-charcoal_biwdlq.webp",
-      },
-      {
-        color: "blue",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726929988/lyncott-dining-table-blue_u547lk.webp",
-      },
-      {
-        color: "mustard",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726929989/lyncott-dining-table-mustard_pqgphl.webp",
-      },
-    ],
-    images: {
-      gray: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726930512/lyncott-dining-table-gray1_u5gmxg.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726930513/lyncott-dining-table-gray2_dcaomz.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726930515/lyncott-dining-table-gray3_dnuzhu.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726930516/lyncott-dining-table-gray4_ozcqno.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726930537/lyncott-dining-table-gray5_ucfgbw.webp",
-      ],
-      charcoal: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931003/lyncott-dining-table-charcoal1_pz3z7u.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931009/lyncott-dining-table-charcoal2_epcbfb.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931013/lyncott-dining-table-charcoal3_fuoc77.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931014/lyncott-dining-table-charcoal4_gpp9xw.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931016/lyncott-dining-table-charcoal5_kopdym.webp",
-      ],
-      blue: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931441/lyncott-dining-table-blue1_v9oail.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931450/lyncott-dining-table-blue2_ebfmxw.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931452/lyncott-dining-table-blue3_rmp2re.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931454/lyncott-dining-table-blue4_bm7hus.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931455/lyncott-dining-table-blue5_fmqloh.webp",
-      ],
-      mustard: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931807/lyncott-dining-table-mustard1_yjf2wq.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931819/lyncott-dining-table-mustard2_mkdk5u.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931824/lyncott-dining-table-mustard3_bgz9qg.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931827/lyncott-dining-table-mustard4_hnvgaa.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726931829/lyncott-dining-table-mustard5_xrpfyd.webp",
-      ],
-    },
-    price: 889.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: 'Socalle 20" 1 Drawer Nightstand',
-    title: "Stylish & Beautiful Nightstand",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["S", "L", "XL"],
-    colors: [
-      {
-        color: "lightNatural",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726932443/night-stand-light-natural_qv6cwt.webp",
-      },
-      {
-        color: "honey",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726932445/night-stand-honey_sthwkf.webp",
-      },
-      {
-        color: "black",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726932446/night-stand-black_k7xibn.webp",
-      },
-      {
-        color: "white",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726932448/night-stand-white_zixssd.webp",
-      },
-    ],
-    images: {
-      lightNatural: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726932779/drawer-nightstand-light-natural1_tywtbe.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726932802/drawer-nightstand-light-natural2_mjkrl8.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726932804/drawer-nightstand-light-natural3_k9odle.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726932806/drawer-nightstand-light-natural4_rca3tl.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726932809/drawer-nightstand-light-natural5_l8x9vo.webp",
-      ],
-      honey: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933081/drawer-nightstand-honey1_trghak.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933087/drawer-nightstand-honey2_ooipix.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933084/drawer-nightstand-honey3_ooipix.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933089/drawer-nightstand-honey4_siaa5w.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933092/drawer-nightstand-honey5_gj6nch.webp",
-      ],
-      black: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933294/drawer-nightstand-black1_z1a9tv.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933297/drawer-nightstand-black2_akabv4.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933299/drawer-nightstand-black3_iow0kz.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933303/drawer-nightstand-black4_ywavqf.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933305/drawer-nightstand-black5_ud8iml.webp",
-      ],
-      white: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933473/drawer-nightstand-white1_zyf5ks.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933478/drawer-nightstand-white2_angsbt.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933476/drawer-nightstand-white3_heo4un.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933480/drawer-nightstand-white4_kmfowc.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726933483/drawer-nightstand-white5_o8zxre.webp",
-      ],
-    },
-    price: 99.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Nerviano Manual Recliner",
-    title: "Stylish & Beautiful Recliner",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["S", "L", "XL"],
-    colors: [
-      {
-        color: "gray",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726985781/manual-recliner-gray_jsfgmm.webp",
-      },
-      {
-        color: "chocolate",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726985787/manual-recliner-chocolate_nto0qw.webp",
-      },
-      {
-        color: "mocha",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726985793/manual-recliner-mocha_tdq1s1.webp",
-      },
-    ],
-    images: {
-      gray: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986221/manual-recliner-gray1_tsp1k2.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986221/manual-recliner-gray2_ehwezv.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986221/manual-recliner-gray3_sb9hlw.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986222/manual-recliner-gray4_nmwxf7.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986222/manual-recliner-gray5_fmi4it.webp",
+      pebble: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272688/mahoney-sofa-pebble1_zdk1x4.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272686/mahoney-sofa-pebble2_zcfzey.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272882/mahoney-sofa-pebble3_o9dznm.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272688/mahoney-sofa-pebble4_yntl9f.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272689/mahoney-sofa-pebble5_pul1hv.webp",
       ],
       chocolate: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986673/manual-recliner-chocolate1_fzitwo.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986673/manual-recliner-chocolate2_yak8ei.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986673/manual-recliner-chocolate3_obfxc3.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986673/manual-recliner-chocolate4_zlpbuc.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726986674/manual-recliner-chocolate5_mbdtkr.webp",
-      ],
-      mocha: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726987048/manual-recliner-mocha1_bsxv6g.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726987048/manual-recliner-mocha2_mwvzdk.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726987048/manual-recliner-mocha3_fygar5.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726987048/manual-recliner-mocha4_zt2aii.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726987049/manual-recliner-mocha5_eygm9r.webp",
-      ],
-    },
-    price: 299.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Lodenbay King Upholstered Panel Bed",
-    title: "Stylish & Beautiful Bed",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["Queen", "King"],
-    colors: [
-      {
-        color: "chippedWhite",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726989548/panel-bed-chipped-white_q8tzyk.webp",
-      },
-      {
-        color: "antiqueGray",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726989549/panel-bed-antique-gray_ytnsba.webp",
-      },
-    ],
-    images: {
-      chippedWhite: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990350/panel-bed-chipped-white1_hpiaj2.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990351/panel-bed-chipped-white3_ty6vo6.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990350/panel-bed-chipped-white2_clin5k.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990351/panel-bed-chipped-white4_ntwdve.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990363/panel-bed-chipped-white5_norhu1.webp",
-      ],
-      antiqueGray: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990984/panel-bed-chipped-antique-gray1_n4ttvk.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990984/panel-bed-chipped-antique-gray2_rusbem.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990985/panel-bed-chipped-antique-gray3_phdfus.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990985/panel-bed-chipped-antique-gray4_ommsdt.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726990997/panel-bed-chipped-antique-gray5_jq3drp.webp",
-      ],
-    },
-    price: 949.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Handmade Hexagon Shelves 3-Pack",
-    title: "Stylish & Beautiful Shelves",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["M", "L", "XL"],
-    colors: [
-      {
-        color: "walnut",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727007103/hexagon-shelves-walnut_ecmxhm.webp",
-      },
-      {
-        color: "whiteWash",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727007102/hexagon-shelves-white-wash_emt8dr.webp",
-      },
-      {
-        color: "black",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727007102/hexagon-shelves-black_khciv9.webp",
-      },
-    ],
-    images: {
-      walnut: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008279/hexagon-shelves-walnut1_tueei1.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008279/hexagon-shelves-walnut3_nxshme.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008279/hexagon-shelves-walnut2_x2ldcy.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008278/hexagon-shelves-walnut4_ovhcrs.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008277/hexagon-shelves-walnut5_u3sajd.webp",
-      ],
-      whiteWash: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008461/hexagon-shelves-white-wash1_dvutat.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008460/hexagon-shelves-white-wash2_hynzn9.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008459/hexagon-shelves-white-wash3_dvgdzo.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008458/hexagon-shelves-white-wash4_ukyxja.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008458/hexagon-shelves-white-wash5_u2gjyi.webp",
-      ],
-      black: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008666/hexagon-shelves-black1_n7hwxe.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008665/hexagon-shelves-black2_rz17lc.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008664/hexagon-shelves-black3_shfskl.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008664/hexagon-shelves-black4_nqqzjk.webp",
-      ],
-    },
-    price: 82.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Crosley Musician Entertainment Center",
-    title: "Stylish & Beautiful Musician Entertainment",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["M", "L", "XL"],
-    colors: [
-      {
-        color: "walnut",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008979/crosley-musician-entertainment-walnut_c3xx8b.webp",
-      },
-      {
-        color: "paprika",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727008978/crosley-musician-entertainment-paprika_fbnogs.webp",
-      },
-    ],
-    images: {
-      walnut: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009102/crosley-musician-entertainment-walnut1_eq2bfu.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009099/crosley-musician-entertainment-walnut2_dwprio.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009099/crosley-musician-entertainment-walnut3_glw0md.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009098/crosley-musician-entertainment-walnut4_yukw1k.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009098/crosley-musician-entertainment-walnut5_fahhph.webp",
-      ],
-      paprika: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009296/crosley-musician-entertainment-paprika1_glskyq.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009296/crosley-musician-entertainment-paprika2_bcuf3o.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009295/crosley-musician-entertainment-paprika3_ktwnul.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727009294/crosley-musician-entertainment-paprika4_m5s0ov.webp",
-      ],
-    },
-    price: 140.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Lynxtyn Swivel Adjustable Height Gaming Chair with LED Lighting",
-    title: "Stylish & Beautiful Bed",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["M", "L", "XL"],
-    colors: [
-      {
-        color: "black",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727027744/techni-sport-gaming-chair-black_vdurua.webp",
-      },
-    ],
-    images: {
-      black: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727028062/techni-sport-gaming-chair-black1_j2nvzv.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727028063/techni-sport-gaming-chair-black2_sdce7z.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727028062/techni-sport-gaming-chair-black3_epyvly.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727028062/techni-sport-gaming-chair-black4_gbmybn.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727028063/techni-sport-gaming-chair-black5_vomt9l.webp",
-      ],
-    },
-    price: 299.99,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Dolante King Upholstered Bed with Square Button Tufting",
-    title: "Stylish & Beautiful Bed",
-    description:
-      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
-    reviews: [
-      {
-        name: "Ricardo M",
-        rating: 4.5,
-        message: "Just bought it. it is comfortable",
-      },
-      {
-        name: "John S",
-        rating: 4.3,
-        message: "Using it for a year.",
-      },
-      {
-        name: "William S",
-        rating: 4.0,
-        message: "Everything seems great, delivery was fast.",
-      },
-    ],
-    sizes: ["Queen", "King"],
-    colors: [
-      {
-        color: "beige",
-        image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726987980/upholstered-bed-beige_qmfcmk.webp",
-      },
-    ],
-    images: {
-      beige: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726988565/upholstered-bed-beige1_cribz0.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726988565/upholstered-bed-beige3_kt0rii.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726988565/upholstered-bed-beige2_fec53d.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726988566/upholstered-bed-beige4_m6vz0i.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1726988567/upholstered-bed-beige5_fmsl36.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272983/mahoney-sofa-chocolate1_j3739r.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272981/mahoney-sofa-chocolate2_fftabf.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272994/mahoney-sofa-chocolate3_l8jrss.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272981/mahoney-sofa-chocolate4_ykgt0o.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727272983/mahoney-sofa-chocolate5_h92gsf.webp",
       ],
     },
     price: 349.99,
+    discountPrice: 297.49,
   },
   {
     id: crypto.randomUUID(),
-    name: "SD Gaming Zone Desk with Charging Station and Headphone Holder",
-    title: "Stylish & Beautiful Gaming Desk",
+    name: "Hennington Queen Upholstered Bed",
     description:
       "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
     reviews: [
@@ -900,23 +93,710 @@ export const productLists = [
         message: "Everything seems great, delivery was fast.",
       },
     ],
-    sizes: ["M", "L"],
+    sizes: ["Queen", "King", "California King"],
     colors: [
       {
-        color: "blackSilver",
+        id: "bisque",
+        name: "Bisque",
         image:
-          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727114710/sd-gaming-zone-desk-black-silver_ezkyhv.webp",
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727285919/hennington-queen-bed-bisque_besy3h.webp",
       },
     ],
     images: {
-      blackSilver: [
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727114770/sd-gaming-zone-desk-black-silver1_aexfqt.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727114771/sd-gaming-zone-desk-black-silver2_k5p27c.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727114771/sd-gaming-zone-desk-black-silver3_pithar.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727114771/sd-gaming-zone-desk-black-silver4_gn1ldi.webp",
-        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727114771/sd-gaming-zone-desk-black-silver5_euqrrm.webp",
+      bisque: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727286275/hennington-queen-bed-bisque1_jqwc8x.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727286274/hennington-queen-bed-bisque2_ppnpbv.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727286276/hennington-queen-bed-bisque3_wspp64.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727286276/hennington-queen-bed-bisque4_shuzeu.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727286274/hennington-queen-bed-bisque5_xlmzon.webp",
       ],
     },
-    price: 169.99,
+    price: 1099.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Rencott Dining Extension Table",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M"],
+    colors: [
+      {
+        id: "lightBrown",
+        name: "Light Brown",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287084/rencott-dining-table-light-brown_yfauds.webp",
+      },
+    ],
+    images: {
+      lightBrown: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287111/rencott-dining-table-light-brown1_wqnj1w.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287113/rencott-dining-table-light-brown2_xbr6mi.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287112/rencott-dining-table-light-brown3_zw26ec.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287112/rencott-dining-table-light-brown4_qay8v0.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287115/rencott-dining-table-light-brown5_d4sqib.webp",
+      ],
+    },
+    price: 799.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Willowton 6 Drawer Dresser",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    hasOffer: "-10%",
+    sizes: ["M", "L"],
+    colors: [
+      {
+        id: "whiteWash",
+        name: "Whitewash",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287499/willowton-dresser-white-wash_vyqqej.webp",
+      },
+      {
+        id: "twoTone",
+        name: "Two-tone",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287498/willowton-dresser-two-tone_tjafdp.webp",
+      },
+    ],
+    images: {
+      whiteWash: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287582/willowton-dresser-white-wash1_k1oltm.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287585/willowton-dresser-white-wash2_vjpf0t.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287585/willowton-dresser-white-wash3_a8ltos.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287582/willowton-dresser-white-wash4_tjeggc.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727287583/willowton-dresser-white-wash5_ch66c7.webp",
+      ],
+      twoTone: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288173/willowton-dresser-two-tone1_ufahas.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288176/willowton-dresser-two-tone2_mvg5o9.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288175/willowton-dresser-two-tone3_c7wtol.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288175/willowton-dresser-two-tone4_qvjjew.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288174/willowton-dresser-two-tone5_y6qnbg.webp",
+      ],
+    },
+    price: 499.99,
+    discountPrice: 449.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Aprilyn 6 Drawer Dresser",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["S", "M", "L"],
+    colors: [
+      {
+        id: "white",
+        name: "White",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288886/aprilyn-drawer-dresser-white_htpmin.webp",
+      },
+      {
+        id: "honey",
+        name: "Honey",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288886/aprilyn-drawer-dresser-honey_cpmrhp.webp",
+      },
+    ],
+    images: {
+      white: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288939/aprilyn-drawer-dresser-white1_dwqwef.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288938/aprilyn-drawer-dresser-white2_udlq2t.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288942/aprilyn-drawer-dresser-white3_tuz968.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288942/aprilyn-drawer-dresser-white4_zdays5.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288939/aprilyn-drawer-dresser-white5_x6glpa.webp",
+      ],
+      honey: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289010/aprilyn-drawer-dresser-honey1_kjzgiu.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289009/aprilyn-drawer-dresser-honey2_awj7op.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289007/aprilyn-drawer-dresser-honey3_tct0aw.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289013/aprilyn-drawer-dresser-honey4_regh7y.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289011/aprilyn-drawer-dresser-honey5_dkxuzv.webp",
+      ],
+    },
+    price: 259.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Nashburg Queen Metal Bed",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["Twin", "King", "Queen"],
+    colors: [
+      {
+        id: "black",
+        name: "Black",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289255/nashburg-metal-bed-black_ofiii3.webp",
+      },
+    ],
+    images: {
+      black: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289312/nashburg-metal-bed-black1_lugeto.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289319/nashburg-metal-bed-black2_hdmlpx.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289316/nashburg-metal-bed-black3_ezymjk.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289315/nashburg-metal-bed-black4_d2lhse.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289313/nashburg-metal-bed-black5_ocqvqp.webp",
+      ],
+    },
+    price: 249.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Trentlore Queen Metal Bed",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    hasOffer: "-8%",
+    sizes: ["Queen"],
+    colors: [
+      {
+        id: "white",
+        name: "White",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727288886/aprilyn-drawer-dresser-white_htpmin.webp",
+      },
+    ],
+    images: {
+      white: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289768/trentlore-metal-bed-white1_y9eh7n.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289766/trentlore-metal-bed-white2_yonulm.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289765/trentlore-metal-bed-white3_pofvwd.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289764/trentlore-metal-bed-white4_udjkfi.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727289770/trentlore-metal-bed-white5_vamvix.webp",
+      ],
+    },
+    price: 249.99,
+    discountPrice: 229.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Thadamere Vanity Set with Stool",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M"],
+    colors: [
+      {
+        id: "white",
+        name: "White",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290284/white_ruxaer.webp",
+      },
+      {
+        id: "lightBrown",
+        name: "Light Brown",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290285/light-brown_bjrmco.webp",
+      },
+    ],
+    images: {
+      white: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290518/thadamere-vanity-set-white1_l7f2rn.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290524/thadamere-vanity-set-white2_srs4in.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290522/thadamere-vanity-set-white3_tw1nig.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290520/thadamere-vanity-set-white4_klg2qv.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290502/thadamere-vanity-set-white5_g2fazw.webp",
+      ],
+      lightBrown: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290700/thadamere-vanity-set-light-brown1_vcbibb.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290697/thadamere-vanity-set-light-brown2_besi43.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290696/thadamere-vanity-set-light-brown3_rngyeh.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290704/thadamere-vanity-set-light-brown4_r9cih6.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290702/thadamere-vanity-set-light-brown5_qyqz7c.webp",
+      ],
+    },
+    price: 219.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Thadamere Vanity Set with Stool",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    hasOffer: "-23%",
+    sizes: ["M"],
+    colors: [
+      {
+        id: "silver",
+        name: "Silver",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290908/silver_vdwgae.webp",
+      },
+    ],
+    images: {
+      silver: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290980/linon-paloma-vanity-set1_fxbdrz.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290989/linon-paloma-vanity-set2_nn4zyj.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290987/linon-paloma-vanity-set3_eyhmah.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290984/linon-paloma-vanity-set4_cjoezd.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290982/linon-paloma-vanity-set5_ckqa2q.webp",
+      ],
+    },
+    price: 315.99,
+    discountPrice: 242.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Techni Sport Gaming Chair",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M"],
+    colors: [
+      {
+        id: "blackWhite",
+        name: "Black & White",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291315/black-white_inx7fl.webp",
+      },
+    ],
+    images: {
+      blackWhite: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291443/techni-gaming-chair1_ms3xcz.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291452/techni-gaming-chair2_tvbf5s.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291450/techni-gaming-chair3_o7wram.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291445/techni-gaming-chair4_phcbwn.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291447/techni-gaming-chair5_prq4cq.webp",
+      ],
+    },
+    price: 230.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Techni Sport Ergonomic High Back Racer Gaming Chair",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    hasOffer: "-17%",
+    sizes: ["M"],
+    colors: [
+      {
+        id: "black",
+        name: "Black",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291559/black_zhgtc0.webp",
+      },
+    ],
+    images: {
+      black: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291682/Techni-high-back-racer-gaming-chair1_mbdlpm.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291692/Techni-high-back-racer-gaming-chair2_u1ei1v.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291689/Techni-high-back-racer-gaming-chair3_oeme2d.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291687/Techni-high-back-racer-gaming-chair4_zms1ls.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291684/Techni-high-back-racer-gaming-chair5_dhjmyb.webp",
+      ],
+    },
+    price: 229.99,
+    discountPrice: 189.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: 'CorLiving Quadra 71" Bookcase',
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["M"],
+    colors: [
+      {
+        id: "white",
+        name: "White",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290284/white_ruxaer.webp",
+      },
+      {
+        id: "black",
+        name: "Black",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291559/black_zhgtc0.webp",
+      },
+      {
+        id: "walnut",
+        name: "Walnut",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291887/walnut_uz2chn.webp",
+      },
+    ],
+    images: {
+      white: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292029/corLiving-bookcase-white1_imbqvm.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292040/corLiving-bookcase-white2_ezeohe.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292038/corLiving-bookcase-white3_wmtqj6.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292035/corLiving-bookcase-white4_o55kvf.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292032/corLiving-bookcase-white5_fyh0dm.webp",
+      ],
+      black: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292144/corLiving-bookcase-black1_mrd2yz.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292142/corLiving-bookcase-black2_skph9k.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292139/corLiving-bookcase-black3_lfthff.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292150/corLiving-bookcase-black4_mjekm1.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292147/corLiving-bookcase-black5_sezhh4.webp",
+      ],
+      walnut: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292264/corLiving-bookcase-walnut1_ndu3a0.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292261/corLiving-bookcase-walnut2_gryth6.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292252/corLiving-bookcase-walnut3_v1wixu.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292271/corLiving-bookcase-walnut4_hrwdwo.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292267/corLiving-bookcase-walnut5_lvryqm.webp",
+      ],
+    },
+    price: 228.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "NTENSE Quest Gaming Desk with CPU Stand",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    colors: [
+      {
+        id: "gray",
+        name: "Gray",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292362/gray_pdanq9.webp",
+      },
+    ],
+    images: {
+      gray: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292515/ntense-quest-gaming-desk-with-cpu-stand1_ztjr3c.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292512/ntense-quest-gaming-desk-with-cpu-stand2_zpvncc.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292509/ntense-quest-gaming-desk-with-cpu-stand3_xlugx7.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292506/ntense-quest-gaming-desk-with-cpu-stand4_w8uval.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292518/ntense-quest-gaming-desk-with-cpu-stand5_m7gcex.webp",
+      ],
+    },
+    price: 171.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: 'CorLiving Quadra 47" Bookcase',
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    sizes: ["S"],
+    colors: [
+      {
+        id: "walnut",
+        name: "Walnut",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291887/walnut_uz2chn.webp",
+      },
+      {
+        id: "black",
+        name: "Black",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727291559/black_zhgtc0.webp",
+      },
+      {
+        id: "white",
+        name: "White",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290284/white_ruxaer.webp",
+      },
+    ],
+    images: {
+      walnut: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292920/corLiving-small-bookcase-walnut1_adcfnk.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292931/corLiving-small-bookcase-walnut2_hsmkea.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292928/corLiving-small-bookcase-walnut3_wanwiz.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292925/corLiving-small-bookcase-walnut4_ttuldd.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727292922/corLiving-small-bookcase-walnut5_xghmy3.webp",
+      ],
+      black: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293070/corLiving-small-bookcase-black1_usocp3.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293111/corLiving-small-bookcase-black2_xmygto.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293108/corLiving-small-bookcase-black3_juldpz.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293105/corLiving-small-bookcase-black4_tv1jy9.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293101/corLiving-small-bookcase-black5_qnbx0i.webp",
+      ],
+      white: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293219/corLiving-small-bookcase-white1_oprrch.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293212/corLiving-small-bookcase-white2_jx7cpb.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293215/corLiving-small-bookcase-white3_b3wsbi.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293208/corLiving-small-bookcase-white4_v7nkmv.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293206/corLiving-small-bookcase-white5_wnxlwz.webp",
+      ],
+    },
+    price: 157.99,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Techni Sport Gaming Chair for Females",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    hasOffer: "-28%",
+    colors: [
+      {
+        id: "kawaii",
+        name: "Kawaii",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293315/kawaii_tlzig0.webp",
+      },
+    ],
+    images: {
+      kawaii: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293527/techni-gaming-chair-female1_tcwxll.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293523/techni-gaming-chair-female2_cc8iz6.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293520/techni-gaming-chair-female3_wxtfwc.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293516/techni-gaming-chair-female4_hmkgyg.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293512/techni-gaming-chair-female5_e83yem.webp",
+      ],
+    },
+    price: 309.99,
+    discountPrice: 223.47,
+  },
+  {
+    id: crypto.randomUUID(),
+    name: "Cascavel Stair Cubbies",
+    description:
+      "Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a clear midrange and extended highs for a sound.",
+    reviews: [
+      {
+        name: "Ricardo M",
+        rating: 4.5,
+        message: "Just bought it. it is comfortable",
+      },
+      {
+        name: "John S",
+        rating: 4.3,
+        message: "Using it for a year.",
+      },
+      {
+        name: "William S",
+        rating: 4.0,
+        message: "Everything seems great, delivery was fast.",
+      },
+    ],
+    colors: [
+      {
+        id: "white",
+        name: "White",
+        image:
+          "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727290284/white_ruxaer.webp",
+      },
+    ],
+    images: {
+      white: [
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293699/cascavel-stair-cubbies1_uot6ha.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293719/cascavel-stair-cubbies2_zpajzp.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293716/cascavel-stair-cubbies3_drpho8.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293706/cascavel-stair-cubbies4_nmzouw.webp",
+        "https://res.cloudinary.com/dlfmu0nzl/image/upload/f_auto,q_auto/v1727293703/cascavel-stair-cubbies5_eaayun.webp",
+      ],
+    },
+    price: 104.99,
   },
 ];
