@@ -4,7 +4,7 @@ export const Header = () => {
   const [isDropdown, setIsDropDown] = useState(false);
 
   return (
-    <div className="w-full shadow-md">
+    <div className="sticky top-0 z-50 w-full shadow-md backdrop-blur bg-[#ffffff70]">
       <header className="relative z-10 flex items-center justify-between px-5 py-2 max-w-screen-2xl lg:px-10 xl:mx-auto xsm:py-7">
         <a
           href="/"

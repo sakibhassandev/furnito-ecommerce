@@ -1,4 +1,5 @@
 import { Hero } from "../components/Hero";
+import { HomePageCarousel } from "../components/HomePageCarousel";
 import { HomePageProducts } from "../components/HomePageProducts";
 import { Range } from "../components/Range";
 
@@ -19,6 +20,7 @@ export const Home = () => {
           Show More
         </a>
       </section>
+      <HomePageCarousel />
     </>
   );
 };
