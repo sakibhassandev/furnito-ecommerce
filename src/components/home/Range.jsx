@@ -1,6 +1,6 @@
-import diningTableImg from "../assets/images/dining-table.png";
-import livingRoomImg from "../assets/images/living-room.png";
-import bedRoomImg from "../assets/images/bed-room.png";
+import diningTableImg from "../../assets/images/range-section/dining-table.png";
+import livingRoomImg from "../../assets/images/range-section/living-room.png";
+import bedRoomImg from "../../assets/images/range-section/bed-room.png";
 
 export const Range = () => {
   return (

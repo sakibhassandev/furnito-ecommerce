@@ -1,5 +1,5 @@
-import { productLists } from "../../productLists";
-import { Product } from "./Product";
+import { productLists } from "../../../productLists";
+import { Product } from "../product/Product";
 
 export const HomePageProducts = () => {
   return (

@@ -1,7 +1,7 @@
-import { Hero } from "../components/Hero";
-import { HomePageCarousel } from "../components/HomePageCarousel";
-import { HomePageProducts } from "../components/HomePageProducts";
-import { Range } from "../components/Range";
+import { Hero } from "../components/home/Hero";
+import { HomePageCarousel } from "../components/home/HomePageCarousel";
+import { HomePageProducts } from "../components/home/HomePageProducts";
+import { Range } from "../components/home/Range";
 
 export const Home = () => {
   return (
