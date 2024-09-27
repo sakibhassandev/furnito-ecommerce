@@ -1,3 +1,4 @@
+import { Feature } from "../components/home/Feature";
 import { Hero } from "../components/home/Hero";
 import { HomePageCarousel } from "../components/home/HomePageCarousel";
 import { HomePageProducts } from "../components/home/HomePageProducts";
@@ -21,6 +22,7 @@ export const Home = () => {
         </a>
       </section>
       <HomePageCarousel />
+      <Feature />
     </>
   );
 };
