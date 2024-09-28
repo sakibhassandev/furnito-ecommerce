@@ -9,3 +9,19 @@ body {
   transition: visibility 0.3s ease-out 0.1s, opacity 0.3s ease-out 0.15s,
     transform 0.3s ease-out 0.1s;
 }
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-bg {
+  background: #fff none repeat scroll 0 0;
+}
+
+.scrollbar-transition {
+  transition: transform 0.45s ease-in-out, opacity 0.45s ease-in-out;
+}
+
+.translate-x-full-plus-80 {
+  transform: translateX(calc(100% + 80px));
+}
