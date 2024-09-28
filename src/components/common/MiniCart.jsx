@@ -1,10 +1,14 @@
 import { IoClose } from "react-icons/io5";
 import { MiniCartItem } from "./MiniCartItem";
 
-export const MiniCart = () => {
+export const MiniCart = ({ isMiniCartOpen, setIsMiniCartOpen }) => {
   return (
     <>
-      <div className="fixed right-0 top-0 h-full w-[350px] scrollbar-transition translate-x-full-plus-80todo scrollbar-bg z-50 overflow-y-scroll overscroll-contain scrollbar-none">
+      <div
+        className={`fixed right-0 top-0 h-full max-w-[300px] xsm:max-w-[350px] scrollbar-transition ${
+          isMiniCartOpen ? "" : "translate-x-full-plus-80"
+        } scrollbar-bg z-50 overflow-y-scroll overscroll-contain scrollbar-none`}
+      >
         <div className="relative flex flex-col justify-between min-h-full">
           <div className="top">
             <div className="relative">
@@ -12,7 +16,10 @@ export const MiniCart = () => {
                 <h4 className="font-medium uppercase">Shopping cart</h4>
               </div>
               <div className="absolute close top-5 right-5">
-                <button className="block space-y-1 cursor-pointer">
+                <button
+                  onClick={() => setIsMiniCartOpen(false)}
+                  className="block space-y-1 duration-200 ease-linear cursor-pointer hover:rotate-90"
+                >
                   {<IoClose className="text-2xl" />}
                 </button>
               </div>
@@ -55,7 +62,7 @@ export const MiniCart = () => {
 
           <div className="checkout p-[20px_20px_85px] bg-white border-t-2 border-[#eaeaef]">
             <div className="mb-7">
-              <h4 className="inline-block text-lg font-semibold">Subtotal:</h4>
+              <h4 className="inline-block text-lg font-medium">Subtotal:</h4>
               <span className="text-[#B88E2F] font-semibold text-xl float-right">
                 $1200.99
               </span>
@@ -63,15 +70,28 @@ export const MiniCart = () => {
             <div>
               <a
                 href="/cart"
-                className="capitalize p-[10px_30px] text-[#03041c] text-[15px] inline-block font-bold text-center bg-[#f1f1f1] relative z-10 "
+                className="capitalize p-[10px_30px] mb-4 text-[#03041c] text-[15px] inline-block w-full hover:bg-[#03041c] hover:text-white ease-linear duration-300 font-medium text-center bg-[#f1f1f1] relative z-10 "
               >
                 view cart
+              </a>
+              <a
+                href="/checkout"
+                className="capitalize p-[10px_30px] text-[#03041c] text-[15px] inline-block w-full hover:bg-[#03041c] hover:text-white ease-linear duration-300 font-medium text-center border-[#eaeaef] border relative z-10 "
+              >
+                checkout
               </a>
             </div>
           </div>
         </div>
       </div>
-      <div className="body-overlay bg-[#03041c] h-full w-full fixed top-0 z-40 left-0 opacity-0 invisible"></div>
+      <div
+        onClick={() => {
+          setIsMiniCartOpen(false);
+        }}
+        className={`body-overlay ${
+          isMiniCartOpen ? "visible opacity-70" : "opacity-0 invisible"
+        } bg-[#03041c] h-full w-full fixed top-0 z-40 left-0 ease-out duration-300`}
+      ></div>
     </>
   );
 };

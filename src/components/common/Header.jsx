@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export const Header = () => {
+export const Header = ({ setIsMiniCartOpen }) => {
   const [isDropdown, setIsDropDown] = useState(false);
 
   return (
-    <div className="sticky top-0 z-50 w-full shadow-md backdrop-blur bg-[#ffffff70]">
+    <div className="sticky top-0 z-40 w-full shadow-md backdrop-blur bg-[#ffffff70]">
       <header className="relative z-10 flex items-center justify-between px-5 py-2 max-w-screen-2xl lg:px-10 xl:mx-auto xsm:py-7">
         <a
           href="/"
@@ -130,6 +130,10 @@ export const Header = () => {
           </svg>
 
           <svg
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsMiniCartOpen(true);
+            }}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 26 23"
             fill="none"

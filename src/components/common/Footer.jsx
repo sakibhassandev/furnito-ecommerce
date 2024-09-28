@@ -2,7 +2,7 @@ export const Footer = () => {
   return (
     <footer>
       <hr className="border-1 border-[#D9D9D9] mx-auto max-w-[1920px]" />
-      <div className="flex justify-between gap-6 mx-16 max-md:flex-col max-lg:flex-wrap 2xl:mx-auto max-w-screen-2xl">
+      <div className="flex justify-between gap-6 mx-16 max-sm:mx-5 max-md:flex-col max-lg:flex-wrap 2xl:mx-auto max-w-screen-2xl">
         <div className="my-10">
           <h2 className="mb-12 text-2xl font-bold">Furnito.</h2>
           <div className="max-w-[300px]">
@@ -93,7 +93,7 @@ export const Footer = () => {
             <input
               type="text"
               placeholder="Enter Your Email Address"
-              className="pr-2 text-sm border-b focus:border-[#B88E2F] border-black outline-none"
+              className="pr-2 text-sm w-full border-b focus:border-[#B88E2F] border-black outline-none"
             />
             <button className="font-medium border-b hover:border-[#B88E2F] ease-linear duration-200 hover:text-[#B88E2F] border-black">
               SUBSCRIBE
