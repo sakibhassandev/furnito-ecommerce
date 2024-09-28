@@ -1,12 +1,16 @@
 import { IoClose } from "react-icons/io5";
 import { MiniCartItem } from "./MiniCartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { isMiniCartOpen } from "../../store/slices/MiniCartSlice";
 
-export const MiniCart = ({ isMiniCartOpen, setIsMiniCartOpen }) => {
+export const MiniCart = () => {
+  const dispatch = useDispatch();
+  const MiniCartOpen = useSelector((state) => state.miniCart);
   return (
     <>
       <div
         className={`fixed right-0 top-0 h-full max-w-[300px] xsm:max-w-[350px] scrollbar-transition ${
-          isMiniCartOpen ? "" : "translate-x-full-plus-80"
+          MiniCartOpen ? "" : "translate-x-full-plus-80"
         } scrollbar-bg z-50 overflow-y-scroll overscroll-contain scrollbar-none`}
       >
         <div className="relative flex flex-col justify-between min-h-full">
@@ -17,7 +21,7 @@ export const MiniCart = ({ isMiniCartOpen, setIsMiniCartOpen }) => {
               </div>
               <div className="absolute close top-5 right-5">
                 <button
-                  onClick={() => setIsMiniCartOpen(false)}
+                  onClick={() => dispatch(isMiniCartOpen("closeMiniCart"))}
                   className="block space-y-1 duration-200 ease-linear cursor-pointer hover:rotate-90"
                 >
                   {<IoClose className="text-2xl" />}
@@ -86,10 +90,10 @@ export const MiniCart = ({ isMiniCartOpen, setIsMiniCartOpen }) => {
       </div>
       <div
         onClick={() => {
-          setIsMiniCartOpen(false);
+          dispatch(isMiniCartOpen("closeMiniCart"));
         }}
         className={`body-overlay ${
-          isMiniCartOpen ? "visible opacity-70" : "opacity-0 invisible"
+          MiniCartOpen ? "visible opacity-70" : "opacity-0 invisible"
         } bg-[#03041c] h-full w-full fixed top-0 z-40 left-0 ease-out duration-300`}
       ></div>
     </>

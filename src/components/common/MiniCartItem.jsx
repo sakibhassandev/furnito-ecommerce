@@ -13,7 +13,12 @@ export const MiniCartItem = ({ name, price, quantity, image }) => {
         </a>
       </div>
       <div className="content">
-        <h5 className="mb-3 text-sm font-medium">{name}</h5>
+        <a
+          href="/item/11232"
+          className="mb-3 hover:text-[#f50963] ease-out duration-300 text-sm font-medium"
+        >
+          {name}
+        </a>
         <div className="price-wrapper">
           <span className="text-sm font-medium text-[#B88E2F]">${price}</span>
           <span className="text-xs text-[#525258] font-medium">

@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { isMiniCartOpen } from "../../store/slices/MiniCartSlice";
 
-export const Header = ({ setIsMiniCartOpen }) => {
+export const Header = () => {
+  const dispatch = useDispatch();
   const [isDropdown, setIsDropDown] = useState(false);
 
   return (
@@ -130,9 +133,8 @@ export const Header = ({ setIsMiniCartOpen }) => {
           </svg>
 
           <svg
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsMiniCartOpen(true);
+            onClick={() => {
+              dispatch(isMiniCartOpen("openMiniCart"));
             }}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 26 23"

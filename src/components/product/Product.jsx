@@ -1,4 +1,4 @@
-export const Product = ({ img, name, price, hasOffer, discountPrice }) => {
+export const Product = ({ img, name, price, hasOffer, discountPrice, id }) => {
   return (
     <div className="product group">
       <div className="overflow-hidden rounded shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]">
@@ -65,10 +65,9 @@ export const Product = ({ img, name, price, hasOffer, discountPrice }) => {
             </button>
           </div>
           <div className="absolute left-0 right-0 transition-all duration-300 ease-out group-hover:bottom-0 -bottom-10 addToCart">
-            <a
+            <button
               type="button"
-              href="/cart"
-              className="flex justify-center items-center gap-2 transition-all ease-out duration-300 hover:bg-[#f50963] text-white font-semibold py-2 bg-black"
+              className="flex w-full justify-center items-center gap-2 transition-all ease-out duration-300 hover:bg-[#f50963] text-white font-semibold py-2 bg-black"
             >
               <svg
                 width={18}
@@ -103,7 +102,7 @@ export const Product = ({ img, name, price, hasOffer, discountPrice }) => {
                 />
               </svg>
               Add to Cart
-            </a>
+            </button>
           </div>
         </div>
       </div>
