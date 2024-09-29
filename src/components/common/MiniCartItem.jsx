@@ -1,6 +1,9 @@
 import { IoClose } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { removeCartItem } from "../../store/slices/cartSlice";
 
-export const MiniCartItem = ({ name, price, quantity, image }) => {
+export const MiniCartItem = ({ name, price, quantity, image, id }) => {
+  const dispatch = useDispatch();
   return (
     <div className="item items-center relative flex p-[20px_35px_20px_20px] border-b border-[1px_solid_hsla(0,0%,51%,.2)] ease duration-300">
       <div className="thumb mr-[15px]">
@@ -26,7 +29,10 @@ export const MiniCartItem = ({ name, price, quantity, image }) => {
           </span>
         </div>
       </div>
-      <button className="absolute cursor-pointer top-[38px] right-4 del">
+      <button
+        className="absolute cursor-pointer top-[38px] right-4 del"
+        onClick={() => dispatch(removeCartItem({ id }))}
+      >
         {
           <IoClose className="text-[#525258] hover:text-[#B88E2F] ease-out duration-300" />
         }

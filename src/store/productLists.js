@@ -36,7 +36,7 @@ export const productLists = [
         message: "Everything seems great, delivery was fast.",
       },
     ],
-    hasOffer: "-15%",
+    hasDiscount: 15,
     sizes: ["L", "X", "XL"],
     colors: [
       {
@@ -69,7 +69,6 @@ export const productLists = [
       ],
     },
     price: 349.99,
-    discountPrice: 297.49,
   },
   {
     id: crypto.randomUUID(),
@@ -177,7 +176,7 @@ export const productLists = [
         message: "Everything seems great, delivery was fast.",
       },
     ],
-    hasOffer: "-10%",
+    hasDiscount: 10,
     sizes: ["M", "L"],
     colors: [
       {
@@ -210,7 +209,6 @@ export const productLists = [
       ],
     },
     price: 499.99,
-    discountPrice: 449.99,
   },
   {
     id: crypto.randomUUID(),
@@ -331,7 +329,7 @@ export const productLists = [
         message: "Everything seems great, delivery was fast.",
       },
     ],
-    hasOffer: "-8%",
+    hasDiscount: 8,
     sizes: ["Queen"],
     colors: [
       {
@@ -351,7 +349,6 @@ export const productLists = [
       ],
     },
     price: 249.99,
-    discountPrice: 229.99,
   },
   {
     id: crypto.randomUUID(),
@@ -430,7 +427,7 @@ export const productLists = [
         message: "Everything seems great, delivery was fast.",
       },
     ],
-    hasOffer: "-23%",
+    hasDiscount: 23,
     sizes: ["M"],
     colors: [
       {
@@ -450,7 +447,6 @@ export const productLists = [
       ],
     },
     price: 315.99,
-    discountPrice: 242.99,
   },
   {
     id: crypto.randomUUID(),
@@ -516,7 +512,7 @@ export const productLists = [
         message: "Everything seems great, delivery was fast.",
       },
     ],
-    hasOffer: "-17%",
+    hasDiscount: 17,
     sizes: ["M"],
     colors: [
       {
@@ -536,7 +532,6 @@ export const productLists = [
       ],
     },
     price: 229.99,
-    discountPrice: 189.99,
   },
   {
     id: crypto.randomUUID(),
@@ -737,7 +732,7 @@ export const productLists = [
         message: "Everything seems great, delivery was fast.",
       },
     ],
-    hasOffer: "-28%",
+    hasDiscount: 28,
     colors: [
       {
         id: "kawaii",
@@ -756,7 +751,6 @@ export const productLists = [
       ],
     },
     price: 309.99,
-    discountPrice: 223.47,
   },
   {
     id: crypto.randomUUID(),

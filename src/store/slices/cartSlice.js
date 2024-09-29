@@ -1,13 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
+
+const findItemIndex = (state, action) =>
+  state.findIndex((item) => item.id === action.payload.id);
 
 const slice = createSlice({
   name: "cart",
-  initialState: [],
+  initialState: JSON.parse(localStorage.getItem("cartItems"))
+    ? JSON.parse(localStorage.getItem("cartItems"))
+    : [],
   reducers: {
     addCartItem(state, action) {
-      state.push({ ...action.payload, quantity: 1 });
+      const existingItemIndex = findItemIndex(state, action);
+      if (existingItemIndex !== -1) {
+        state[existingItemIndex].quantity += 1;
+      } else {
+        state.push({ ...action.payload, quantity: 1 });
+      }
+      localStorage.setItem("cartItems", JSON.stringify(current(state)));
     },
-    removeCartItem(state, action) {},
+    removeCartItem(state, action) {
+      const existingItemIndex = findItemIndex(state, action);
+      state.splice(existingItemIndex, 1);
+      localStorage.setItem("cartItems", JSON.stringify(current(state)));
+    },
     increaseCartItemQuantity(state, action) {},
     decreaseCartItemQuantity(state, action) {},
   },

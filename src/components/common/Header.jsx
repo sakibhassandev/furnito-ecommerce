@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { isMiniCartOpen } from "../../store/slices/MiniCartSlice";
 
 export const Header = () => {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cartItems);
   const [isDropdown, setIsDropDown] = useState(false);
+  const cartCount = cartItems.reduce((acc, curr) => {
+    return acc + curr.quantity;
+  }, 0);
 
   return (
     <div className="sticky top-0 z-40 w-full shadow-md backdrop-blur bg-[#ffffff70]">
@@ -91,61 +95,78 @@ export const Header = () => {
         </ul>
 
         <div className="flex items-center icons text-[#4c4f65] gap-5 lg:gap-11">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 20"
-            fill="none"
-            className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] signup"
-          >
-            <path
-              d="M21.333 10V4.167h2.334v7h-2.334m0 4.666h2.334V13.5h-2.334M9.667 11.167c3.115 0 9.333 1.563 9.333 4.666v3.5H.333v-3.5c0-3.103 6.219-4.666 9.334-4.666zm0-10.5a4.667 4.667 0 110 9.333 4.667 4.667 0 010-9.333zm0 12.716c-3.465 0-7.117 1.704-7.117 2.45v1.284h14.233v-1.284c0-.746-3.651-2.45-7.116-2.45zm0-10.5a2.45 2.45 0 100 4.9 2.45 2.45 0 000-4.9z"
-              fill="currentColor"
-            />
-          </svg>
+          <button className="search">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 25 25"
+              fill="none"
+              className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] search"
+            >
+              <path
+                d="M23.5 23.5l-5.234-5.243m2.9-7.007a9.916 9.916 0 11-19.832 0 9.916 9.916 0 0119.833 0v0z"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+          <a href="/login">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 20"
+              fill="none"
+              className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] signup"
+            >
+              <path
+                d="M21.333 10V4.167h2.334v7h-2.334m0 4.666h2.334V13.5h-2.334M9.667 11.167c3.115 0 9.333 1.563 9.333 4.666v3.5H.333v-3.5c0-3.103 6.219-4.666 9.334-4.666zm0-10.5a4.667 4.667 0 110 9.333 4.667 4.667 0 010-9.333zm0 12.716c-3.465 0-7.117 1.704-7.117 2.45v1.284h14.233v-1.284c0-.746-3.651-2.45-7.116-2.45zm0-10.5a2.45 2.45 0 100 4.9 2.45 2.45 0 000-4.9z"
+                fill="currentColor"
+              />
+            </svg>
+          </a>
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 25 25"
-            fill="none"
-            className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] search"
-          >
-            <path
-              d="M23.5 23.5l-5.234-5.243m2.9-7.007a9.916 9.916 0 11-19.832 0 9.916 9.916 0 0119.833 0v0z"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-            />
-          </svg>
+          <a href="/wishlist" className="relative">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 26 24"
+              fill="none"
+              className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] wishlist"
+            >
+              <path
+                d="M7.167 1.5c-3.221 0-5.834 2.585-5.834 5.775 0 2.575 1.021 8.686 11.07 14.863a1.148 1.148 0 001.194 0c10.049-6.177 11.07-12.288 11.07-14.863 0-3.19-2.613-5.775-5.834-5.775C15.613 1.5 13 5 13 5s-2.612-3.5-5.833-3.5z"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span className="absolute hidden -top-5 -right-3 text-xs font-bold bg-black w-[22px] h-[22px] border-[3px] border-white text-center rounded-full text-white">
+              0
+            </span>
+          </a>
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 26 24"
-            fill="none"
-            className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] wishlist"
-          >
-            <path
-              d="M7.167 1.5c-3.221 0-5.834 2.585-5.834 5.775 0 2.575 1.021 8.686 11.07 14.863a1.148 1.148 0 001.194 0c10.049-6.177 11.07-12.288 11.07-14.863 0-3.19-2.613-5.775-5.834-5.775C15.613 1.5 13 5 13 5s-2.612-3.5-5.833-3.5z"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-
-          <svg
-            onClick={() => {
-              dispatch(isMiniCartOpen("openMiniCart"));
-            }}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 26 23"
-            fill="none"
-            className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] cart"
-          >
-            <path
-              d="M24.235 16.193H7.952l.818-1.666 13.584-.024a.95.95 0 00.935-.782l1.882-10.53a.95.95 0 00-.933-1.119L6.957 2.015l-.148-.695a.971.971 0 00-.946-.765H1.64a.965.965 0 100 1.93H5.08l.646 3.068 1.588 7.692-2.045 3.339a.956.956 0 00-.082 1.006c.164.325.495.53.861.53h1.717a2.808 2.808 0 002.242 4.493 2.808 2.808 0 002.243-4.493h4.405a2.808 2.808 0 002.242 4.493 2.808 2.808 0 002.242-4.493h3.098c.53 0 .965-.432.965-.965a.968.968 0 00-.968-.962zM7.36 3.918l15.745.052-1.543 8.635-12.367.022-1.835-8.709zm2.65 16.754a.866.866 0 01-.864-.865c0-.475.388-.864.864-.864a.866.866 0 01.61 1.475.864.864 0 01-.61.254zm8.889 0a.866.866 0 01-.864-.865c0-.475.388-.864.864-.864a.866.866 0 01.611 1.475.864.864 0 01-.611.254z"
-              fill="currentColor"
-            />
-          </svg>
+          <button className="relative z-20 miniCart">
+            <svg
+              onClick={() => {
+                dispatch(isMiniCartOpen("openMiniCart"));
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 26 23"
+              fill="none"
+              className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] cart"
+            >
+              <path
+                d="M24.235 16.193H7.952l.818-1.666 13.584-.024a.95.95 0 00.935-.782l1.882-10.53a.95.95 0 00-.933-1.119L6.957 2.015l-.148-.695a.971.971 0 00-.946-.765H1.64a.965.965 0 100 1.93H5.08l.646 3.068 1.588 7.692-2.045 3.339a.956.956 0 00-.082 1.006c.164.325.495.53.861.53h1.717a2.808 2.808 0 002.242 4.493 2.808 2.808 0 002.243-4.493h4.405a2.808 2.808 0 002.242 4.493 2.808 2.808 0 002.242-4.493h3.098c.53 0 .965-.432.965-.965a.968.968 0 00-.968-.962zM7.36 3.918l15.745.052-1.543 8.635-12.367.022-1.835-8.709zm2.65 16.754a.866.866 0 01-.864-.865c0-.475.388-.864.864-.864a.866.866 0 01.61 1.475.864.864 0 01-.61.254zm8.889 0a.866.866 0 01-.864-.865c0-.475.388-.864.864-.864a.866.866 0 01.611 1.475.864.864 0 01-.611.254z"
+                fill="currentColor"
+              />
+            </svg>
+            <span
+              className={`absolute z-10 ${
+                cartCount < 1 ? "invisible opacity-0" : ""
+              } flex justify-center items-center -top-[22px] -right-3 text-xs font-bold bg-black w-[24px] h-[24px] border-[3px] border-white text-center rounded-full text-white`}
+            >
+              {cartCount}
+            </span>
+          </button>
 
           <button
             className="block space-y-1 cursor-pointer md:hidden"

@@ -1,4 +1,14 @@
-export const Product = ({ img, name, price, hasOffer, discountPrice, id }) => {
+import { useDispatch } from "react-redux";
+import { addCartItem } from "../../store/slices/cartSlice";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+export const Product = ({ img, name, price, hasDiscount, id }) => {
+  const dispatch = useDispatch();
+  const discountPrice = parseFloat(
+    (hasDiscount ? price - (price * hasDiscount) / 100 : 0).toFixed(2)
+  );
+
   return (
     <div className="product group">
       <div className="overflow-hidden rounded shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]">
@@ -12,14 +22,14 @@ export const Product = ({ img, name, price, hasOffer, discountPrice, id }) => {
           </a>
           <div
             className={`${
-              hasOffer ? "flex" : "hidden"
+              hasDiscount ? "flex" : "hidden"
             } absolute left-0 flex flex-col flex-wrap text-white top-5`}
           >
             <span className="bg-[#f50963] inline-block text-sm leading-none py-1 px-[10px] capitalize mb-[5px]">
               Sale
             </span>
             <span className="bg-[#03041c] inline-block text-sm leading-none py-1 px-[10px] capitalize mb-[5px]">
-              {hasOffer}
+              {`-${hasDiscount}%`}
             </span>
           </div>
           <div className="absolute invisible opacity-0 transition-card translate-x-14 group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 top-6 right-3 ">
@@ -66,6 +76,20 @@ export const Product = ({ img, name, price, hasOffer, discountPrice, id }) => {
           </div>
           <div className="absolute left-0 right-0 transition-all duration-300 ease-out group-hover:bottom-0 -bottom-10 addToCart">
             <button
+              onClick={() => {
+                dispatch(addCartItem({ img, name, price, id, discountPrice }));
+                toast.success(`${name} added to cart`, {
+                  position: "top-center",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  transition: Bounce,
+                });
+              }}
               type="button"
               className="flex w-full justify-center items-center gap-2 transition-all ease-out duration-300 hover:bg-[#f50963] text-white font-semibold py-2 bg-black"
             >
@@ -103,6 +127,7 @@ export const Product = ({ img, name, price, hasOffer, discountPrice, id }) => {
               </svg>
               Add to Cart
             </button>
+            <ToastContainer className="text-sm" />
           </div>
         </div>
       </div>
@@ -113,9 +138,9 @@ export const Product = ({ img, name, price, hasOffer, discountPrice, id }) => {
           </a>
         </h3>
         <div>
-          <span>${hasOffer ? discountPrice : price}</span>
-          <del className={`${hasOffer ? "" : "hidden"} ml-2`}>
-            {discountPrice ? "$" + price : ""}
+          <span>${hasDiscount ? discountPrice : price}</span>
+          <del className={`${hasDiscount ? "" : "hidden"} ml-2`}>
+            {hasDiscount ? "$" + price : ""}
           </del>
         </div>
       </div>

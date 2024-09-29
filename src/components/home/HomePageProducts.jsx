@@ -16,8 +16,7 @@ export const HomePageProducts = () => {
               name={product.name}
               img={Object.values(product.images)[0][0]}
               price={product.price}
-              discountPrice={product.discountPrice}
-              hasOffer={product.hasOffer}
+              hasDiscount={product.hasDiscount}
             />
           );
         }
