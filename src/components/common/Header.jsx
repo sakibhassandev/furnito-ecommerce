@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isMiniCartOpen } from "../../store/slices/MiniCartSlice";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartItems);
+  const wishList = useSelector((state) => state.wishList);
   const [isDropdown, setIsDropDown] = useState(false);
   const cartCount = cartItems.reduce((acc, curr) => {
+    return acc + curr.quantity;
+  }, 0);
+  const wishlistCount = wishList.reduce((acc, curr) => {
     return acc + curr.quantity;
   }, 0);
 
   return (
     <div className="sticky top-0 z-40 w-full shadow-md backdrop-blur bg-[#ffffff70]">
       <header className="relative z-10 flex items-center justify-between px-5 py-2 max-w-screen-2xl lg:px-10 xl:mx-auto xsm:py-7">
-        <a
-          href="/"
+        <Link
+          to="/"
           className="flex flex-col items-center gap-1 xsm:flex-row logo"
         >
           <svg
@@ -50,7 +55,7 @@ export const Header = () => {
           <span className="text-xl xsm:text-2xl md:text-4xl font-bold font-['Montserrat']">
             Furnito
           </span>
-        </a>
+        </Link>
 
         <ul
           className={`${
@@ -58,39 +63,43 @@ export const Header = () => {
           } overflow-y-hidden transition-all md:h-auto ease-in-out duration-200 md:static absolute top-14 md:bg-inherit bg-white md:shadow-none shadow-[0px_5px_10px_#14303a15] md:w-['auto'] w-full md:px-0 px-4 md:flex left-0 justify-center gap-10 lg:gap-[75px]`}
         >
           <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
-            <a
-              href="/"
+            <Link
+              onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+              to="/"
               className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
             >
               Home
-            </a>
+            </Link>
           </li>
 
           <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
-            <a
-              href="/shop"
+            <Link
+              onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+              to="/shop"
               className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
             >
               Shop
-            </a>
+            </Link>
           </li>
 
           <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
-            <a
-              href="/about"
+            <Link
+              onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+              to="/about"
               className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
             >
               About
-            </a>
+            </Link>
           </li>
 
           <li className="md:p-[unset] py-2">
-            <a
-              href="/contact"
+            <Link
+              onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+              to="/contact"
               className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
             >
               Contact
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -110,7 +119,10 @@ export const Header = () => {
               />
             </svg>
           </button>
-          <a href="/login">
+          <Link
+            onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+            to="/login"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 20"
@@ -122,9 +134,13 @@ export const Header = () => {
                 fill="currentColor"
               />
             </svg>
-          </a>
+          </Link>
 
-          <a href="/wishlist" className="relative">
+          <Link
+            onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+            to="/wishlist"
+            className="relative"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 26 24"
@@ -139,10 +155,14 @@ export const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="absolute hidden -top-5 -right-3 text-xs font-bold bg-black w-[22px] h-[22px] border-[3px] border-white text-center rounded-full text-white">
-              0
+            <span
+              className={`absolute z-10 ${
+                wishlistCount < 1 ? "invisible opacity-0" : ""
+              } flex justify-center items-center -top-[22px] -right-3 text-xs font-bold bg-black w-[24px] h-[24px] border-[3px] border-white text-center rounded-full text-white`}
+            >
+              {wishlistCount}
             </span>
-          </a>
+          </Link>
 
           <button className="relative z-20 miniCart">
             <svg

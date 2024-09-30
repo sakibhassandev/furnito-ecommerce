@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { addCartItem } from "../../store/slices/cartSlice";
+import { addWishListItem } from "../../store/slices/wishListSlice";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -33,7 +34,25 @@ export const Product = ({ img, name, price, hasDiscount, id }) => {
             </span>
           </div>
           <div className="absolute invisible opacity-0 transition-card translate-x-14 group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 top-6 right-3 ">
-            <button className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-9 h-9">
+            <button
+              onClick={() => {
+                dispatch(
+                  addWishListItem({ id, img, name, price, discountPrice })
+                );
+                toast.success(`${name} added to wishlist`, {
+                  position: "top-center",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  transition: Bounce,
+                });
+              }}
+              className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-9 h-9"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 26 24"
