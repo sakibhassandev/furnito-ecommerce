@@ -1,11 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
+import { store } from "./store/index.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import { Home } from "./pages/Home.jsx";
-import { Provider } from "react-redux";
-import { store } from "./store/index.js";
-import { WishList } from "./components/product/WishList.jsx";
+import { WishList } from "./pages/WishList.jsx";
+import { Cart } from "./pages/Cart.jsx";
 
 import "./index.css";
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/wishlist",
         element: <WishList />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
   },

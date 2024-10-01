@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { MiniCartItem } from "./MiniCartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { isMiniCartOpen } from "../../store/slices/MiniCartSlice";
-import { EmptyCard } from "../common/EmptyCard";
+import { EmptyCard } from "./EmptyCard";
 
 export const MiniCart = () => {
   const dispatch = useDispatch();
@@ -68,18 +69,20 @@ export const MiniCart = () => {
               </span>
             </div>
             <div>
-              <a
-                href="/cart"
+              <Link
+                onClick={() => dispatch(isMiniCartOpen("closeMiniCart"))}
+                to="/cart"
                 className="capitalize rounded-sm p-[10px_30px] mb-4 text-[#03041c] text-[15px] inline-block w-full hover:bg-[#03041c] hover:text-white ease-linear duration-300 font-medium text-center bg-[#f1f1f1] relative z-10 "
               >
                 view cart
-              </a>
-              <a
-                href="/checkout"
+              </Link>
+              <Link
+                onClick={() => dispatch(isMiniCartOpen("closeMiniCart"))}
+                to="/checkout"
                 className="capitalize rounded-sm p-[10px_30px] text-[#03041c] text-[15px] inline-block w-full hover:bg-[#03041c] hover:text-white ease-linear duration-300 font-medium text-center border-[#eaeaef] border relative z-10 "
               >
                 checkout
-              </a>
+              </Link>
             </div>
           </div>
         </div>

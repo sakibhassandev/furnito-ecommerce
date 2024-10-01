@@ -23,8 +23,23 @@ const slice = createSlice({
       state.splice(existingItemIndex, 1);
       localStorage.setItem("cartItems", JSON.stringify(current(state)));
     },
-    increaseCartItemQuantity(state, action) {},
-    decreaseCartItemQuantity(state, action) {},
+    increaseCartItemQuantity(state, action) {
+      const existingItemIndex = findItemIndex(state, action);
+      if (existingItemIndex !== -1) {
+        state[existingItemIndex].quantity += 1;
+      }
+      localStorage.setItem("cartItems", JSON.stringify(current(state)));
+    },
+    decreaseCartItemQuantity(state, action) {
+      const existingItemIndex = findItemIndex(state, action);
+      if (existingItemIndex !== -1) {
+        state[existingItemIndex].quantity -= 1;
+      }
+      if (state[existingItemIndex].quantity === 0) {
+        state.splice(existingItemIndex, 1);
+      }
+      localStorage.setItem("cartItems", JSON.stringify(current(state)));
+    },
   },
 });
 

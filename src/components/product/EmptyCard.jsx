@@ -1,4 +1,4 @@
-import emptyCartImg from "../../assets/images/empty-cart.png";
+import emptyCartImg from "../../assets/images/empty-cart.webp";
 
 export const EmptyCard = ({ name }) => {
   return (

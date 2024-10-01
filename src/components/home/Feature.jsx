@@ -1,12 +1,12 @@
-import featureImg1 from "../../assets/images/feature-section/feature-img1.png";
-import featureImg2 from "../../assets/images/feature-section/feature-img2.png";
-import featureImg3 from "../../assets/images/feature-section/feature-img3.png";
-import featureImg4 from "../../assets/images/feature-section/feature-img4.png";
-import featureImg5 from "../../assets/images/feature-section/feature-img5.png";
-import featureImg6 from "../../assets/images/feature-section/feature-img6.png";
-import featureImg7 from "../../assets/images/feature-section/feature-img7.png";
-import featureImg8 from "../../assets/images/feature-section/feature-img8.png";
-import featureImg9 from "../../assets/images/feature-section/feature-img9.png";
+import featureImg1 from "../../assets/images/feature-section/feature-img1.webp";
+import featureImg2 from "../../assets/images/feature-section/feature-img2.webp";
+import featureImg3 from "../../assets/images/feature-section/feature-img3.webp";
+import featureImg4 from "../../assets/images/feature-section/feature-img4.webp";
+import featureImg5 from "../../assets/images/feature-section/feature-img5.webp";
+import featureImg6 from "../../assets/images/feature-section/feature-img6.webp";
+import featureImg7 from "../../assets/images/feature-section/feature-img7.webp";
+import featureImg8 from "../../assets/images/feature-section/feature-img8.webp";
+import featureImg9 from "../../assets/images/feature-section/feature-img9.webp";
 
 export const Feature = () => {
   return (

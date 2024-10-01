@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import sectionHeroImg from "../../assets/images/section-common-hero.jpg";
+import sectionHeroImg from "../../assets/images/section-common-hero.webp";
 
 export const SectionCommonHeader = ({ name, prev, curr }) => {
   return (

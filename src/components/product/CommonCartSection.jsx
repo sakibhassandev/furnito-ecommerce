@@ -1,5 +1,5 @@
 import { LiaReplySolid } from "react-icons/lia";
-import { CartItem } from "./cartItem";
+import { CartItem } from "./CartItem";
 import { EmptyCard } from "./EmptyCard";
 
 export const CommonCartSection = ({
@@ -9,6 +9,7 @@ export const CommonCartSection = ({
   increaseAction,
   decreaseAction,
   removeAction,
+  bottomSec,
 }) => {
   return (
     <div className="py-24 mx-6">
@@ -68,6 +69,7 @@ export const CommonCartSection = ({
           </table>
         </div>
       )}
+      {bottomSec}
     </div>
   );
 };

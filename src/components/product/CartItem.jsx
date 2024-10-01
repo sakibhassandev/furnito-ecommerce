@@ -1,7 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { Bounce, ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Bounce, toast } from "react-toastify";
 
 export const CartItem = ({
   id,
@@ -128,11 +127,21 @@ export const CartItem = ({
           className="hover:text-[#f50963] ease-out duration-300"
           onClick={() => {
             dispatch(removeAction({ id }));
+            toast.error(`${name} remove from ${toastName}`, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Bounce,
+            });
           }}
         >
           <IoClose className="text-xl" />
         </button>
-        <ToastContainer className="text-sm" />
       </td>
     </tr>
   );

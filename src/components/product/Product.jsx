@@ -1,8 +1,7 @@
 import { useDispatch } from "react-redux";
 import { addCartItem } from "../../store/slices/cartSlice";
 import { addWishListItem } from "../../store/slices/wishListSlice";
-import { Bounce, ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Bounce, toast } from "react-toastify";
 
 export const Product = ({ img, name, price, hasDiscount, id }) => {
   const dispatch = useDispatch();
@@ -146,7 +145,6 @@ export const Product = ({ img, name, price, hasDiscount, id }) => {
               </svg>
               Add to Cart
             </button>
-            <ToastContainer className="text-sm" />
           </div>
         </div>
       </div>

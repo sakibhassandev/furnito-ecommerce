@@ -3,11 +3,11 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { DotButton, useDotButton } from "./EmblaCarouselDotButton";
 
-import carouselImg1 from "../../assets/images/carousel-section/carousel1.png";
-import carouselImg2 from "../../assets/images/carousel-section/carousel2.png";
-import carouselImg3 from "../../assets/images/carousel-section/carousel3.png";
-import carouselImg4 from "../../assets/images/carousel-section/carousel4.png";
-import carouselImg5 from "../../assets/images/carousel-section/carousel5.png";
+import carouselImg1 from "../../assets/images/carousel-section/carousel1.webp";
+import carouselImg2 from "../../assets/images/carousel-section/carousel2.webp";
+import carouselImg3 from "../../assets/images/carousel-section/carousel3.webp";
+import carouselImg4 from "../../assets/images/carousel-section/carousel4.webp";
+import carouselImg5 from "../../assets/images/carousel-section/carousel5.webp";
 
 export const HomePageCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
