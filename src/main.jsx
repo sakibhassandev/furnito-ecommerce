@@ -7,6 +7,8 @@ import App from "./App.jsx";
 import { Home } from "./pages/Home.jsx";
 import { WishList } from "./pages/WishList.jsx";
 import { Cart } from "./pages/Cart.jsx";
+import { Login } from "./components/auth/Login.jsx";
+import { Register } from "./components/auth/Register.jsx";
 
 import "./index.css";
 
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },

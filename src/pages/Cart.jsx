@@ -28,7 +28,13 @@ export const Cart = () => {
         decreaseAction={decreaseCartItemQuantity}
         removeAction={removeCartItem}
         bottomSec={
-          <div className="xl:max-w-[1140px] lg:max-w-[960px] md:max-w-[720px] mx-auto md:flex justify-end">
+          <div
+            className={`${
+              cartItems.length < 1
+                ? "hidden"
+                : "xl:max-w-[1140px] lg:max-w-[960px] md:max-w-[720px] mx-auto md:flex justify-end"
+            }`}
+          >
             <div className="ml-auto mt-14 md:w-5/12">
               <h2 className="text-2xl mb-5 capitalize text-[#03041c] font-semibold">
                 Cart totals

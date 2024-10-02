@@ -25,3 +25,32 @@ body {
 .translate-x-full-plus-80 {
   transform: translateX(calc(100% + 80px));
 }
+
+@media (min-width: 576px) {
+  .b-container {
+    max-width: 540px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .b-container {
+    max-width: 720px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .b-container {
+    max-width: 960px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .b-container {
+    max-width: 1140px !important;
+  }
+}
+@media (min-width: 1400px) {
+  .b-container {
+    max-width: 1320px !important;
+  }
+}
