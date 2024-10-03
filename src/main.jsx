@@ -9,6 +9,7 @@ import { WishList } from "./pages/WishList.jsx";
 import { Cart } from "./pages/Cart.jsx";
 import { Login } from "./components/auth/Login.jsx";
 import { Register } from "./components/auth/Register.jsx";
+import { Forgot } from "./components/auth/Forgot.jsx";
 
 import "./index.css";
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/forgot",
+        element: <Forgot />,
       },
     ],
   },
