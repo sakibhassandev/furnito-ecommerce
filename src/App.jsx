@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { BackToTop } from "./components/common/BackToTop";
 import { Header } from "./components/common/Header";
 import { Footer } from "./components/common/Footer";
 import { MiniCart } from "./components/product/MiniCart";
@@ -14,6 +15,7 @@ export const App = () => {
       <MiniCart />
       <Outlet />
       <Footer />
+      <BackToTop />
       <ToastContainer className="text-sm" />
     </>
   );
