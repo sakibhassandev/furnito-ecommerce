@@ -1,9 +1,18 @@
 import { useDispatch } from "react-redux";
 import { addCartItem } from "../../store/slices/cartSlice";
 import { addWishListItem } from "../../store/slices/wishListSlice";
+import { isQuickViewOpen } from "../../store/slices/QuickViewSlice";
 import { Bounce, toast } from "react-toastify";
 
-export const Product = ({ img, name, price, hasDiscount, id }) => {
+export const Product = ({
+  productLists,
+  img,
+  name,
+  price,
+  hasDiscount,
+  id,
+  setQuickViewProduct,
+}) => {
   const dispatch = useDispatch();
   const discountPrice = parseFloat(
     (hasDiscount ? price - (price * hasDiscount) / 100 : 0).toFixed(2)
@@ -70,7 +79,16 @@ export const Product = ({ img, name, price, hasDiscount, id }) => {
                 Add To Wishlist
               </span>
             </button>
-            <button className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-9 h-9">
+            <button
+              onClick={() => {
+                dispatch(isQuickViewOpen("openQuickView"));
+                const quickViewProduct = productLists.find(
+                  (product) => product.id === id
+                );
+                setQuickViewProduct(quickViewProduct);
+              }}
+              className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-9 h-9"
+            >
               <svg
                 width={19}
                 height={16}

@@ -1,6 +1,7 @@
 import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { removeCartItem } from "../../store/slices/cartSlice";
+import { Bounce, toast } from "react-toastify";
 
 export const MiniCartItem = ({ name, price, quantity, image, id }) => {
   const dispatch = useDispatch();
@@ -31,7 +32,20 @@ export const MiniCartItem = ({ name, price, quantity, image, id }) => {
       </div>
       <button
         className="absolute cursor-pointer top-[38px] right-4 del"
-        onClick={() => dispatch(removeCartItem({ id }))}
+        onClick={() => {
+          dispatch(removeCartItem({ id }));
+          toast.error(`${name} removed from cart`, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        }}
       >
         {
           <IoClose className="text-[#525258] hover:text-[#B88E2F] ease-out duration-300" />

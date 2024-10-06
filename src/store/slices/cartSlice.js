@@ -12,9 +12,12 @@ const slice = createSlice({
     addCartItem(state, action) {
       const existingItemIndex = findItemIndex(state, action);
       if (existingItemIndex !== -1) {
-        state[existingItemIndex].quantity += 1;
+        state[existingItemIndex].quantity += action.payload.quantity || 1;
       } else {
-        state.push({ ...action.payload, quantity: 1 });
+        state.push({
+          ...action.payload,
+          quantity: action.payload.quantity || 1,
+        });
       }
       localStorage.setItem("cartItems", JSON.stringify(current(state)));
     },
