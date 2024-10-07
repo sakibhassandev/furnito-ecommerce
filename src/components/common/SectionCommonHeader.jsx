@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import sectionHeroImg from "../../assets/images/section-common-hero.webp";
+import logo from "../../assets/images/furnito-favico.svg";
 
 export const SectionCommonHeader = ({ name, prev, curr }) => {
   return (
@@ -10,6 +11,7 @@ export const SectionCommonHeader = ({ name, prev, curr }) => {
         className="object-center object-cover w-full h-[316px] blur-[3px] opacity-70"
       />
       <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+        <img src={logo} alt="icon" className="w-12 mx-auto mb-4" />
         <h3 className="mb-5 text-2xl font-semibold xsm:text-4xl md:text-5xl">
           {name}
         </h3>

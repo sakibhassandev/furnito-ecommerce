@@ -12,6 +12,7 @@ export const Login = () => {
   });
   const [errors, setErrors] = useState({});
 
+  // Validation Config Obj
   const validationConfig = {
     email: [
       { required: true, message: "Please enter an email" },
@@ -26,6 +27,7 @@ export const Login = () => {
     ],
   };
 
+  // Validation Function
   const validate = (formData) => {
     const errorsData = {};
     Object.entries(formData).forEach(([key, value]) => {
@@ -51,6 +53,7 @@ export const Login = () => {
     return errorsData;
   };
 
+  //   Handle Change Eventlistener
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials((prevState) => ({
@@ -60,6 +63,7 @@ export const Login = () => {
     setErrors({});
   };
 
+  // Handle Submit Eventlistener
   const handleSubmit = (e) => {
     e.preventDefault();
     validate(credentials);

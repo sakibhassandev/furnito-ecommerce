@@ -121,7 +121,7 @@ export const QuickView = ({ quickViewProduct }) => {
                   </div>
                 </div>
                 <div
-                  className="flex max-sm:flex-wrap sm:justify-between product-options"
+                  className="flex flex-wrap gap-3 product-options"
                   ref={imagesRef}
                 >
                   {quickViewProduct.images &&
@@ -143,7 +143,7 @@ export const QuickView = ({ quickViewProduct }) => {
                                 "after:invisible"
                               );
                             }}
-                            className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#f50963] relative w-24 h-24 mt-4 mb-3 mr-4 sm:w-32 sm:h-32 lg:w-24 lg:h-24`}
+                            className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#f50963] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-24 lg:h-24`}
                             key={i}
                           >
                             <img
@@ -458,28 +458,28 @@ export const QuickView = ({ quickViewProduct }) => {
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <FaFacebookF />
+                      <FaFacebookF className="hover:text-[#f50963] ease-linear duration-300" />
                     </a>
                     <a
                       href="http://twitter.com"
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <FaTwitter />
+                      <FaTwitter className="hover:text-[#f50963] ease-linear duration-300" />
                     </a>
                     <a
                       href="https://www.linkedin.com/"
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <FaLinkedin />
+                      <FaLinkedin className="hover:text-[#f50963] ease-linear duration-300" />
                     </a>
                     <a
                       href="https://www.youtube.com/"
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <FaYoutube />
+                      <FaYoutube className="hover:text-[#f50963] ease-linear duration-300" />
                     </a>
                   </div>
                 </div>
