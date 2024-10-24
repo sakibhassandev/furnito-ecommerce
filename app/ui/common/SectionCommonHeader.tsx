@@ -16,12 +16,16 @@ export const SectionCommonHeader = ({
         src="/assets/images/section-common-hero.webp"
         alt="sectionHeroImg"
         className="object-center object-cover w-full h-[316px] blur-[3px] opacity-70"
+        width={1920}
+        height={786}
       />
       <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
         <Image
           src="/assets/furnito-icon.svg"
           alt="icon"
           className="w-12 mx-auto mb-4"
+          width={50}
+          height={33}
         />
         <h3 className="mb-5 text-2xl font-semibold xsm:text-4xl md:text-5xl">
           {name}
