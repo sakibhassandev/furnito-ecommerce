@@ -1,17 +1,22 @@
 import { Hero } from "./ui/home/Hero";
 import { Range } from "./ui/home/Range";
 import HomeProducts from "./ui/home/HomeProducts";
+import { ToastContainer } from "react-toastify";
+import { Feature } from "./ui/home/Feature";
 // import { HomePageCarousel } from "./ui/home/HomePageCarousel";
 // import { Feature } from "./ui/home/Feature";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   return (
     <main>
       <Hero />
       <Range />
-      <HomeProducts />
-      {/* <HomePageCarousel />
-      <Feature /> */}
+      {/* <HomeProducts /> */}
+      {/* <HomePageCarousel /> */}
+      <Feature />
+      <ToastContainer className="text-sm" />
     </main>
   );
 }

@@ -19,22 +19,30 @@ export const Feature = () => {
               src="/assets/images/feature-section/feature-img1.webp"
               alt="feature-img1"
               className="object-contain"
+              width={78}
+              height={382}
             />
             <Image
               src="/assets/images/feature-section/feature-img2.webp"
               alt="feature-img2"
               className="self-end object-contain"
+              width={451}
+              height={312}
             />
           </div>
           <div className="flex gap-5">
             <Image
               src="/assets/images/feature-section/feature-img4.webp"
               alt="feature-img4"
+              width={185}
+              height={323}
             />
             <Image
               src="/assets/images/feature-section/feature-img3.webp"
               alt="feature-img3"
               className="self-start object-contain"
+              width={344}
+              height={242}
             />
           </div>
         </div>
@@ -43,6 +51,8 @@ export const Feature = () => {
           <Image
             src="/assets/images/feature-section/feature-img5.webp"
             alt="feature-img5"
+            width={295}
+            height={392}
           />
         </div>
 
@@ -52,11 +62,15 @@ export const Feature = () => {
               src="/assets/images/feature-section/feature-img6.webp"
               alt="feature-img6"
               className="self-end object-contain"
+              width={290}
+              height={348}
             />
             <Image
               src="/assets/images/feature-section/feature-img7.webp"
               alt="feature-img7"
               className="self-start object-contain"
+              width={262}
+              height={433}
             />
           </div>
           <div className="flex gap-5">
@@ -64,11 +78,15 @@ export const Feature = () => {
               src="/assets/images/feature-section/feature-img8.webp"
               alt="feature-img8"
               className="self-start object-contain"
+              width={178}
+              height={242}
             />
             <Image
               src="/assets/images/feature-section/feature-img9.webp"
               alt="feature-img9"
               className="self-start object-contain"
+              width={258}
+              height={196}
             />
           </div>
         </div>
