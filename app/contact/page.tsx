@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { SectionCommonHeader } from "../ui/common/SectionCommonHeader";
 import { InfoHighlights } from "../ui/common/InfoHighlights";
+import ContactForm from "../ui/contact/ContactForm";
 
 // Social Media Icons
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
-import ContactForm from "../ui/contact/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact US",
@@ -264,10 +264,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
-// Todos:
-// Make it a server component as possible //done
-// export metadata //done
-// make form with react action state
-// make a toast notification when the form is submitted //done
-// make a form validation

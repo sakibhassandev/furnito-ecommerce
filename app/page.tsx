@@ -4,8 +4,6 @@ import { Range } from "./ui/home/Range";
 import { HomePageCarousel } from "./ui/home/HomePageCarousel";
 import { Feature } from "./ui/home/Feature";
 
-import "react-toastify/dist/ReactToastify.css";
-
 export default function Home() {
   return (
     <main>
