@@ -1,5 +1,5 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
-import { CartState } from "@/app/types";
+import { CartState } from "@/app/lib/definitions";
 
 const findItemIndex = (
   state: CartState[],
