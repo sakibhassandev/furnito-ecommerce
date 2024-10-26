@@ -1,4 +1,4 @@
-import { productLists } from "../../../productLists";
+import { productLists } from "@/app/store/productLists";
 import { Product } from "./Product";
 
 export const ProductList = () => {

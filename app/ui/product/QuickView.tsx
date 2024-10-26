@@ -6,7 +6,7 @@ import { addCartItem } from "../../store/slices/cartSlice";
 import { addWishListItem } from "../../store/slices/wishListSlice";
 import { toast } from "react-toastify";
 import { RootState } from "@/app/store";
-import { ProductType } from "@/app/types";
+import { ProductType } from "@/app/lib/definitions";
 
 // Icons
 import { FaLink } from "react-icons/fa6";
@@ -40,12 +40,6 @@ export const QuickView = ({
       : 0
     ).toFixed(2)
   );
-
-  if (isQuickView) {
-    document.querySelector("body")?.classList.add("overflow-hidden");
-  } else {
-    document.querySelector("body")?.classList.remove("overflow-hidden");
-  }
 
   let bigImage: string = "";
   if (quickViewProduct && quickViewProduct.images) {
@@ -87,6 +81,12 @@ export const QuickView = ({
         sizesRef.current.children[i].classList.remove("sizes-active");
       }
       sizesRef.current.children[sizesIndex]?.classList.add("sizes-active");
+    }
+
+    if (isQuickView) {
+      document.querySelector("body")?.classList.add("overflow-hidden");
+    } else {
+      document.querySelector("body")?.classList.remove("overflow-hidden");
     }
 
     return () => {

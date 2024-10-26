@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { IoClose } from "react-icons/io5";
 import { MiniCartItem } from "./MiniCartItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,14 +71,14 @@ export const MiniCart = () => {
             <div>
               <Link
                 onClick={() => dispatch(isMiniCartOpen("closeMiniCart"))}
-                to="/cart"
+                href="/cart"
                 className="capitalize rounded-sm p-[10px_30px] mb-4 text-[#03041c] text-[15px] inline-block w-full hover:bg-[#03041c] hover:text-white ease-linear duration-300 font-medium text-center bg-[#f1f1f1] relative z-10 "
               >
                 view cart
               </Link>
               <Link
                 onClick={() => dispatch(isMiniCartOpen("closeMiniCart"))}
-                to="/checkout"
+                href="/checkout"
                 className="capitalize rounded-sm p-[10px_30px] text-[#03041c] text-[15px] inline-block w-full hover:bg-[#03041c] hover:text-white ease-linear duration-300 font-medium text-center border-[#eaeaef] border relative z-10 "
               >
                 checkout

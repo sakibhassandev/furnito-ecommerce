@@ -1,6 +1,7 @@
+import Image from "next/image";
 import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 export const CartItem = ({
   id,
@@ -20,10 +21,12 @@ export const CartItem = ({
     <tr className="bg-white border-b ">
       <td className="px-4 py-5 border-r border-[#eaedff]">
         <a href="/product-details">
-          <img
+          <Image
             src={img}
+            alt={img}
             className="w-20 max-w-full max-h-full mx-auto duration-300 ease-linear hover:scale-105 md:w-32"
-            alt={name}
+            width={1200}
+            height={900}
           />
         </a>
       </td>
@@ -45,14 +48,8 @@ export const CartItem = ({
               dispatch(decreaseAction({ id }));
               toast.error(`1 ${name} remove from ${toastName}`, {
                 position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
+                autoClose: 2000,
                 theme: "light",
-                transition: Bounce,
               });
             }}
             className="w-6 h-6 hover:text-[#f50963] ease-out duration-300 p-1 rounded-full me-3"
@@ -80,7 +77,7 @@ export const CartItem = ({
               onChange={() => ""}
               id="first_product"
               className=" w-14 border focus:border-[#f50963] ease-out duration-300 text-center outline-none text-sm rounded-lg block px-2.5 py-1 "
-              required=""
+              required
             />
           </div>
           <button
@@ -88,14 +85,8 @@ export const CartItem = ({
               dispatch(increaseAction({ id }));
               toast.success(`1 ${name} added to ${toastName}`, {
                 position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
+                autoClose: 2000,
                 theme: "light",
-                transition: Bounce,
               });
             }}
             className="w-6 hover:text-[#f50963] ease-out duration-300 h-6 p-1 rounded-full ms-3"
@@ -129,14 +120,8 @@ export const CartItem = ({
             dispatch(removeAction({ id }));
             toast.error(`${name} remove from ${toastName}`, {
               position: "top-center",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
+              autoClose: 2000,
               theme: "light",
-              transition: Bounce,
             });
           }}
         >

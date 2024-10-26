@@ -5,7 +5,7 @@ import { addCartItem } from "../../store/slices/cartSlice";
 import { addWishListItem } from "../../store/slices/wishListSlice";
 import { isQuickViewOpen } from "../../store/slices/QuickViewSlice";
 import { toast } from "react-toastify";
-import { ProductType } from "@/app/types";
+import { ProductType } from "@/app/lib/definitions";
 
 type ProductProps = {
   productLists: ProductType[];
