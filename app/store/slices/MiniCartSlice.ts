@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const slice = createSlice({
   name: "miniCart",
-  initialState: "",
+  initialState: false,
   reducers: {
-    isMiniCartOpen(state, action) {
+    isMiniCartOpen(state: unknown, action: PayloadAction<string>) {
       if (action.payload === "openMiniCart") {
         return true;
       } else if (action.payload === "closeMiniCart") {

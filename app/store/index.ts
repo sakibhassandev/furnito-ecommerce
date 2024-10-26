@@ -14,3 +14,6 @@ export const store = configureStore({
     quickView: quickViewReducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

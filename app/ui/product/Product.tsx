@@ -1,8 +1,23 @@
-// import { useDispatch } from "react-redux";
-// import { addCartItem } from "../../store/slices/cartSlice";
-// import { addWishListItem } from "../../store/slices/wishListSlice";
-// import { isQuickViewOpen } from "../../store/slices/QuickViewSlice";
-import { Bounce, toast } from "react-toastify";
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { addCartItem } from "../../store/slices/cartSlice";
+import { addWishListItem } from "../../store/slices/wishListSlice";
+import { isQuickViewOpen } from "../../store/slices/QuickViewSlice";
+import { toast } from "react-toastify";
+import { ProductType } from "@/app/types";
+
+type ProductProps = {
+  productLists: ProductType[];
+  img: string;
+  name: string;
+  price: number;
+  hasDiscount?: number;
+  id: string;
+  setQuickViewProduct: (product: ProductType) => void;
+};
 
 export const Product = ({
   productLists,
@@ -12,23 +27,25 @@ export const Product = ({
   hasDiscount,
   id,
   setQuickViewProduct,
-}) => {
-  // const dispatch = useDispatch();
-  // const discountPrice = parseFloat(
-  //   (hasDiscount ? price - (price * hasDiscount) / 100 : 0).toFixed(2)
-  // );
+}: ProductProps) => {
+  const dispatch = useDispatch();
+  const discountPrice = parseFloat(
+    (hasDiscount ? price - (price * hasDiscount) / 100 : 0).toFixed(2)
+  );
 
   return (
     <div className="product group">
       <div className="overflow-hidden rounded shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]">
         <div className="relative overflow-hidden ">
-          <a href="/">
-            <img
+          <Link href="/">
+            <Image
               src={img}
               alt={name}
+              width={100}
+              height={100}
               className="w-full h-full px-6 py-10 transition-all duration-300 ease-linear xsm:px-10 xsm:py-20 group-hover:scale-110"
             />
-          </a>
+          </Link>
           <div
             className={`${
               hasDiscount ? "flex" : "hidden"
@@ -49,14 +66,8 @@ export const Product = ({
                 );
                 toast.success(`${name} added to wishlist`, {
                   position: "top-center",
-                  autoClose: 3000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
+                  autoClose: 2000,
                   theme: "light",
-                  transition: Bounce,
                 });
               }}
               className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-9 h-9"
@@ -85,7 +96,10 @@ export const Product = ({
                 const quickViewProduct = productLists.find(
                   (product) => product.id === id
                 );
-                setQuickViewProduct(quickViewProduct);
+                console.log(quickViewProduct);
+                if (quickViewProduct) {
+                  setQuickViewProduct(quickViewProduct);
+                }
               }}
               className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-9 h-9"
             >
@@ -116,14 +130,8 @@ export const Product = ({
                 dispatch(addCartItem({ img, name, price, id, discountPrice }));
                 toast.success(`${name} added to cart`, {
                   position: "top-center",
-                  autoClose: 3000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
+                  autoClose: 2000,
                   theme: "light",
-                  transition: Bounce,
                 });
               }}
               type="button"
@@ -168,12 +176,12 @@ export const Product = ({
       </div>
       <div className="pt-4 ">
         <h3>
-          <a href="/" className="hover:text-[#f50963] ease-out duration-300">
+          <Link href="/" className="hover:text-[#f50963] ease-out duration-300">
             {name}
-          </a>
+          </Link>
         </h3>
         <div>
-          <span>${hasDiscount ? discountPrice : price}</span>
+          {/* <span>${hasDiscount ? discountPrice : price}</span> */}
           <del className={`${hasDiscount ? "" : "hidden"} ml-2`}>
             {hasDiscount ? "$" + price : ""}
           </del>

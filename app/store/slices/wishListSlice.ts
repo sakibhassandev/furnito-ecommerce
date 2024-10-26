@@ -1,12 +1,13 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import { WishListState } from "@/app/types";
 
-const findItemIndex = (state, action) =>
+const findItemIndex = (state: WishListState[], action:PayloadAction<{id: WishListState['id']}>) =>
   state.findIndex((item) => item.id === action.payload.id);
 
 const slice = createSlice({
   name: "wishList",
-  initialState: JSON.parse(localStorage.getItem("wishlistItems"))
-    ? JSON.parse(localStorage.getItem("wishlistItems"))
+  initialState: JSON.parse(localStorage.getItem("wishlistItems") || '[]')
+    ? JSON.parse(localStorage.getItem("wishlistItems") || '[]')
     : [],
   reducers: {
     addWishListItem(state, action) {

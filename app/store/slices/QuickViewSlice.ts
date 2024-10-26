@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const slice = createSlice({
   name: "quickView",
-  initialState: "",
+  initialState: false,
   reducers: {
-    isQuickViewOpen(state, action) {
+    isQuickViewOpen(state: unknown, action: PayloadAction<string>) {
       if (action.payload === "openQuickView") {
         return true;
       } else if (action.payload === "closeQuickView") {
