@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { isQuickViewOpen } from "../../store/slices/QuickViewSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +7,6 @@ import { addWishListItem } from "../../store/slices/wishListSlice";
 import { toast } from "react-toastify";
 import { RootState } from "@/app/store";
 import { ProductType } from "@/app/types";
-import Image from "next/image";
 
 // Icons
 import { FaLink } from "react-icons/fa6";
@@ -18,7 +18,7 @@ import { FaYoutube } from "react-icons/fa";
 export const QuickView = ({
   quickViewProduct,
 }: {
-  quickViewProduct: ProductType;
+  quickViewProduct: ProductType | null;
 }) => {
   // Indexes
   const [imgIndex, setImgIndex] = useState(0);
@@ -27,9 +27,9 @@ export const QuickView = ({
   const [quantity, setQuantity] = useState(1);
 
   // References
-  const imagesRef = useRef();
-  const colorsRef = useRef();
-  const sizesRef = useRef();
+  const imagesRef = useRef<HTMLDivElement>(null);
+  const colorsRef = useRef<HTMLDivElement>(null);
+  const sizesRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
   const isQuickView = useSelector((state: RootState) => state.quickView);
@@ -47,7 +47,7 @@ export const QuickView = ({
     document.querySelector("body")?.classList.remove("overflow-hidden");
   }
 
-  let bigImage;
+  let bigImage: string = "";
   if (quickViewProduct && quickViewProduct.images) {
     bigImage = Object.values(
       quickViewProduct.images as Record<string, string[]>
@@ -60,7 +60,7 @@ export const QuickView = ({
   useEffect(() => {
     if (imagesRef.current) {
       for (let i = 0; i < imagesRef.current.children.length; i++) {
-        imagesRef.current?.children[i].classList.add(
+        imagesRef.current.children[i].classList.add(
           "after:invisible",
           "after:opacity-0"
         );
@@ -72,7 +72,7 @@ export const QuickView = ({
     }
     if (colorsRef.current) {
       for (let i = 0; i < colorsRef.current.children.length; i++) {
-        colorsRef.current?.children[i].classList.remove(
+        colorsRef.current.children[i].classList.remove(
           "border",
           "animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate]"
         );
@@ -84,11 +84,18 @@ export const QuickView = ({
     }
     if (sizesRef.current) {
       for (let i = 0; i < sizesRef.current.children.length; i++) {
-        sizesRef.current?.children[i].classList.remove("sizes-active");
+        sizesRef.current.children[i].classList.remove("sizes-active");
       }
       sizesRef.current.children[sizesIndex]?.classList.add("sizes-active");
     }
-  }, [isQuickView, imgIndex, sizesIndex]);
+
+    return () => {
+      setImgIndex(0);
+      setColorIndex(0);
+      setSizesIndex(0);
+      setQuantity(1);
+    };
+  }, [isQuickView]);
 
   return (
     <div
@@ -99,7 +106,7 @@ export const QuickView = ({
       } fixed left-0 z-50 flex w-full ease-out duration-300 h-full overflow-x-hidden overflow-y-auto lg:items-center`}
     >
       <div className="relative max-w-[1200px] mx-auto product_modal z-50">
-        <div className="relative p-10 mx-3 bg-white shadow-md modal-content">
+        <div className="relative p-10 mx-3 bg-white shadow-md modal-content h-screen overflow-y-auto">
           <div className="modal-wrapper">
             <button
               onClick={() => dispatch(isQuickViewOpen("closeQuickView"))}
@@ -122,18 +129,20 @@ export const QuickView = ({
               <div className="self-center max-lg:self-center lg:mr-10 left">
                 <div className="product-img">
                   <div className="lg:h-[400px] lg:w-[433px]">
-                    <Image
-                      src={bigImage}
-                      alt="cover-image"
-                      width={100}
-                      height={100}
-                      className="object-fill w-full h-full shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]"
-                    />
+                    {bigImage && (
+                      <Image
+                        src={bigImage}
+                        alt="cover-image"
+                        width={1200}
+                        height={900}
+                        className="object-fill w-full h-full shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]"
+                      />
+                    )}
                   </div>
                 </div>
                 <div
                   className="flex flex-wrap gap-3 product-options"
-                  ref={imagesRef}
+                  ref={imagesRef as unknown as React.RefObject<HTMLDivElement>}
                 >
                   {quickViewProduct?.images &&
                     Object.values(quickViewProduct.images)[colorIndex].map(
@@ -142,26 +151,28 @@ export const QuickView = ({
                           <button
                             onClick={() => {
                               setImgIndex(i);
-                              const imageChildren = imagesRef.current.children;
-                              for (let i = 0; i < imageChildren.length; i++) {
-                                imageChildren[i].classList.add(
-                                  "after:invisible",
-                                  "after:opacity-0"
+                              const imageChildren = imagesRef.current?.children;
+                              if (imageChildren) {
+                                for (let i = 0; i < imageChildren.length; i++) {
+                                  imageChildren[i].classList.add(
+                                    "after:invisible",
+                                    "after:opacity-0"
+                                  );
+                                }
+                                imageChildren[i].classList.remove(
+                                  "after:opacity-0",
+                                  "after:invisible"
                                 );
                               }
-                              imageChildren[i].classList.remove(
-                                "after:opacity-0",
-                                "after:invisible"
-                              );
                             }}
                             className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#f50963] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-24 lg:h-24`}
                             key={i}
                           >
                             <Image
                               src={url}
-                              alt=""
-                              width={100}
-                              height={100}
+                              alt={`${name} image`}
+                              width={1200}
+                              height={900}
                               className="w-full h-full object-contain shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] p-2"
                             />
                           </button>
@@ -178,19 +189,26 @@ export const QuickView = ({
                   <p className="my-5">{quickViewProduct?.description}</p>
                   <div className="mb-4 sizes">
                     <p className="text-[#9F9F9F] text-sm mb-3">Size</p>
-                    <div className="flex items-center gap-4" ref={sizesRef}>
+                    <div
+                      className="flex items-center gap-4"
+                      ref={
+                        sizesRef as unknown as React.RefObject<HTMLDivElement>
+                      }
+                    >
                       {quickViewProduct?.sizes?.map((size, i) => {
                         return (
                           <span
                             onClick={() => {
                               setSizesIndex(i);
                               const sizesChildren = sizesRef.current?.children;
-                              for (let i = 0; i < sizesChildren.length; i++) {
-                                sizesChildren[i].classList.remove(
-                                  "sizes-active"
-                                );
+                              if (sizesChildren) {
+                                for (let i = 0; i < sizesChildren.length; i++) {
+                                  sizesChildren[i].classList.remove(
+                                    "sizes-active"
+                                  );
+                                }
+                                sizesChildren[i].classList.add("sizes-active");
                               }
-                              sizesChildren[i].classList.add("sizes-active");
                             }}
                             key={i}
                             className="bg-[#F9F1E7] py-2 px-3 flex justify-center text-sm items-center text-black rounded-md cursor-pointer"
@@ -203,29 +221,36 @@ export const QuickView = ({
                   </div>
                   <div className="mb-4 sizes">
                     <p className="text-[#9F9F9F] text-sm mb-3">Color</p>
-                    <div className="flex items-center gap-3" ref={colorsRef}>
+                    <div
+                      className="flex items-center gap-3"
+                      ref={
+                        colorsRef as unknown as React.RefObject<HTMLDivElement>
+                      }
+                    >
                       {quickViewProduct?.colors?.map((color, i) => {
                         return (
                           <Image
                             onClick={() => {
                               setColorIndex(i);
-                              const colorChildren = colorsRef.current.children;
-                              for (let i = 0; i < colorChildren.length; i++) {
-                                colorChildren[i].classList.remove(
+                              const colorChildren = colorsRef.current?.children;
+                              if (colorChildren) {
+                                for (let i = 0; i < colorChildren.length; i++) {
+                                  colorChildren[i].classList.remove(
+                                    "border",
+                                    "animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate]"
+                                  );
+                                }
+                                colorChildren[i].classList.add(
                                   "border",
                                   "animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate]"
                                 );
                               }
-                              colorChildren[i].classList.add(
-                                "border",
-                                "animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate]"
-                              );
                             }}
                             key={i}
                             src={color.image}
                             alt={color.name}
-                            width={100}
-                            height={100}
+                            width={1200}
+                            height={900}
                             title={`Select Color: ${color.name}`}
                             className="relative w-[1.75rem] shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate] h-[1.75rem] p-[2px] border border-[#f50963] rounded-full cursor-pointer"
                           />
@@ -312,11 +337,14 @@ export const QuickView = ({
                         dispatch(
                           addCartItem({
                             id,
-                            img: Object.values(quickViewProduct?.images)[0][0],
+                            img: quickViewProduct?.images
+                              ? Object.values(quickViewProduct.images)[0][0]
+                              : "",
                             name,
                             price,
                             discountPrice,
-                            quantity: quantity,
+                            quantity,
+                            size: quickViewProduct?.sizes?.[sizesIndex],
                           })
                         );
                         toast.success(`${name} added to cart`, {
@@ -368,13 +396,14 @@ export const QuickView = ({
                           dispatch(
                             addWishListItem({
                               id,
-                              img: Object.values(
-                                quickViewProduct?.images
-                              )[0][0],
+                              img: quickViewProduct?.images
+                                ? Object.values(quickViewProduct.images)[0][0]
+                                : "",
                               name,
                               price,
                               discountPrice,
-                              quantity: quantity,
+                              quantity,
+                              size: quickViewProduct?.sizes?.[sizesIndex],
                             })
                           );
                           toast.success(`${name} added to wishlist`, {

@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
@@ -41,8 +39,8 @@ export const Product = ({
             <Image
               src={img}
               alt={name}
-              width={100}
-              height={100}
+              width={1200}
+              height={900}
               className="w-full h-full px-6 py-10 transition-all duration-300 ease-linear xsm:px-10 xsm:py-20 group-hover:scale-110"
             />
           </Link>
@@ -96,7 +94,6 @@ export const Product = ({
                 const quickViewProduct = productLists.find(
                   (product) => product.id === id
                 );
-                console.log(quickViewProduct);
                 if (quickViewProduct) {
                   setQuickViewProduct(quickViewProduct);
                 }
@@ -181,7 +178,7 @@ export const Product = ({
           </Link>
         </h3>
         <div>
-          {/* <span>${hasDiscount ? discountPrice : price}</span> */}
+          <span>${hasDiscount ? discountPrice : price}</span>
           <del className={`${hasDiscount ? "" : "hidden"} ml-2`}>
             {hasDiscount ? "$" + price : ""}
           </del>

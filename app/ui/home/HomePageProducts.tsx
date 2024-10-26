@@ -10,20 +10,19 @@ export const HomePageProducts = () => {
   const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(
     null
   );
-  console.log(productLists);
 
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] max-sm:justify-items-center gap-12 sm:gap-10 mt-10 productContainer">
       <QuickView quickViewProduct={quickViewProduct} />
       {productLists.map((product, i: number) => {
-        console.log(product);
+        console.log(productLists);
         if (i >= 8) {
           return null;
         } else {
           return (
             <Product
               setQuickViewProduct={setQuickViewProduct}
-              productLists={productLists}
+              productLists={productLists as unknown as ProductType[]}
               key={product.id}
               id={product.id}
               name={product.name}
