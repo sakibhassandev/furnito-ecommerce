@@ -1,22 +1,23 @@
 "use client";
 
-// import { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { isMiniCartOpen } from "../../store/slices/MiniCartSlice";
-
 import Link from "next/link";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { isMiniCartOpen } from "@/app/store/slices/MiniCartSlice";
+import { CartState, WishListState } from "@/app/lib/definitions";
+import { RootState } from "@/app/store";
 
 export const Header = () => {
-  // const dispatch = useDispatch();
-  // const cartItems = useSelector((state) => state.cartItems);
-  // const wishList = useSelector((state) => state.wishList);
-  // const [isDropdown, setIsDropDown] = useState(false);
-  // const cartCount = cartItems.reduce((acc, curr) => {
-  //   return acc + curr.quantity;
-  // }, 0);
-  // const wishlistCount = wishList.reduce((acc, curr) => {
-  //   return acc + curr.quantity;
-  // }, 0);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cartItems);
+  const wishList = useSelector((state: RootState) => state.wishList);
+  const [isDropdown, setIsDropDown] = useState(false);
+  const cartCount = cartItems.reduce((acc: number, curr: CartState) => {
+    return acc + curr.quantity;
+  }, 0);
+  const wishlistCount = wishList.reduce((acc: number, curr: WishListState) => {
+    return acc + curr.quantity;
+  }, 0);
 
   return (
     <div className="sticky top-0 z-40 w-full shadow-md backdrop-blur bg-[#ffffff70]">
@@ -61,12 +62,13 @@ export const Header = () => {
         </Link>
 
         <ul
-          // ${isDropdown ? "h-[171px]" : "h-0"}
-          className={`overflow-y-hidden transition-all md:h-auto ease-in-out duration-200 md:static absolute top-14 md:bg-inherit bg-white md:shadow-none shadow-[0px_5px_10px_#14303a15] md:w-['auto'] w-full md:px-0 px-4 md:flex left-0 justify-center gap-10 lg:gap-[75px]`}
+          className={`${
+            isDropdown ? "h-[171px]" : "h-0"
+          } overflow-y-hidden transition-all md:h-auto ease-in-out duration-200 md:static absolute top-14 md:bg-inherit bg-white md:shadow-none shadow-[0px_5px_10px_#14303a15] md:w-['auto'] w-full md:px-0 px-4 md:flex left-0 justify-center gap-10 lg:gap-[75px]`}
         >
           <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
             <Link
-              // onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
               href="/"
               className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
             >
@@ -76,7 +78,7 @@ export const Header = () => {
 
           <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
             <Link
-              // onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
               href="/shop"
               className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
             >
@@ -86,7 +88,7 @@ export const Header = () => {
 
           <li className="md:p-[unset] py-2 md:border-none border-b border-[#d6d9dc]">
             <Link
-              // onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
               href="/about"
               className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
             >
@@ -96,7 +98,7 @@ export const Header = () => {
 
           <li className="md:p-[unset] py-2">
             <Link
-              // onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
               href="/contact"
               className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
             >
@@ -122,7 +124,7 @@ export const Header = () => {
             </svg>
           </button>
           <Link
-            // onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
             href="/login"
           >
             <svg
@@ -139,7 +141,7 @@ export const Header = () => {
           </Link>
 
           <Link
-            // onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
             href="/wishlist"
             className="relative"
           >
@@ -158,16 +160,19 @@ export const Header = () => {
               />
             </svg>
             <span
-              // ${wishlistCount < 1 ? "invisible opacity-0" : ""}
-              className={`absolute z-10 flex justify-center items-center -top-[22px] -right-3 text-xs font-bold bg-black w-[24px] h-[24px] border-[3px] border-white text-center rounded-full text-white`}
+              className={`${
+                wishlistCount < 1 ? "invisible opacity-0" : ""
+              } absolute z-10 flex justify-center items-center -top-[22px] -right-3 text-xs font-bold bg-black w-[24px] h-[24px] border-[3px] border-white text-center rounded-full text-white`}
             >
-              {/* {wishlistCount} */}
+              {wishlistCount}
             </span>
           </Link>
 
           <button className="relative z-20 miniCart">
             <svg
-              // onClick={() => {dispatch(isMiniCartOpen("openMiniCart"))}}
+              onClick={() => {
+                dispatch(isMiniCartOpen("openMiniCart"));
+              }}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 26 23"
               fill="none"
@@ -179,29 +184,33 @@ export const Header = () => {
               />
             </svg>
             <span
-              // ${cartCount < 1 ? "invisible opacity-0" : ""}
-              className={`absolute z-10 
+              className={`${
+                cartCount < 1 ? "invisible opacity-0" : ""
+              } absolute z-10 
                  flex justify-center items-center -top-[22px] -right-3 text-xs font-bold bg-black w-[24px] h-[24px] border-[3px] border-white text-center rounded-full text-white`}
             >
-              {/* {cartCount} */}
+              {cartCount}
             </span>
           </button>
 
           <button
             className="block space-y-1 cursor-pointer md:hidden"
-            // onClick={() => setIsDropDown(!isDropdown)}
+            onClick={() => setIsDropDown(!isDropdown)}
           >
             <span
-              // ${isDropdown ? "-rotate-45 relative top-[6px]" : "-rotate-0"}
-              className={`w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
+              className={`${
+                isDropdown ? "-rotate-45 relative top-[6px]" : "-rotate-0"
+              } w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
             ></span>
             <span
-              // ${isDropdown ? "rotate-45" : "rotate-0"}
-              className={`w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
+              className={`${
+                isDropdown ? "rotate-45" : "rotate-0"
+              } w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
             ></span>
             <span
-              // ${isDropdown ? "opacity-0" : "opacity-100"}
-              className={`w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
+              className={`${
+                isDropdown ? "opacity-0" : "opacity-100"
+              } w-5 h-[2px] bg-[#051441] transition-all ease-in-out duration-300 block`}
             ></span>
           </button>
         </div>

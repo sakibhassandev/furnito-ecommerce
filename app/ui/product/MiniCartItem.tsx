@@ -1,17 +1,18 @@
+import Image from "next/image";
 import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { removeCartItem } from "../../store/slices/cartSlice";
 import { toast } from "react-toastify";
-import Image from "next/image";
+import { CartState } from "@/app/lib/definitions";
 
-export const MiniCartItem = ({ name, price, quantity, image, id }) => {
+export const MiniCartItem = ({ name, price, quantity, img, id }: CartState) => {
   const dispatch = useDispatch();
   return (
     <div className="item items-center relative flex p-[20px_35px_20px_20px] border-b border-[1px_solid_hsla(0,0%,51%,.2)] ease duration-300">
       <div className="thumb mr-[15px]">
         <a href="/product/123">
           <Image
-            src={image}
+            src={img}
             alt={name}
             width={1200}
             height={900}

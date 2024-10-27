@@ -1,15 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import { IoClose } from "react-icons/io5";
 import { MiniCartItem } from "./MiniCartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { isMiniCartOpen } from "../../store/slices/MiniCartSlice";
 import { EmptyCard } from "./EmptyCard";
+import { RootState } from "@/app/store";
+import { CartState } from "@/app/lib/definitions";
 
 export const MiniCart = () => {
   const dispatch = useDispatch();
-  const MiniCartOpen = useSelector((state) => state.miniCart);
-  const cartItems = useSelector((state) => state.cartItems);
-  const totalPrice = cartItems.reduce((acc, curr) => {
+  const MiniCartOpen = useSelector((state: RootState) => state.miniCart);
+  const cartItems = useSelector((state: RootState) => state.cartItems);
+  const totalPrice = cartItems.reduce((acc: number, curr: CartState) => {
     return (
       acc +
       (curr.discountPrice ? curr.discountPrice : curr.price) * curr.quantity
@@ -44,13 +48,20 @@ export const MiniCart = () => {
             ) : (
               <div className="h-full items">
                 {cartItems.map(
-                  ({ name, img, price, discountPrice, quantity, id }) => {
+                  ({
+                    name,
+                    img,
+                    price,
+                    discountPrice,
+                    quantity,
+                    id,
+                  }: CartState) => {
                     return (
                       <MiniCartItem
                         key={id}
                         id={id}
                         name={name}
-                        image={img}
+                        img={img}
                         price={discountPrice ? discountPrice : price}
                         quantity={quantity}
                       />

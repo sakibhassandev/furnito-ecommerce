@@ -1,3 +1,5 @@
+"use client";
+
 import { HomePageProducts } from "@/app/ui/home/HomePageProducts";
 
 const HomeProducts = () => {

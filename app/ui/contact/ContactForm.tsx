@@ -27,7 +27,6 @@ const ContactForm = () => {
       }
     );
     reset();
-    console.log(data);
   };
 
   return (

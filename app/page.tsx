@@ -3,13 +3,16 @@ import { Range } from "./ui/home/Range";
 import { HomePageCarousel } from "./ui/home/HomePageCarousel";
 import { Feature } from "./ui/home/Feature";
 import StoreProvider from "./store/slices/StoreProvider";
+import HomeProducts from "@/app/ui/home/HomeProducts";
 
 export default function Home() {
   return (
     <main>
       <Hero />
       <Range />
-      <StoreProvider /> {/*products list */}
+      <StoreProvider>
+        <HomeProducts /> {/*products list */}
+      </StoreProvider>
       <HomePageCarousel />
       <Feature />
     </main>

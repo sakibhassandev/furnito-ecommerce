@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Product } from "../product/Product";
 import { QuickView } from "@/app/ui/product/QuickView";
 import { RootState } from "@/app/store";
-import { ProductType } from "@/app/types";
+import { ProductType } from "@/app/lib/definitions";
 
 export const HomePageProducts = () => {
   const productLists = useSelector((state: RootState) => state.products);
@@ -15,7 +15,6 @@ export const HomePageProducts = () => {
     <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] max-sm:justify-items-center gap-12 sm:gap-10 mt-10 productContainer">
       <QuickView quickViewProduct={quickViewProduct} />
       {productLists.map((product, i: number) => {
-        console.log(productLists);
         if (i >= 8) {
           return null;
         } else {

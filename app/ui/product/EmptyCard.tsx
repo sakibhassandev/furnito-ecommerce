@@ -1,11 +1,10 @@
 import Image from "next/image";
-import emptyCartImg from "../../assets/images/empty-cart.webp";
 
 export const EmptyCard = ({ name }: { name: string }) => {
   return (
     <div className="empty-card text-center mt-[150px]">
       <Image
-        src={emptyCartImg}
+        src="/assets/images/empty-cart.webp"
         alt="empty-cart"
         width={283}
         height={171}
