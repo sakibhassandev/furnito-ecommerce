@@ -1,58 +1,37 @@
 "use client";
 
-import { useState } from "react";
-
-import { AuthParticles } from "./AuthParticles";
 import Link from "next/link";
+import { AuthParticles } from "./AuthParticles";
+import { FieldValues, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export const Forgot = () => {
-  const [credentials, setCredentials] = useState({
-    email: "",
-  });
-  const [errors, setErrors] = useState({});
+  // Form & Error States
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    getValues,
+  } = useForm();
 
-  const validationConfig = {
-    email: [
-      { required: true, message: "Please enter an email" },
+  // Submit Handler
+  const onSubmit = async (data: FieldValues) => {
+    // TODO: Send data to backend also make this server client
+    // ...
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    toast.success(
+      `Hey there, ${getValues(
+        "email"
+      )}. A reset link has been sent to your email.`,
       {
-        pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-        message: "Please enter a valid email",
-      },
-    ],
-  };
-
-  const validate = (formData: React.FormEvent) => {
-    const errorsData = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      validationConfig[key].some((rule) => {
-        if (rule.required && !value) {
-          errorsData[key] = rule.message;
-          return true;
-        }
-
-        if (rule.pattern && !rule.pattern.test(value)) {
-          errorsData[key] = rule.message;
-          return true;
-        }
-      });
-    });
-
-    setErrors(errorsData);
-    return errorsData;
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCredentials((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-    setErrors({});
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    validate(credentials);
+        position: "top-center",
+        autoClose: 2000,
+        theme: "light",
+      }
+    );
+    console.log(data);
+    reset();
   };
 
   return (
@@ -72,13 +51,18 @@ export const Forgot = () => {
                   </p>
                 </div>
                 <div className="form">
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input_wrappers">
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            value={credentials.email}
-                            onChange={handleChange}
+                            {...register("email", {
+                              required: "Email is required",
+                              pattern: {
+                                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                message: "Email must be a valid email",
+                              },
+                            })}
                             type="email"
                             id="email"
                             name="email"
@@ -113,16 +97,17 @@ export const Forgot = () => {
                           </span>
                         </div>
                         <p className="mt-1 text-sm text-red-500 error">
-                          {errors.email}
+                          {errors.email?.message as string}
                         </p>
                       </div>
                     </div>
                     <div className="send-request__btn">
                       <button
+                        disabled={isSubmitting}
                         type="submit"
-                        className="text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
+                        className="disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
                       >
-                        Send Request
+                        {isSubmitting ? "Sending Request..." : "Send Request"}
                       </button>
                     </div>
                   </form>
@@ -130,7 +115,7 @@ export const Forgot = () => {
                     <p className="text-[#525258] text-sm">
                       Remember your password? &nbsp;
                       <Link
-                        to="/login"
+                        href="/login"
                         className="text-[#f50963] hover:text-[#03041c] ease-out duration-300 font-semibold"
                       >
                         Login

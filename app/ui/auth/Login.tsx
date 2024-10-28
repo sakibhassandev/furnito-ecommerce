@@ -1,72 +1,39 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { LuEye } from "react-icons/lu";
+"use client";
 
+import { useState } from "react";
+import Link from "next/link";
+import { FieldValues, useForm } from "react-hook-form";
+import { LuEye } from "react-icons/lu";
 import { AuthParticles } from "./AuthParticles";
+import { toast } from "react-toastify";
 
 export const Login = () => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState({});
 
-  // Validation Config Obj
-  const validationConfig = {
-    email: [
-      { required: true, message: "Please enter an email" },
+  // Form & Error States
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    getValues,
+  } = useForm();
+
+  // Submit Handler
+  const onSubmit = async (data: FieldValues) => {
+    // TODO: Send data to backend also make this server client
+    // ...
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    toast.success(
+      `Hey there, ${getValues("email").split("@")[0]}. Welcome back!`,
       {
-        pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-        message: "Please enter a valid email",
-      },
-    ],
-    password: [
-      { required: true, message: "Please enter password" },
-      { minLength: 6, message: "Password must be at least 6 characters" },
-    ],
-  };
-
-  // Validation Function
-  const validate = (formData) => {
-    const errorsData = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      validationConfig[key].some((rule) => {
-        if (rule.required && !value) {
-          errorsData[key] = rule.message;
-          return true;
-        }
-
-        if (rule.minLength && value.length < rule.minLength) {
-          errorsData[key] = rule.message;
-          return true;
-        }
-
-        if (rule.pattern && !rule.pattern.test(value)) {
-          errorsData[key] = rule.message;
-          return true;
-        }
-      });
-    });
-
-    setErrors(errorsData);
-    return errorsData;
-  };
-
-  //   Handle Change Eventlistener
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-    setErrors({});
-  };
-
-  // Handle Submit Eventlistener
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    validate(credentials);
+        position: "top-center",
+        autoClose: 2000,
+        theme: "light",
+      }
+    );
+    console.log(data);
+    reset();
   };
 
   return (
@@ -86,13 +53,18 @@ export const Login = () => {
                   </p>
                 </div>
                 <div className="form">
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input_wrappers">
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            value={credentials.email}
-                            onChange={handleChange}
+                            {...register("email", {
+                              required: "Please enter an email",
+                              pattern: {
+                                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                message: "Please enter a valid email",
+                              },
+                            })}
                             type="email"
                             id="email"
                             name="email"
@@ -125,14 +97,20 @@ export const Login = () => {
                           </span>
                         </div>
                         <p className="mt-1 text-sm text-red-500 error">
-                          {errors.email}
+                          {errors.email?.message as string}
                         </p>
                       </div>
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            value={credentials.password}
-                            onChange={handleChange}
+                            {...register("password", {
+                              required: "Please enter password",
+                              minLength: {
+                                value: 6,
+                                message:
+                                  "Password must be at least 6 characters",
+                              },
+                            })}
                             type={isPasswordShow ? "text" : "password"}
                             name="password"
                             id="password"
@@ -172,7 +150,7 @@ export const Login = () => {
                           </span>
                           <span
                             onClick={() => setIsPasswordShow(!isPasswordShow)}
-                            className={`${
+                            className={` ${
                               isPasswordShow ? "hidden" : ""
                             } absolute -translate-y-1/2 cursor-pointer right-6 login-input-eye top-1/2`}
                           >
@@ -235,7 +213,7 @@ export const Login = () => {
                           />
                         </div>
                         <p className="mt-1 text-sm text-red-500 error">
-                          {errors.password}
+                          {errors.password?.message as string}
                         </p>
                       </div>
                     </div>
@@ -276,7 +254,7 @@ export const Login = () => {
                       </div>
                       <div className="login__forgot ">
                         <Link
-                          to="/forgot"
+                          href="/forgot"
                           className="capitalize hover:text-[#f50963] ease-out duration-300"
                         >
                           forgot password?
@@ -286,9 +264,10 @@ export const Login = () => {
                     <div className="login__btn">
                       <button
                         type="submit"
-                        className="text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
+                        disabled={isSubmitting}
+                        className="disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
                       >
-                        Sign In
+                        {isSubmitting ? "Signing In..." : "Sign In"}
                       </button>
                     </div>
                   </form>
@@ -296,7 +275,7 @@ export const Login = () => {
                     <p className="text-[#525258] text-sm">
                       Don’t have an account? &nbsp;
                       <Link
-                        to="/register"
+                        href="/register"
                         className="text-[#f50963] hover:text-[#03041c] ease-out duration-300 font-semibold"
                       >
                         Register Now

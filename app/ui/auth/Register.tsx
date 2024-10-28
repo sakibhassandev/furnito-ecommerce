@@ -4,82 +4,56 @@ import { useState } from "react";
 import Link from "next/link";
 import { LuEye } from "react-icons/lu";
 import { AuthParticles } from "./AuthParticles";
+import { FieldValues, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export const Register = () => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const [isConfirmPasswordShow, setIsConfirmPasswordShow] = useState(false);
-  const [credentials, setCredentials] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [errors, setErrors] = useState({});
 
-  const validationConfig = {
-    name: [{ required: true, message: "Please enter a name" }],
-    email: [
-      { required: true, message: "Please enter an email" },
-      {
-        pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-        message: "Please enter a valid email",
-      },
-    ],
-    password: [
-      { required: true, message: "Please enter password" },
-      { minLength: 6, message: "Password must be at least 6 characters" },
-    ],
-    confirmPassword: [
-      { required: true, message: "Password does not match!" },
-      {
-        match: "password",
-        message: "Passwords do not match!",
-      },
-    ],
-  };
+  // const validationConfig = {
+  //   name: [{ required: true, message: "Please enter a name" }],
+  //   email: [
+  //     { required: true, message: "Please enter an email" },
+  //     {
+  //       pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+  //       message: "Please enter a valid email",
+  //     },
+  //   ],
+  //   password: [
+  //     { required: true, message: "Please enter password" },
+  //     { minLength: 6, message: "Password must be at least 6 characters" },
+  //   ],
+  //   confirmPassword: [
+  //     { required: true, message: "Password does not match!" },
+  //     {
+  //       match: "password",
+  //       message: "Passwords do not match!",
+  //     },
+  //   ],
+  // };
 
-  const validate = (formData: React.FormEvent) => {
-    const errorsData = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      validationConfig[key].some((rule) => {
-        if (rule.required && !value) {
-          errorsData[key] = rule.message;
-          return true;
-        }
+  // Form & Error States
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    getValues,
+  } = useForm();
 
-        if (rule.minLength && value.length < rule.minLength) {
-          errorsData[key] = rule.message;
-          return true;
-        }
-
-        if (rule.pattern && !rule.pattern.test(value)) {
-          errorsData[key] = rule.message;
-          return true;
-        }
-
-        if (rule.match && value !== formData[rule.match]) {
-          errorsData[key] = rule.message;
-          return true;
-        }
-      });
+  // Submit Handler
+  const onSubmit = async (data: FieldValues) => {
+    // TODO: Send data to backend also make this server client
+    // ...
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    toast.success(`Hey there, ${getValues("name")}. Welcome to the family!`, {
+      position: "top-center",
+      autoClose: 2000,
+      theme: "light",
     });
-
-    setErrors(errorsData);
-    return errorsData;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-    setErrors({});
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    validate(credentials);
+    console.log(data);
+    reset();
   };
 
   return (
@@ -99,13 +73,14 @@ export const Register = () => {
                   </p>
                 </div>
                 <div className="form">
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="input_wrappers">
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            value={credentials.name}
-                            onChange={handleChange}
+                            {...register("name", {
+                              required: "Name is required",
+                            })}
                             type="text"
                             id="name"
                             name="name"
@@ -138,14 +113,19 @@ export const Register = () => {
                           </span>
                         </div>
                         <p className="mt-1 text-sm text-red-500 error">
-                          {errors.name}
+                          {errors.name?.message as string}
                         </p>
                       </div>
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            value={credentials.email}
-                            onChange={handleChange}
+                            {...register("email", {
+                              required: "Email is required",
+                              pattern: {
+                                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                message: "Email must be a valid email",
+                              },
+                            })}
                             type="email"
                             id="email"
                             name="email"
@@ -180,14 +160,20 @@ export const Register = () => {
                           </span>
                         </div>
                         <p className="mt-1 text-sm text-red-500 error">
-                          {errors.email}
+                          {errors.email?.message as string}
                         </p>
                       </div>
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            value={credentials.password}
-                            onChange={handleChange}
+                            {...register("password", {
+                              required: "Password is required",
+                              minLength: {
+                                value: 6,
+                                message:
+                                  "Password must be at least 6 characters",
+                              },
+                            })}
                             type={isPasswordShow ? "text" : "password"}
                             name="password"
                             id="password"
@@ -290,14 +276,18 @@ export const Register = () => {
                           />
                         </div>
                         <p className="mt-1 text-sm text-red-500 error">
-                          {errors.password}
+                          {errors.password?.message as string}
                         </p>
                       </div>
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            value={credentials.confirmPassword}
-                            onChange={handleChange}
+                            {...register("confirmPassword", {
+                              required: "Confirm Password is required",
+                              validate: (value) =>
+                                value === getValues("password") ||
+                                "Password must match",
+                            })}
                             type={isConfirmPasswordShow ? "text" : "password"}
                             name="confirmPassword"
                             id="confirmPassword"
@@ -404,16 +394,17 @@ export const Register = () => {
                           />
                         </div>
                         <p className="mt-1 text-sm text-red-500 error">
-                          {errors.confirmPassword}
+                          {errors.confirmPassword?.message as string}
                         </p>
                       </div>
                     </div>
                     <div className="register__btn">
                       <button
+                        disabled={isSubmitting}
                         type="submit"
-                        className="text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
+                        className="disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
                       >
-                        Sign Up
+                        {isSubmitting ? "Signing up..." : "Sign Up"}
                       </button>
                     </div>
                   </form>
@@ -421,7 +412,7 @@ export const Register = () => {
                     <p className="text-[#525258] text-sm">
                       Already have an account? &nbsp;
                       <Link
-                        to="/login"
+                        href="/login"
                         className="text-[#f50963] hover:text-[#03041c] ease-out duration-300 font-semibold"
                       >
                         Log in
