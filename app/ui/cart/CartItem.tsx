@@ -1,3 +1,4 @@
+import { CartState, CommonCartSectionProps } from "@/app/lib/definitions";
 import Image from "next/image";
 import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
@@ -14,7 +15,7 @@ export const CartItem = ({
   increaseAction,
   decreaseAction,
   removeAction,
-}) => {
+}: CartState & CommonCartSectionProps) => {
   const dispatch = useDispatch();
 
   return (

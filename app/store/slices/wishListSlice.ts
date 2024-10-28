@@ -1,5 +1,5 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
-import { WishListState } from "@/app/types";
+import { WishListState } from "@/app/lib/definitions";
 
 const findItemIndex = (
   state: WishListState[],

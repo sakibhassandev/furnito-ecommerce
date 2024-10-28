@@ -1,3 +1,5 @@
+import { PayloadAction } from "@reduxjs/toolkit";
+
 export type CartState = {
   id: string;
   img: string;
@@ -29,4 +31,20 @@ export type ProductType = {
   colors: { id: string; name: string; image: string }[];
   images: { [key: string]: string[] };
   price: number;
+};
+
+export type CommonCartSectionProps = {
+  productList?: CartState[];
+  emptyCardName?: string;
+  toastName: string;
+  increaseAction: (payload: {
+    id: CartState["id"];
+  }) => PayloadAction<{ id: CartState["id"] }>;
+  decreaseAction: (payload: {
+    id: CartState["id"];
+  }) => PayloadAction<{ id: CartState["id"] }>;
+  removeAction: (payload: {
+    id: CartState["id"];
+  }) => PayloadAction<{ id: CartState["id"] }>;
+  bottomSec?: React.ReactNode;
 };

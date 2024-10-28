@@ -26,6 +26,7 @@ const ContactForm = () => {
         theme: "light",
       }
     );
+    console.log(data);
     reset();
   };
 
