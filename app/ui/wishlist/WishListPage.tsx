@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { RootState } from "@/app/store";
-import { CommonCartSection } from "@/app/ui/product/CommonCartSection";
+import { CommonCartSection } from "@/app/ui/cart/CommonCartSection";
 import { SectionCommonHeader } from "@/app/ui/common/SectionCommonHeader";
 import { InfoHighlights } from "@/app/ui/common/InfoHighlights";
 import { useSelector } from "react-redux";

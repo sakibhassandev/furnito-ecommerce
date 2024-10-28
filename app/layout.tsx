@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { poppins } from "./ui/fonts";
 import { Header } from "@/app/ui/common/Header";
-import { MiniCart } from "./ui/product/MiniCart";
+import { MiniCart } from "@/app/ui/cart/MiniCart";
 import { Footer } from "@/app/ui/common/Footer";
 import { ToastContainer } from "react-toastify";
 import StoreProvider from "./store/slices/StoreProvider";

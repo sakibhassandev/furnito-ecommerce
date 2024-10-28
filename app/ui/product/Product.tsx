@@ -8,13 +8,13 @@ import { toast } from "react-toastify";
 import { ProductType } from "@/app/lib/definitions";
 
 type ProductProps = {
-  productLists: ProductType[];
+  productLists?: ProductType[];
   img: string;
   name: string;
   price: number;
   hasDiscount?: number;
   id: string;
-  setQuickViewProduct: (product: ProductType) => void;
+  setQuickViewProduct?: (product: ProductType) => void;
 };
 
 export const Product = ({

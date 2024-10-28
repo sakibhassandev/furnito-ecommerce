@@ -1,6 +1,6 @@
 import { LiaReplySolid } from "react-icons/lia";
-import { CartItem } from "./CartItem";
-import { EmptyCard } from "./EmptyCard";
+import { CartItem } from "@/app/ui/cart/CartItem";
+import { EmptyCart } from "@/app/ui/cart/EmptyCart";
 
 export const CommonCartSection = ({
   productList,
@@ -14,7 +14,7 @@ export const CommonCartSection = ({
   return (
     <div className="py-24 mx-6">
       {productList.length < 1 ? (
-        <EmptyCard name={emptyCardName} />
+        <EmptyCart name={emptyCardName} />
       ) : (
         <div className="relative  xl:max-w-[1140px] lg:max-w-[960px] md:max-w-[720px] mx-auto overflow-x-auto">
           <div className="top rounded mb-8 p-[17px_37px] bg-[#F9F1E7]">

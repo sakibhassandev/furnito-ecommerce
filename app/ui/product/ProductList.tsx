@@ -7,6 +7,7 @@ export const ProductList = () => {
       {productLists.map((product) => {
         return (
           <Product
+            id={product.id}
             key={product.id}
             name={product.name}
             img={Object.values(product.images)[0][0]}

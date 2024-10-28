@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export const EmptyCard = ({ name }: { name: string }) => {
+export const EmptyCart = ({ name }: { name: string }) => {
   return (
     <div className="empty-card text-center mt-[150px]">
       <Image

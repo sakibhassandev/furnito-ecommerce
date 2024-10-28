@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { IoClose } from "react-icons/io5";
-import { MiniCartItem } from "./MiniCartItem";
+import { MiniCartItem } from "@/app/ui/cart/MiniCartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { isMiniCartOpen } from "../../store/slices/MiniCartSlice";
-import { EmptyCard } from "./EmptyCard";
+import { EmptyCart } from "@/app/ui/cart/EmptyCart";
 import { RootState } from "@/app/store";
 import { CartState } from "@/app/lib/definitions";
 
@@ -44,7 +44,7 @@ export const MiniCart = () => {
             </div>
 
             {cartItems.length < 1 ? (
-              <EmptyCard name="cart" />
+              <EmptyCart name="cart" />
             ) : (
               <div className="h-full items">
                 {cartItems.map(
