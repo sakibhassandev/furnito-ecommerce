@@ -5,6 +5,7 @@ import { MiniCart } from "@/app/ui/cart/MiniCart";
 import { Footer } from "@/app/ui/common/Footer";
 import { ToastContainer } from "react-toastify";
 import StoreProvider from "./store/slices/StoreProvider";
+import { BackToTop } from "./ui/common/BackToTop";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
@@ -35,6 +36,7 @@ export default function RootLayout({
         </StoreProvider>
         {children}
         <Footer />
+        <BackToTop />
         <ToastContainer className="text-sm" />
       </body>
     </html>
