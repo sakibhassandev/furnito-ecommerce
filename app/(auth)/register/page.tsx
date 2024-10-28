@@ -1,4 +1,9 @@
+import type { Metadata } from "next";
 import { Register } from "@/app/ui/auth/Register";
+
+export const metadata: Metadata = {
+  title: "Register",
+};
 
 const RegisterPage = () => {
   return <Register />;
