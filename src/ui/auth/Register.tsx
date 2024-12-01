@@ -2,12 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { LuEye } from "react-icons/lu";
+import { LuEye, LuLoader2 } from "react-icons/lu";
 import { AuthParticles } from "./AuthParticles";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registerSchema } from "@/schemas/registerSchema";
+import axios, { AxiosError } from "axios";
+import { ApiError } from "@/utils/ApiError";
+import { useRouter } from "next/navigation";
 
 export const Register = () => {
+  const router = useRouter();
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const [isConfirmPasswordShow, setIsConfirmPasswordShow] = useState(false);
 
@@ -17,20 +24,31 @@ export const Register = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
-  } = useForm();
+  } = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+  });
 
   // Submit Handler
-  const onSubmit = async (data: FieldValues) => {
-    // TODO: Send data to backend also make this server client
-    // ...
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    toast.success(`Hey there, ${getValues("name")}. Welcome to the family!`, {
-      position: "top-center",
-      autoClose: 2000,
-      theme: "light",
-    });
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
+    try {
+      const response = await axios.post("/api/register", data);
+      toast.success(
+        `Hey, ${response.data.data.name}. Your account registered successfully! Please check your email to verify your account.`,
+        {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "light",
+        }
+      );
+      router.push("/login");
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiError>;
+      toast.error(axiosError.response?.data.message || "Something went wrong", {
+        position: "top-center",
+        autoClose: 2000,
+        theme: "light",
+      });
+    }
     reset();
   };
 
@@ -56,9 +74,7 @@ export const Register = () => {
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            {...register("name", {
-                              required: "Name is required",
-                            })}
+                            {...register("name")}
                             type="text"
                             id="name"
                             name="name"
@@ -97,13 +113,7 @@ export const Register = () => {
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            {...register("email", {
-                              required: "Email is required",
-                              pattern: {
-                                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                                message: "Email must be a valid email",
-                              },
-                            })}
+                            {...register("email")}
                             type="email"
                             id="email"
                             name="email"
@@ -144,14 +154,7 @@ export const Register = () => {
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            {...register("password", {
-                              required: "Password is required",
-                              minLength: {
-                                value: 6,
-                                message:
-                                  "Password must be at least 6 characters",
-                              },
-                            })}
+                            {...register("password")}
                             type={isPasswordShow ? "text" : "password"}
                             name="password"
                             id="password"
@@ -260,12 +263,7 @@ export const Register = () => {
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            {...register("confirmPassword", {
-                              required: "Confirm Password is required",
-                              validate: (value) =>
-                                value === getValues("password") ||
-                                "Password must match",
-                            })}
+                            {...register("confirmPassword")}
                             type={isConfirmPasswordShow ? "text" : "password"}
                             name="confirmPassword"
                             id="confirmPassword"
@@ -380,9 +378,16 @@ export const Register = () => {
                       <button
                         disabled={isSubmitting}
                         type="submit"
-                        className="disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
+                        className="relative disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
                       >
-                        {isSubmitting ? "Signing up..." : "Sign Up"}
+                        {isSubmitting ? (
+                          <>
+                            <LuLoader2 className="animate-spin absolute left-[35%] top-1/4 w-7 h-7" />{" "}
+                            Signing up
+                          </>
+                        ) : (
+                          "Sign Up"
+                        )}
                       </button>
                     </div>
                   </form>

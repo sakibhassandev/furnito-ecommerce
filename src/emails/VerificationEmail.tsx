@@ -56,7 +56,7 @@ export default function VerificationEmail({
           </Text>
         </Row>
         <Row>
-          <Text>Best, Furnito Team</Text>
+          <Text>Best regards, Furnito Team</Text>
         </Row>
         <Row>
           <Button
