@@ -21,7 +21,7 @@ model User {
     confirmPassword String
     verifyCode      String
     verifyCodeExp   DateTime
-    idVerified      Boolean  @default(false)
+    isVerified      Boolean  @default(false)
     reviews         Review[]
 }
 
