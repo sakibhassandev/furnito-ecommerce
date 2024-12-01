@@ -45,11 +45,19 @@ export async function POST(request: Request) {
         verifyCode,
         verifyCodeExp: new Date(Date.now() + 1000 * 60 * 60 * 3),
       },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        verifyCode: true,
+        verifyCodeExp: true,
+        isVerified: true,
+      },
     });
 
     await sendVerificationEmail(user.email, name, verifyCode);
 
-    return Response.json(new ApiResponse(201, true, "User registered"), {
+    return Response.json(new ApiResponse(201, true, user, "User registered"), {
       status: 201,
     });
   } catch (error) {
