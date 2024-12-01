@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id              String   @id @default(auto()) @map("_id") @db.ObjectId
+    name            String
+    email           String   @unique
+    password        String
+    confirmPassword String
+    verifyCode      String
+    verifyCodeExp   DateTime
+    idVerified      Boolean  @default(false)
+    reviews         Review[]
+}
+
+model Review {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
+    message   String
+    rating    Int
+    authorId  String   @db.ObjectId
+    author    User     @relation(fields: [authorId], references: [id])
+    productId String   @db.ObjectId
+    product   Product  @relation(fields: [productId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Colors {
+    id        String  @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
+    image     String
+    productId String  @db.ObjectId
+    product   Product @relation(fields: [productId], references: [id])
+}
+
+model ProductImages {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    color     String
+    url       String[]
+    productId String   @db.ObjectId
+    product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Product {
+    id          String          @id @default(auto()) @map("_id") @db.ObjectId
+    name        String
+    description String
+    sku         String?
+    categories  String[]
+    tags        String[]
+    reviews     Review[]
+    hasDiscount Int?
+    sizes       String[]
+    colors      Colors[]
+    images      ProductImages[]
+    price       Float
+    createdAt   DateTime        @default(now())
+    updatedAt   DateTime        @updatedAt
+}
