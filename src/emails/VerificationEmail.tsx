@@ -12,7 +12,7 @@ import {
 
 interface VerificationEmailProps {
   name: string;
-  otp: string;
+  otp: number;
   email: string;
 }
 
@@ -36,7 +36,7 @@ export default function VerificationEmail({
           fontStyle="normal"
         />
       </Head>
-      <Preview>Here&apos;s your verification code ${otp}</Preview>
+      <Preview>Here&apos;s your verification code {otp.toString()}</Preview>
       <Section>
         <Row>
           <Heading as="h2">Hey {name},</Heading>
@@ -61,7 +61,12 @@ export default function VerificationEmail({
         <Row>
           <Button
             href={`http://localhost:3000/verify/${email}`} //Todo: Change this with the actual URL
-            style={{ color: "white", backgroundColor: "#B88E2F" }}
+            style={{
+              color: "white",
+              backgroundColor: "#B88E2F",
+              padding: "10px 22px",
+              borderRadius: "5px",
+            }}
           >
             Verify here
           </Button>

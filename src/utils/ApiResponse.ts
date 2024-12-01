@@ -3,10 +3,15 @@ export class ApiResponse {
   message: string;
   success: boolean;
   data?: unknown;
-  constructor(status: number, data: unknown, message = "Success") {
+  constructor(
+    status: number,
+    success: boolean,
+    data: unknown,
+    message = "Success"
+  ) {
     this.status = status;
     this.data = data;
     this.message = message;
-    this.success = status < 400;
+    this.success = success;
   }
 }
