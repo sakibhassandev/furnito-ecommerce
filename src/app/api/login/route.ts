@@ -18,6 +18,8 @@ export async function POST(request: Request) {
       );
     }
 
+    // TODO: Add login state in header
+
     const user = await prisma.user.findUnique({
       where: { email },
       select: {
@@ -42,6 +44,15 @@ export async function POST(request: Request) {
       return Response.json(new ApiError(400, false, "Invalid password"), {
         status: 400,
       });
+    }
+
+    if (!user.isVerified) {
+      return Response.json(
+        new ApiError(400, false, "Please verify your account first to login"),
+        {
+          status: 400,
+        }
+      );
     }
 
     if (!process.env.JWT_SECRET) {

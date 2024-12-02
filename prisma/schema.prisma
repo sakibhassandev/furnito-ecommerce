@@ -14,14 +14,16 @@ datasource db {
 }
 
 model User {
-    id            String   @id @default(auto()) @map("_id") @db.ObjectId
-    name          String
-    email         String   @unique
-    password      String
-    verifyCode    Int
-    verifyCodeExp DateTime
-    isVerified    Boolean  @default(false)
-    reviews       Review[]
+    id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+    name                String
+    email               String    @unique
+    password            String
+    verifyCode          Int
+    verifyCodeExp       DateTime
+    forgotPasswordToken String?
+    forgotPasswordExp   DateTime?
+    isVerified          Boolean   @default(false)
+    reviews             Review[]
 }
 
 model Review {
