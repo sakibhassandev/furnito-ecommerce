@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       new ApiResponse(
         200,
         true,
-        {},
+        user,
         "New verification code sent successfully to your email."
       ),
       {

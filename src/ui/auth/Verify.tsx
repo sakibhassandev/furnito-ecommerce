@@ -42,7 +42,6 @@ export const Verify = () => {
         `/api/verify?email=${params.get("email")}`,
         { otp: submittedCode }
       );
-      console.log(response);
       toast.success(
         `Hey, ${response.data.data.name}. your account has been verified!`,
         {
@@ -123,6 +122,29 @@ export const Verify = () => {
     const newIndex = Math.min(digits.length, 5);
     setActiveInput(newIndex);
     inputRefs.current[newIndex]?.focus();
+  };
+
+  const resendVerificationCode = async () => {
+    try {
+      const response = await axios.post(
+        `/api/resend-verification-code?email=${params.get("email")}`
+      );
+      toast.success(
+        `Hey, ${response.data.data.name}. new verification has been sent to you email!`,
+        {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "light",
+        }
+      );
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiError>;
+      toast.error(axiosError.response?.data.message || "Something went wrong", {
+        position: "top-center",
+        autoClose: 2000,
+        theme: "light",
+      });
+    }
   };
 
   return (
@@ -213,6 +235,7 @@ export const Verify = () => {
                       Didn&apos;t receive code?
                     </p>
                     <button
+                      onClick={resendVerificationCode}
                       type="button"
                       className="text-[#f50963] text-sm hover:text-[#03041c] ease-out duration-300 font-semibold"
                     >
