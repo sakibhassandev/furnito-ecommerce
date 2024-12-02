@@ -1,7 +1,11 @@
 "use client";
 
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { contactSchema } from "@/schemas/contactSchema";
+import { LuLoader2 } from "react-icons/lu";
 
 const ContactForm = () => {
   // Form & Error States
@@ -11,10 +15,12 @@ const ContactForm = () => {
     formState: { errors, isSubmitting },
     reset,
     getValues,
-  } = useForm();
+  } = useForm<z.infer<typeof contactSchema>>({
+    resolver: zodResolver(contactSchema),
+  });
 
   // Submit Handler
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async (data: z.infer<typeof contactSchema>) => {
     // TODO: Send data to backend also make this server client
     // ...
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -37,7 +43,7 @@ const ContactForm = () => {
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
           <div className="name-input">
             <input
-              {...register("name", { required: "Name is required" })}
+              {...register("name")}
               type="text"
               name="name"
               id="name"
@@ -50,13 +56,7 @@ const ContactForm = () => {
           </div>
           <div className="email-input">
             <input
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                  message: "Email must be a valid email",
-                },
-              })}
+              {...register("email")}
               type="email"
               name="email"
               id="email"
@@ -88,7 +88,7 @@ const ContactForm = () => {
           </div>
           <div className="subject-input">
             <input
-              {...register("subject", { required: "Subject is required" })}
+              {...register("subject")}
               type="text"
               name="subject"
               id="subject"
@@ -102,13 +102,7 @@ const ContactForm = () => {
           <div className="md:col-span-2">
             <div className="message-input">
               <textarea
-                {...register("message", {
-                  required: "Message is required",
-                  minLength: {
-                    value: 20,
-                    message: "Message must be at least 20 characters",
-                  },
-                })}
+                {...register("message")}
                 name="message"
                 id="message"
                 className="resize-none focus:border-[#f50963] focus:bg-white ease-linear duration-300 p-[23px_25px] h-40 w-full bg-[#f5f5f8] border border-[#f5f5f8] outline-none text-[#03041c]"
@@ -123,9 +117,16 @@ const ContactForm = () => {
             <button
               disabled={isSubmitting}
               type="submit"
-              className="disabled:opacity-50 p-[12px_35px] sm:p-[14px_47px] bg-[#f50963] cursor-pointer text-base text-white rounded hover:bg-[#03041c] ease-linear duration-300"
+              className="relative disabled:opacity-50 p-[12px_35px] sm:p-[14px_47px] bg-[#f50963] cursor-pointer text-base text-white rounded hover:bg-[#03041c] ease-linear duration-300"
             >
-              Send Message
+              {isSubmitting ? (
+                <>
+                  <LuLoader2 className="animate-spin absolute left-3 top-[23%] w-7 h-7" />{" "}
+                  Sending Message
+                </>
+              ) : (
+                "Send Message"
+              )}
             </button>
           </div>
         </div>
