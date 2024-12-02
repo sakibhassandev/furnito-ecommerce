@@ -43,7 +43,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExp = new Date(Date.now() + 1000 * 60 * 60 * 3);
 
     await prisma.user.update({

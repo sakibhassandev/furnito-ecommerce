@@ -382,7 +382,7 @@ export const Register = () => {
                       >
                         {isSubmitting ? (
                           <>
-                            <LuLoader2 className="animate-spin absolute left-[35%] top-1/4 w-7 h-7" />{" "}
+                            <LuLoader2 className="animate-spin absolute left-[33%] top-1/4 w-7 h-7" />{" "}
                             Signing up
                           </>
                         ) : (

@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const verifyCode = Math.floor(100000 + Math.random() * 900000);
+    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
 
     const bcryptSalt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, bcryptSalt);

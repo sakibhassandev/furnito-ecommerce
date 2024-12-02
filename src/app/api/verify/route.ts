@@ -6,7 +6,6 @@ export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const email = searchParams.get("email");
-
     const { otp } = await request.json();
 
     if (!email) {
@@ -27,6 +26,7 @@ export async function POST(request: Request) {
       },
       select: {
         id: true,
+        name: true,
         email: true,
         verifyCode: true,
         verifyCodeExp: true,
@@ -42,6 +42,8 @@ export async function POST(request: Request) {
         }
       );
     }
+
+    console.log(user.verifyCode, otp);
 
     if (user.isVerified) {
       return Response.json(new ApiError(400, false, "User already verified."), {
@@ -79,7 +81,7 @@ export async function POST(request: Request) {
     });
 
     return Response.json(
-      new ApiResponse(200, true, {}, "User verified Successfully."),
+      new ApiResponse(200, true, user, "User verified Successfully."),
       {
         status: 200,
       }

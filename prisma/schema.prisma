@@ -18,7 +18,7 @@ model User {
     name                String
     email               String    @unique
     password            String
-    verifyCode          Int?
+    verifyCode          String?
     verifyCodeExp       DateTime?
     forgotPasswordToken String?
     forgotPasswordExp   DateTime?

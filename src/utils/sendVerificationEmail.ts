@@ -5,7 +5,7 @@ import { ApiResponse } from "@/utils/ApiResponse";
 export async function sendVerificationEmail(
   email: string,
   name: string,
-  verifyCode: number
+  verifyCode: string
 ): Promise<ApiResponse> {
   try {
     await resend.emails.send({

@@ -12,7 +12,7 @@ import {
 
 interface VerificationEmailProps {
   name: string;
-  otp: number;
+  otp: string;
   email: string;
 }
 
