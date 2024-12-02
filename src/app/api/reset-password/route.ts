@@ -80,7 +80,7 @@ export async function POST(request: Request) {
     });
 
     return Response.json(
-      new ApiResponse(200, true, "Password reset successfully."),
+      new ApiResponse(200, true, {}, "Password reset successfully."),
       {
         status: 200,
       }

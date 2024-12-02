@@ -15,7 +15,7 @@ export async function POST() {
     (await cookies()).delete("token");
 
     return Response.json(
-      new ApiResponse(200, true, "User logged out successfully"),
+      new ApiResponse(200, true, {}, "User logged out successfully"),
       { status: 200 }
     );
   } catch (error) {

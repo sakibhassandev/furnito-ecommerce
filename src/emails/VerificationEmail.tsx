@@ -41,9 +41,8 @@ export default function VerificationEmail({
         <Row>
           <Heading as="h2">Hey {name},</Heading>
           <Text>
-            Thank you for registering. Please use the following verification
-            code to confirm your account. This code will be valid only for 3
-            hours.
+            Thank you for joining us. Please use the following verification code
+            to confirm your account. This code will be valid only for 3 hours.
           </Text>
         </Row>
         <Row>
@@ -60,7 +59,7 @@ export default function VerificationEmail({
         </Row>
         <Row>
           <Button
-            href={`http://localhost:3000/verify/${email}`} //Todo: Change this with the actual URL
+            href={`http://localhost:3000/verify?email=${email}`} //Todo: Change this with the actual URL
             style={{
               color: "white",
               backgroundColor: "#B88E2F",
@@ -70,6 +69,12 @@ export default function VerificationEmail({
           >
             Verify here
           </Button>
+        </Row>
+        <Row>
+          <Text>
+            If you did not request a verification code, please ignore this email
+            or contact support if you have questions.
+          </Text>
         </Row>
       </Section>
     </Html>
