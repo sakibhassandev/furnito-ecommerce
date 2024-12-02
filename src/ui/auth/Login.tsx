@@ -2,12 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { FieldValues, useForm } from "react-hook-form";
-import { LuEye } from "react-icons/lu";
+import { useForm } from "react-hook-form";
+import { LuEye, LuLoader2 } from "react-icons/lu";
 import { AuthParticles } from "./AuthParticles";
 import { toast } from "react-toastify";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { loginSchema } from "@/schemas/loginSchema";
+import axios, { AxiosError } from "axios";
+import { ApiError } from "@/utils/ApiError";
+import { useRouter } from "next/navigation";
 
 export const Login = () => {
+  const router = useRouter();
   const [isPasswordShow, setIsPasswordShow] = useState(false);
 
   // Form & Error States
@@ -16,23 +23,28 @@ export const Login = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
-  } = useForm();
+  } = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+  });
 
   // Submit Handler
-  const onSubmit = async (data: FieldValues) => {
-    // TODO: Send data to backend also make this server client
-    // ...
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    toast.success(
-      `Hey there, ${getValues("email").split("@")[0]}. Welcome back!`,
-      {
+  const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+    try {
+      const response = await axios.post("/api/login", data);
+      toast.success(`Hey, ${response.data.data.name}. Welcome back!`, {
         position: "top-center",
         autoClose: 2000,
         theme: "light",
-      }
-    );
-    console.log(data);
+      });
+      router.push("/");
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiError>;
+      toast.error(axiosError.response?.data.message || "Something went wrong", {
+        position: "top-center",
+        autoClose: 2000,
+        theme: "light",
+      });
+    }
     reset();
   };
 
@@ -58,13 +70,7 @@ export const Login = () => {
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            {...register("email", {
-                              required: "Please enter an email",
-                              pattern: {
-                                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                                message: "Please enter a valid email",
-                              },
-                            })}
+                            {...register("email")}
                             type="email"
                             id="email"
                             name="email"
@@ -103,14 +109,7 @@ export const Login = () => {
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            {...register("password", {
-                              required: "Please enter password",
-                              minLength: {
-                                value: 6,
-                                message:
-                                  "Password must be at least 6 characters",
-                              },
-                            })}
+                            {...register("password")}
                             type={isPasswordShow ? "text" : "password"}
                             name="password"
                             id="password"
@@ -267,7 +266,14 @@ export const Login = () => {
                         disabled={isSubmitting}
                         className="disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
                       >
-                        {isSubmitting ? "Signing In..." : "Sign In"}
+                        {isSubmitting ? (
+                          <>
+                            <LuLoader2 className="animate-spin absolute left-[35%] top-1/4 w-7 h-7" />{" "}
+                            Signing In
+                          </>
+                        ) : (
+                          "Sign In"
+                        )}
                       </button>
                     </div>
                   </form>

@@ -60,7 +60,9 @@ export async function POST(request: Request) {
     });
 
     user.password = "";
-    return Response.json(new ApiResponse(200, true, user, "User logged in"));
+    return Response.json(
+      new ApiResponse(200, true, user, "Your are logged in")
+    );
   } catch (error) {
     console.log("Error login user", error);
     return Response.json(new ApiError(500, false, "Error login user"), {
