@@ -39,10 +39,12 @@ export async function POST(request: Request) {
       },
       select: {
         id: true,
+        name: true,
         email: true,
         forgotPasswordToken: true,
         forgotPasswordExp: true,
         isVerified: true,
+        password: true,
       },
     });
 
@@ -52,6 +54,18 @@ export async function POST(request: Request) {
         {
           status: 400,
         }
+      );
+    }
+
+    const isPasswordMatch = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    if (!isPasswordMatch) {
+      return Response.json(
+        new ApiError(400, false, "Current password is incorrect."),
+        { status: 400 }
       );
     }
 
@@ -80,7 +94,7 @@ export async function POST(request: Request) {
     });
 
     return Response.json(
-      new ApiResponse(200, true, {}, "Password reset successfully."),
+      new ApiResponse(200, true, user, "Password reset successfully."),
       {
         status: 200,
       }

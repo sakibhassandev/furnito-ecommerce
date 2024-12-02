@@ -2,8 +2,14 @@
 
 import Link from "next/link";
 import { AuthParticles } from "./AuthParticles";
-import { FieldValues, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { forgotPasswordSchema } from "@/schemas/forgotPasswordSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import axios, { AxiosError } from "axios";
+import { LuLoader2 } from "react-icons/lu";
+import { ApiError } from "@/utils/ApiError";
 
 export const Forgot = () => {
   // Form & Error States
@@ -12,25 +18,32 @@ export const Forgot = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues,
-  } = useForm();
+  } = useForm<z.infer<typeof forgotPasswordSchema>>({
+    resolver: zodResolver(forgotPasswordSchema),
+  });
 
   // Submit Handler
-  const onSubmit = async (data: FieldValues) => {
-    // TODO: Send data to backend also make this server client
-    // ...
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    toast.success(
-      `Hey there, ${getValues(
-        "email"
-      )}. A reset link has been sent to your email.`,
-      {
+  const onSubmit = async (data: z.infer<typeof forgotPasswordSchema>) => {
+    try {
+      const response = await axios.post("/api/forgot-password", {
+        email: data.email,
+      });
+      toast.success(
+        `Hey, ${response.data.data.name}. Check your email for password reset link!`,
+        {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "light",
+        }
+      );
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiError>;
+      toast.error(axiosError.response?.data.message || "Something went wrong", {
         position: "top-center",
         autoClose: 2000,
         theme: "light",
-      }
-    );
-    console.log(data);
+      });
+    }
     reset();
   };
 
@@ -56,13 +69,7 @@ export const Forgot = () => {
                       <div className="relative mb-5 input_item">
                         <div className="relative input">
                           <input
-                            {...register("email", {
-                              required: "Email is required",
-                              pattern: {
-                                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                                message: "Email must be a valid email",
-                              },
-                            })}
+                            {...register("email")}
                             type="email"
                             id="email"
                             name="email"
@@ -105,9 +112,16 @@ export const Forgot = () => {
                       <button
                         disabled={isSubmitting}
                         type="submit"
-                        className="disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
+                        className="relative disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
                       >
-                        {isSubmitting ? "Sending Request..." : "Send Request"}
+                        {isSubmitting ? (
+                          <>
+                            <LuLoader2 className="animate-spin absolute left-[28%] top-1/4 w-7 h-7" />{" "}
+                            Sending Request
+                          </>
+                        ) : (
+                          "Send Request"
+                        )}
                       </button>
                     </div>
                   </form>
