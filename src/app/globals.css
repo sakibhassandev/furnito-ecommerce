@@ -23,6 +23,10 @@
   transform: translateX(calc(100% + 80px));
 }
 
+.service-item-hover {
+  transition: all 0.3s cubic-bezier(0.21, 0.6, 0.44, 2.18);
+}
+
 @media (min-width: 576px) {
   .b-container {
     max-width: 540px !important;
