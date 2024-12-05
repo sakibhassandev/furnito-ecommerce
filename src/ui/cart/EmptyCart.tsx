@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export const EmptyCart = ({ name }: { name: string }) => {
   return (
-    <div className="empty-card text-center mt-[150px]">
+    <div className="empty-card text-center my-20">
       <Image
         src="/assets/images/empty-cart.webp"
         alt="empty-cart"

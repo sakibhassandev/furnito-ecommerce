@@ -72,7 +72,7 @@ export const MiniCart = () => {
             )}
           </div>
 
-          <div className="checkout p-[20px_20px_85px] bg-white border-t-2 border-[#eaeaef]">
+          <div className="checkout p-[20px_20px_45px] bg-white border-t-2 border-[#eaeaef]">
             <div className="mb-7">
               <h4 className="inline-block text-lg font-medium">Subtotal:</h4>
               <span className="text-[#B88E2F] font-semibold text-xl float-right">
