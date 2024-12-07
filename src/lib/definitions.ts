@@ -48,3 +48,8 @@ export type CommonCartSectionProps = {
   }) => PayloadAction<{ id: CartState["id"] }>;
   bottomSec?: React.ReactNode;
 };
+
+export type FaqItem = {
+  question: string;
+  answer: string;
+};

@@ -4,6 +4,8 @@ import { InfoHighlights } from "@/ui/common/InfoHighlights";
 import { AboutCarousel } from "@/ui/about/AboutCarousel";
 import { ServicesItem } from "@/ui/about/ServicesItem";
 import OurAwards from "@/ui/about/OurAwards";
+import GetInTouchSection from "@/ui/about/GetInTouch";
+import { OurTeamCarousel } from "@/ui/about/OurTeamCarousel";
 
 export const metadata: Metadata = {
   title: "About US",
@@ -86,6 +88,8 @@ const About = () => {
         </div>
         <AboutCarousel slides={carouselItems} />
         <OurAwards />
+        <GetInTouchSection />
+        <OurTeamCarousel />
         <InfoHighlights />
       </section>
     </main>
