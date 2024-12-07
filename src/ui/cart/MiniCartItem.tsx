@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { removeCartItem } from "@/store/slices/cartSlice";
 import { toast } from "react-toastify";
 import { CartState } from "@/lib/definitions";
+import { X } from "lucide-react";
 
 export const MiniCartItem = ({ name, price, quantity, img, id }: CartState) => {
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ export const MiniCartItem = ({ name, price, quantity, img, id }: CartState) => {
         }}
       >
         {
-          <IoClose className="text-[#525258] hover:text-[#B88E2F] ease-out duration-300" />
+          <X className="w-5 h-5 text-[#525258] hover:text-[#B88E2F] ease-out duration-300" />
         }
       </button>
     </div>

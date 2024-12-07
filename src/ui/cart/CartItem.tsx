@@ -1,6 +1,6 @@
 import { CartState, CommonCartSectionProps } from "@/lib/definitions";
+import { X } from "lucide-react";
 import Image from "next/image";
-import { IoClose } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -126,7 +126,7 @@ export const CartItem = ({
             });
           }}
         >
-          <IoClose className="text-xl" />
+          <X className="text-xl" />
         </button>
       </td>
     </tr>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { LuEye, LuLoader2 } from "react-icons/lu";
+import { Eye, Loader2 } from "lucide-react";
 import { AuthParticles } from "./AuthParticles";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -287,7 +287,7 @@ export const ResetPassword = () => {
                               />
                             </svg>
                           </span>
-                          <LuEye
+                          <Eye
                             onClick={() =>
                               setIsConfirmPasswordShow(!isConfirmPasswordShow)
                             }
@@ -309,7 +309,7 @@ export const ResetPassword = () => {
                       >
                         {isSubmitting ? (
                           <>
-                            <LuLoader2 className="animate-spin absolute left-[26%] top-1/4 w-7 h-7" />{" "}
+                            <Loader2 className="animate-spin absolute left-[26%] top-1/4 w-7 h-7" />{" "}
                             Resetting Password
                           </>
                         ) : (

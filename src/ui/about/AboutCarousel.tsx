@@ -1,10 +1,10 @@
 "use client";
 
 import useEmblaCarousel from "embla-carousel-react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { cn } from "@/utils/cn";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CarouselProps {
   slides: {
@@ -64,14 +64,14 @@ export function AboutCarousel({ slides }: CarouselProps) {
         onClick={scrollPrev}
         className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/30 backdrop-blur-sm hover:bg-white/40 transition-colors"
       >
-        <FaChevronLeft className="w-6 h-6 text-white" />
+        <ChevronLeft className="w-6 h-6 text-white" />
       </button>
 
       <button
         onClick={scrollNext}
         className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/30 backdrop-blur-sm hover:bg-white/40 transition-colors"
       >
-        <FaChevronRight className="w-6 h-6 text-white" />
+        <ChevronRight className="w-6 h-6 text-white" />
       </button>
 
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">

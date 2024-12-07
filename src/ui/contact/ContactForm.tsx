@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema } from "@/schemas/contactSchema";
-import { LuLoader2 } from "react-icons/lu";
+import { Loader2 } from "lucide-react";
 
 const ContactForm = () => {
   // Form & Error States
@@ -121,7 +121,7 @@ const ContactForm = () => {
             >
               {isSubmitting ? (
                 <>
-                  <LuLoader2 className="animate-spin absolute left-3 top-[23%] w-7 h-7" />{" "}
+                  <Loader2 className="animate-spin absolute left-3 top-[23%] w-7 h-7" />{" "}
                   Sending Message
                 </>
               ) : (

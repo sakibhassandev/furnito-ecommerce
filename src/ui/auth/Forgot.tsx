@@ -8,8 +8,8 @@ import { forgotPasswordSchema } from "@/schemas/forgotPasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import axios, { AxiosError } from "axios";
-import { LuLoader2 } from "react-icons/lu";
 import { ApiError } from "@/utils/ApiError";
+import { Loader2 } from "lucide-react";
 
 export const Forgot = () => {
   // Form & Error States
@@ -116,7 +116,7 @@ export const Forgot = () => {
                       >
                         {isSubmitting ? (
                           <>
-                            <LuLoader2 className="animate-spin absolute left-[28%] top-1/4 w-7 h-7" />{" "}
+                            <Loader2 className="animate-spin absolute left-[28%] top-1/4 w-7 h-7" />{" "}
                             Sending Request
                           </>
                         ) : (

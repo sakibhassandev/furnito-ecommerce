@@ -3,6 +3,7 @@ import { SectionCommonHeader } from "@/ui/common/SectionCommonHeader";
 import { InfoHighlights } from "@/ui/common/InfoHighlights";
 import { AboutCarousel } from "@/ui/about/AboutCarousel";
 import { ServicesItem } from "@/ui/about/ServicesItem";
+import OurAwards from "@/ui/about/OurAwards";
 
 export const metadata: Metadata = {
   title: "About US",
@@ -84,6 +85,7 @@ const About = () => {
           </div>
         </div>
         <AboutCarousel slides={carouselItems} />
+        <OurAwards />
         <InfoHighlights />
       </section>
     </main>

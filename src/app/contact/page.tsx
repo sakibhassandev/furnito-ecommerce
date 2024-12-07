@@ -5,10 +5,7 @@ import { InfoHighlights } from "@/ui/common/InfoHighlights";
 import ContactForm from "@/ui/contact/ContactForm";
 
 // Social Media Icons
-import { FaFacebookF } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa";
+import { Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact US",
@@ -107,22 +104,22 @@ const Contact = () => {
                     <ul className="flex justify-center gap-4 mt-2 text-lg text-[#b9b9bf]">
                       <li>
                         <a href="#">
-                          <FaFacebookF className="hover:text-[#f50963] ease-linear duration-300" />
+                          <Facebook className="w-5 h-5 hover:text-[#f50963] ease-linear duration-300" />
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <FaTwitter className="hover:text-[#f50963] ease-linear duration-300" />
+                          <Twitter className="w-5 h-5 hover:text-[#f50963] ease-linear duration-300" />
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <FaLinkedin className="hover:text-[#f50963] ease-linear duration-300" />
+                          <Linkedin className="w-5 h-5 hover:text-[#f50963] ease-linear duration-300" />
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <FaYoutube className="hover:text-[#f50963] ease-linear duration-300" />
+                          <Youtube className="w-5 h-5 hover:text-[#f50963] ease-linear duration-300" />
                         </a>
                       </li>
                     </ul>

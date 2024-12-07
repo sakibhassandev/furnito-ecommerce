@@ -9,11 +9,7 @@ import { RootState } from "@/store";
 import { ProductType } from "@/lib/definitions";
 
 // Icons
-import { FaLink } from "react-icons/fa6";
-import { FaFacebookF } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { FaYoutube } from "react-icons/fa";
+import { Facebook, Linkedin, Twitter, Youtube, Link } from "lucide-react";
 
 export const QuickView = ({
   quickViewProduct,
@@ -433,7 +429,7 @@ export const QuickView = ({
                         </span>
                       </button>
                       <button className="relative group/product-detail flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-12 h-12">
-                        <FaLink className="text-2xl" />
+                        <Link className="text-2xl" />
                         <span className="absolute group-hover/product-detail:-top-5 opacity-0 invisible group-hover/product-detail:visible group-hover/product-detail:opacity-100 ease-out duration-300 -translate-y-1/2 top-0 w-max left-1/2 -translate-x-1/2 bg-[#03041c] text-white py-1 px-2 text-xs z-10 inline-block leading-none after:content-[''] after:absolute after:bg-[#03041c] after:-bottom-1 after:-z-30 after:left-1/2 after:-translate-x-1/2 after:rotate-45 after:h-2 after:w-2 ">
                           Product Details
                         </span>
@@ -490,28 +486,28 @@ export const QuickView = ({
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <FaFacebookF className="hover:text-[#f50963] ease-linear duration-300" />
+                      <Facebook className="hover:text-[#f50963] ease-linear duration-300" />
                     </a>
                     <a
                       href="http://twitter.com"
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <FaTwitter className="hover:text-[#f50963] ease-linear duration-300" />
+                      <Twitter className="hover:text-[#f50963] ease-linear duration-300" />
                     </a>
                     <a
                       href="https://www.linkedin.com/"
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <FaLinkedin className="hover:text-[#f50963] ease-linear duration-300" />
+                      <Linkedin className="hover:text-[#f50963] ease-linear duration-300" />
                     </a>
                     <a
                       href="https://www.youtube.com/"
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <FaYoutube className="hover:text-[#f50963] ease-linear duration-300" />
+                      <Youtube className="hover:text-[#f50963] ease-linear duration-300" />
                     </a>
                   </div>
                 </div>

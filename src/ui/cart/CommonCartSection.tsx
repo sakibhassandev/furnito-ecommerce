@@ -1,7 +1,7 @@
-import { LiaReplySolid } from "react-icons/lia";
 import { CartItem } from "@/ui/cart/CartItem";
 import { EmptyCart } from "@/ui/cart/EmptyCart";
 import { CommonCartSectionProps } from "@/lib/definitions";
+import { Reply } from "lucide-react";
 
 export const CommonCartSection = ({
   productList,
@@ -21,7 +21,7 @@ export const CommonCartSection = ({
           <div className="top rounded mb-8 p-[17px_37px] bg-[#F9F1E7]">
             <p className="hover:text-[#f50963] w-max ease-out duration-300">
               <a href="/shop" className="flex items-center gap-2">
-                Continue Shopping <LiaReplySolid className="text-xl" />
+                Continue Shopping <Reply className="text-xl" />
               </a>
             </p>
           </div>

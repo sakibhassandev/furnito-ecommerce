@@ -1,5 +1,5 @@
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
-import { GoArrowUpRight } from "react-icons/go";
 
 type ServiceItemProps = {
   icon: string;
@@ -26,7 +26,7 @@ export const ServicesItem = ({ servicesItems }: ServicesItemsProps) => {
           height={50}
         />
         <a href="">
-          <GoArrowUpRight className="text-3xl hover:text-[#f50963] ease-linear duration-200" />
+          <ArrowUpRight className="text-3xl hover:text-[#f50963] ease-linear duration-200" />
         </a>
       </div>
       <div className="bottom">

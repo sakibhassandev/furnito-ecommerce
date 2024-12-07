@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { IoClose } from "react-icons/io5";
 import { MiniCartItem } from "@/ui/cart/MiniCartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { isMiniCartOpen } from "@/store/slices/miniCartSlice";
 import { EmptyCart } from "@/ui/cart/EmptyCart";
 import { RootState } from "@/store";
 import { CartState } from "@/lib/definitions";
+import { X } from "lucide-react";
 
 export const MiniCart = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export const MiniCart = () => {
                   onClick={() => dispatch(isMiniCartOpen("closeMiniCart"))}
                   className="block space-y-1 duration-200 ease-linear cursor-pointer hover:rotate-90"
                 >
-                  {<IoClose className="text-2xl" />}
+                  {<X className="text-2xl" />}
                 </button>
               </div>
             </div>

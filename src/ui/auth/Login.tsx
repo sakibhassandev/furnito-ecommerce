@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { LuEye, LuLoader2 } from "react-icons/lu";
 import { AuthParticles } from "./AuthParticles";
 import { toast } from "react-toastify";
 import * as z from "zod";
@@ -12,6 +11,7 @@ import { loginSchema } from "@/schemas/loginSchema";
 import axios, { AxiosError } from "axios";
 import { ApiError } from "@/utils/ApiError";
 import { useRouter } from "next/navigation";
+import { Eye, Loader2 } from "lucide-react";
 
 export const Login = () => {
   const router = useRouter();
@@ -204,7 +204,7 @@ export const Login = () => {
                               />
                             </svg>
                           </span>
-                          <LuEye
+                          <Eye
                             onClick={() => setIsPasswordShow(!isPasswordShow)}
                             className={`${
                               isPasswordShow ? "" : "hidden"
@@ -268,7 +268,7 @@ export const Login = () => {
                       >
                         {isSubmitting ? (
                           <>
-                            <LuLoader2 className="animate-spin absolute left-[35%] top-1/4 w-7 h-7" />{" "}
+                            <Loader2 className="animate-spin absolute left-[35%] top-1/4 w-7 h-7" />{" "}
                             Signing In
                           </>
                         ) : (
