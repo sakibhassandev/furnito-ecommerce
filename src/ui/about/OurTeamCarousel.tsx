@@ -69,12 +69,12 @@ export const OurTeamCarousel = () => {
         >
           <div>
             <h2 className="text-4xl md:text-5xl font-bold mb-2 text-center md:text-left">
-              One <span className="text-pink-500">Team</span>,
+              One <span className="text-amber-400">Team</span>,
               <br />
               Many{" "}
               <span className="relative">
                 Talents
-                <span className="absolute bottom-2 left-0 w-full h-1 bg-pink-500"></span>
+                <span className="absolute bottom-2 left-0 w-full h-1 bg-amber-400"></span>
               </span>
             </h2>
           </div>
