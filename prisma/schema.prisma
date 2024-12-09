@@ -30,7 +30,7 @@ model Review {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     name      String
     message   String
-    rating    Int
+    rating    String
     authorId  String   @db.ObjectId
     author    User     @relation(fields: [authorId], references: [id])
     productId String   @db.ObjectId

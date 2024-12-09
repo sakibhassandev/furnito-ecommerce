@@ -91,11 +91,13 @@ export const Product = ({
             <button
               onClick={() => {
                 dispatch(isQuickViewOpen("openQuickView"));
-                const quickViewProduct = productLists.find(
+                const quickViewProduct = productLists?.find(
                   (product) => product.id === id
                 );
                 if (quickViewProduct) {
-                  setQuickViewProduct(quickViewProduct);
+                  if (setQuickViewProduct) {
+                    setQuickViewProduct(quickViewProduct);
+                  }
                 }
               }}
               className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-9 h-9"

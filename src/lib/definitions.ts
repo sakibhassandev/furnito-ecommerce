@@ -29,7 +29,7 @@ export type ProductType = {
   hasDiscount?: number;
   sizes: string[];
   colors: { id: string; name: string; image: string }[];
-  images: { [key: string]: string[] };
+  images: { color: string; url: string[] }[];
   price: number;
 };
 
