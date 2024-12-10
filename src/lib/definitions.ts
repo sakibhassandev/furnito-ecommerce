@@ -31,6 +31,7 @@ export type ProductType = {
   colors: { id: string; name: string; image: string }[];
   images: { color: string; url: string[] }[];
   price: number;
+  updatedAt?: string;
 };
 
 export type CommonCartSectionProps = {

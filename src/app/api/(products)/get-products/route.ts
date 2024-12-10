@@ -2,15 +2,9 @@ import { prisma } from "@/lib/prisma";
 import { ApiError } from "@/utils/ApiError";
 import { ApiResponse } from "@/utils/ApiResponse";
 
-export async function POST(request: Request) {
+export async function POST() {
   try {
-    const { page = 1 } = await request.json();
-    const take = 12;
-    const skip = (page - 1) * take;
-
     const products = await prisma.product.findMany({
-      take,
-      skip,
       include: {
         images: {
           select: {
