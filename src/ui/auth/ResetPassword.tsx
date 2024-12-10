@@ -175,7 +175,7 @@ export const ResetPassword = () => {
                               />
                             </svg>
                           </span>
-                          <LuEye
+                          <Eye
                             onClick={() => setIsPasswordShow(!isPasswordShow)}
                             className={`${
                               isPasswordShow ? "" : "hidden"

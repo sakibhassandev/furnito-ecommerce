@@ -89,6 +89,8 @@ export const QuickView = ({
       setSizesIndex(0);
       setQuantity(1);
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isQuickView]);
 
   return (
