@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { QuickView } from "@/ui/product/QuickView";
 import { TopBar } from "../shop/TopBar";
 import { Pagination } from "../shop/Pagination";
-import { SortOption, sortProducts } from "@/utils/ProductSorting";
+import { SortOption, sortProducts } from "@/ui/shop/ProductSorting";
 
 const ITEMS_PER_PAGE = 12;
 

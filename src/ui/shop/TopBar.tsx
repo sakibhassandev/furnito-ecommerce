@@ -1,4 +1,4 @@
-import { SORT_OPTIONS, SortOption } from "@/utils/ProductSorting";
+import { SORT_OPTIONS, SortOption } from "@/ui/shop/ProductSorting";
 import { motion, AnimatePresence } from "framer-motion";
 import { SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
