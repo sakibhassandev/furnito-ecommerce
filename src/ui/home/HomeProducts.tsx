@@ -1,6 +1,7 @@
 "use client";
 
 import { HomePageProducts } from "@/ui/home/HomePageProducts";
+import Link from "next/link";
 
 const HomeProducts = () => {
   return (
@@ -9,12 +10,12 @@ const HomeProducts = () => {
         Our Product
       </h2>
       <HomePageProducts />
-      <a
+      <Link
         href="/shop"
         className="py-3 text-[#B88E2F] font-semibold hover:scale-105 transition-all hover:bg-[#B88E2F] hover:text-white ease-in-out rounded max-md:text-sm duration-200 px-12 md:px-16 block w-max mx-auto my-8 border border-[#B88E2F]"
       >
         Show More
-      </a>
+      </Link>
     </section>
   );
 };

@@ -32,7 +32,6 @@ export const ResetPassword = () => {
 
   // Submit Handler
   const onSubmit = async (data: z.infer<typeof ResetPasswordSchema>) => {
-    console.log(data); // TODO: REMOVE
     try {
       const response = await axios.post(
         `/api/reset-password?token=${params.get("token")}`,

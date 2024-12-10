@@ -91,9 +91,9 @@ export const Product = ({
             <button
               onClick={() => {
                 dispatch(isQuickViewOpen("openQuickView"));
-                const quickViewProduct = productLists?.find(
-                  (product) => product.id === id
-                );
+                const quickViewProduct = productLists?.find((product) => {
+                  return product.id === id;
+                });
                 if (quickViewProduct) {
                   if (setQuickViewProduct) {
                     setQuickViewProduct(quickViewProduct);

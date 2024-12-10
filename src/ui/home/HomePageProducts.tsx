@@ -1,12 +1,25 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { Product } from "../product/Product";
 import { QuickView } from "@/ui/product/QuickView";
-import { RootState } from "@/store";
 import { ProductType } from "@/lib/definitions";
+import axios from "axios";
 
 export const HomePageProducts = () => {
-  const productLists = useSelector((state: RootState) => state.products);
+  const [productLists, setProductLists] = useState<ProductType[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("/api/get-products", {
+          page: 1,
+        });
+        setProductLists(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const [quickViewProduct, setQuickViewProduct] = useState<ProductType | null>(
     null
   );
@@ -21,11 +34,11 @@ export const HomePageProducts = () => {
           return (
             <Product
               setQuickViewProduct={setQuickViewProduct}
-              productLists={productLists as unknown as ProductType[]}
+              productLists={productLists}
               key={product.id}
               id={product.id}
               name={product.name}
-              img={Object.values(product.images)[0][0]}
+              img={product.images[0]?.url[0]}
               price={product.price}
               hasDiscount={product.hasDiscount || 0}
             />

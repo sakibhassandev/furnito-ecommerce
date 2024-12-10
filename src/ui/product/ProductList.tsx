@@ -15,7 +15,6 @@ export const ProductList = () => {
         const response = await axios.post("/api/get-products", {
           page: 1,
         });
-        console.log(response.data.data);
         setProductLists(response.data.data);
       } catch (error) {
         console.log(error);

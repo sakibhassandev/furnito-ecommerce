@@ -39,9 +39,7 @@ export const QuickView = ({
 
   let bigImage: string = "";
   if (quickViewProduct && quickViewProduct.images) {
-    bigImage = Object.values(
-      quickViewProduct.images as Record<string, string[]>
-    )[colorIndex][imgIndex];
+    bigImage = quickViewProduct.images[colorIndex].url[imgIndex];
   }
 
   // product details variables
@@ -141,40 +139,38 @@ export const QuickView = ({
                   ref={imagesRef as unknown as React.RefObject<HTMLDivElement>}
                 >
                   {quickViewProduct?.images &&
-                    Object.values(quickViewProduct.images)[colorIndex].map(
-                      (url, i) => {
-                        return (
-                          <button
-                            onClick={() => {
-                              setImgIndex(i);
-                              const imageChildren = imagesRef.current?.children;
-                              if (imageChildren) {
-                                for (let i = 0; i < imageChildren.length; i++) {
-                                  imageChildren[i].classList.add(
-                                    "after:invisible",
-                                    "after:opacity-0"
-                                  );
-                                }
-                                imageChildren[i].classList.remove(
-                                  "after:opacity-0",
-                                  "after:invisible"
+                    quickViewProduct.images[colorIndex].url.map((url, i) => {
+                      return (
+                        <button
+                          onClick={() => {
+                            setImgIndex(i);
+                            const imageChildren = imagesRef.current?.children;
+                            if (imageChildren) {
+                              for (let i = 0; i < imageChildren.length; i++) {
+                                imageChildren[i].classList.add(
+                                  "after:invisible",
+                                  "after:opacity-0"
                                 );
                               }
-                            }}
-                            className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#f50963] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-24 lg:h-24`}
-                            key={i}
-                          >
-                            <Image
-                              src={url}
-                              alt={`${name} image`}
-                              width={1200}
-                              height={900}
-                              className="w-full h-full object-contain shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] p-2"
-                            />
-                          </button>
-                        );
-                      }
-                    )}
+                              imageChildren[i].classList.remove(
+                                "after:opacity-0",
+                                "after:invisible"
+                              );
+                            }
+                          }}
+                          className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#f50963] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-24 lg:h-24`}
+                          key={i}
+                        >
+                          <Image
+                            src={url}
+                            alt={`${name} image`}
+                            width={1200}
+                            height={900}
+                            className="w-full h-full object-contain shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] p-2"
+                          />
+                        </button>
+                      );
+                    })}
                 </div>
               </div>
               <div className="right">
@@ -334,7 +330,7 @@ export const QuickView = ({
                           addCartItem({
                             id,
                             img: quickViewProduct?.images
-                              ? Object.values(quickViewProduct.images)[0][0]
+                              ? quickViewProduct.images[0].url[0]
                               : "",
                             name,
                             price,
@@ -393,7 +389,7 @@ export const QuickView = ({
                             addWishListItem({
                               id,
                               img: quickViewProduct?.images
-                                ? Object.values(quickViewProduct.images)[0][0]
+                                ? quickViewProduct.images[0].url[0]
                                 : "",
                               name,
                               price,
