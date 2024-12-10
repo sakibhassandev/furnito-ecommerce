@@ -1,18 +1,3 @@
-// Polyfill for generating random UUIDs
-if (!crypto.randomUUID) {
-  crypto.randomUUID = function () {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-      /[xy]/g,
-      function (c) {
-        const r =
-          (crypto.getRandomValues(new Uint8Array(1))[0] & 0x0f) >>
-          (c === "x" ? 0 : 4);
-        return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-      }
-    );
-  };
-}
-
 export const productLists = [
   {
     id: crypto.randomUUID(),
@@ -25,17 +10,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It is comfortable",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, delivery was fast.",
       },
     ],
@@ -82,17 +67,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It is comfortable",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, delivery was fast.",
       },
     ],
@@ -126,17 +111,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It is comfortable.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, delivery was fast.",
       },
     ],
@@ -177,19 +162,19 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message:
           "Just bought it. It's comfortable and fits perfectly in my bedroom.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message:
           "Using it for a year, and it's holding up really well. Love the build quality.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message:
           "Everything seems great, delivery was fast, and it looks even better in person.",
       },
@@ -237,19 +222,19 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message:
           "Just bought it. It's comfortable and the drawers slide smoothly.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message:
           "Using it for a year, and it's still in perfect condition. Great quality!",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message:
           "Everything seems great, delivery was fast, and it's very spacious.",
       },
@@ -303,17 +288,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It's comfortable and looks amazing.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year, and it's been great. Very sturdy!",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message:
           "Everything seems great, delivery was fast, and assembly was easy.",
       },
@@ -348,17 +333,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It's comfortable and stylish.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year, and it's been very sturdy.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, delivery was fast and hassle-free.",
       },
     ],
@@ -402,17 +387,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It's comfortable and adds charm to my room.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year, still as good as new. Very sturdy.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message:
           "Everything seems great, delivery was fast, and it's easy to assemble.",
       },
@@ -466,17 +451,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It's comfortable and looks great.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year, and it still looks as new.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, and the delivery was fast.",
       },
     ],
@@ -517,17 +502,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It's comfortable and stylish.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year, and it's still holding up great.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, and the delivery was fast.",
       },
     ],
@@ -568,17 +553,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It's comfortable and sleek.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year, still great for long hours.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, delivery was fast.",
       },
     ],
@@ -623,17 +608,17 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message: "Just bought it. It is comfortable and practical.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year, still sturdy and looks great.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, delivery was fast.",
       },
     ],
@@ -691,18 +676,18 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message:
           "Just bought it. It is comfortable and fits my gaming space perfectly.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year, and it holds up well.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, delivery was fast.",
       },
     ],
@@ -735,18 +720,18 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message:
           "Just bought it. It is comfortable and fits perfectly in my space.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year and it still looks new.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great, delivery was fast.",
       },
     ],
@@ -805,18 +790,18 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message:
           "Just bought it. It is comfortable and fits perfectly in my space.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year and it still looks and feels great.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great; delivery was fast.",
       },
     ],
@@ -850,18 +835,18 @@ export const productLists = [
     reviews: [
       {
         name: "Ricardo M",
-        rating: 4.5,
+        rating: "4.5",
         message:
           "Just bought it. It is comfortable and fits perfectly in my entryway.",
       },
       {
         name: "John S",
-        rating: 4.3,
+        rating: "4.3",
         message: "Using it for a year and it still looks as good as new.",
       },
       {
         name: "William S",
-        rating: 4.0,
+        rating: "4.0",
         message: "Everything seems great; delivery was fast.",
       },
     ],
