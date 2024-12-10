@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { ApiError } from "@/utils/ApiError";
 import { ApiResponse } from "@/utils/ApiResponse";
 
-export async function POST() {
+export async function GET() {
   try {
     const products = await prisma.product.findMany({
       include: {

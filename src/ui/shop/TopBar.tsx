@@ -1,6 +1,6 @@
 import { SORT_OPTIONS, SortOption } from "@/utils/ProductSorting";
 import { motion, AnimatePresence } from "framer-motion";
-import { List } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 
 type TopBarType = {
@@ -36,11 +36,9 @@ export function TopBar({
           </span>
 
           <div className="ml-auto flex items-center gap-2">
-            <div className="flex">
-              <button className={`p-2 rounded-r border`}>
-                <List className="w-4 h-4" />
-              </button>
-            </div>
+            <button className={`p-2 rounded-r border`}>
+              <SlidersHorizontal className="w-4 h-4" />
+            </button>
 
             <div className="relative">
               <button

@@ -9,9 +9,7 @@ export const HomePageProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("/api/get-products", {
-          page: 1,
-        });
+        const response = await axios.get("/api/get-products");
         setProductLists(response.data.data);
       } catch (error) {
         console.log(error);

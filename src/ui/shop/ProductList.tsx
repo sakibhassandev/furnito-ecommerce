@@ -1,8 +1,8 @@
 import { ProductType } from "@/lib/definitions";
-import { Product } from "./Product";
+import { Product } from "@/ui/product/Product";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { QuickView } from "./QuickView";
+import { QuickView } from "@/ui/product/QuickView";
 import { TopBar } from "../shop/TopBar";
 import { Pagination } from "../shop/Pagination";
 import { SortOption, sortProducts } from "@/utils/ProductSorting";
@@ -33,9 +33,7 @@ export const ProductList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post("/api/get-products", {
-          page: 1,
-        });
+        const response = await axios.get("/api/get-products");
         setProductLists(response.data.data);
       } catch (error) {
         console.log(error);

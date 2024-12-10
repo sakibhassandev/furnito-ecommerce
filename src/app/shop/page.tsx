@@ -3,7 +3,7 @@
 import StoreProvider from "@/store/StoreProvider";
 import { InfoHighlights } from "@/ui/common/InfoHighlights";
 import { SectionCommonHeader } from "@/ui/common/SectionCommonHeader";
-import { ProductList } from "@/ui/product/ProductList";
+import { ProductList } from "@/ui/shop/ProductList";
 // import { Metadata } from "next";
 
 // export const metadata: Metadata = {
