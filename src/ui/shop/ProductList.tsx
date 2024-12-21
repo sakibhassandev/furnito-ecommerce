@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { QuickView } from "@/ui/product/QuickView";
 import { TopBar } from "../shop/TopBar";
 import { Pagination } from "../shop/Pagination";
-import { SortOption, sortProducts } from "@/utils/ProductSorting";
+import { SortOption, sortProducts } from "@/ui/shop/ProductSorting";
+import ProductSkeleton from "../skeleton/ProductSkeleton";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -52,23 +53,27 @@ export const ProductList = () => {
         onSortChange={handleSortChange}
         currentSort={currentSort}
       />
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] max-sm:justify-items-center gap-10 mt-10 productContainer">
-        <QuickView quickViewProduct={quickViewProduct} />
-        {currentProducts.map((product) => {
-          return (
-            <Product
-              productLists={productLists}
-              setQuickViewProduct={setQuickViewProduct}
-              id={product.id}
-              key={product.id}
-              name={product.name}
-              img={product.images[0]?.url[0]}
-              price={product.price}
-              hasDiscount={product.hasDiscount}
-            />
-          );
-        })}
-      </div>
+      {productLists.length === 0 ? (
+        <ProductSkeleton count={12} />
+      ) : (
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] max-sm:justify-items-center gap-10 mt-10 productContainer">
+          <QuickView quickViewProduct={quickViewProduct} />
+          {currentProducts.map((product) => {
+            return (
+              <Product
+                productLists={productLists}
+                setQuickViewProduct={setQuickViewProduct}
+                id={product.id}
+                key={product.id}
+                name={product.name}
+                img={product.images[0]?.url[0]}
+                price={product.price}
+                hasDiscount={product.hasDiscount}
+              />
+            );
+          })}
+        </div>
+      )}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
