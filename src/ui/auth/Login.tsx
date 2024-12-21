@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { AuthParticles } from "./AuthParticles";
@@ -17,6 +17,15 @@ export const Login = () => {
   const router = useRouter();
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const [isRememberMe, setIsRememberMe] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const rememberMe = JSON.parse(
+        localStorage.getItem("rememberMe") || "false"
+      );
+      setIsRememberMe(!!rememberMe);
+    }
+  }, []);
 
   // Form & Error States
   const {
@@ -59,7 +68,7 @@ export const Login = () => {
     const formData = getValues();
     setIsRememberMe(!isRememberMe);
     if (typeof window !== "undefined" && window.localStorage) {
-      if (isRememberMe) {
+      if (!isRememberMe) {
         localStorage.setItem("rememberMe", JSON.stringify(formData));
       } else {
         localStorage.removeItem("rememberMe");
@@ -242,13 +251,7 @@ export const Login = () => {
                           htmlFor="lp-remember"
                         >
                           <input
-                            checked={
-                              typeof window !== "undefined" &&
-                              window.localStorage &&
-                              localStorage.getItem("rememberMe")
-                                ? true
-                                : false
-                            }
+                            checked={isRememberMe}
                             onChange={rememberMe}
                             type="checkbox"
                             className="w-5 h-5 transition-all border rounded shadow appearance-none cursor-pointer peer hover:shadow-md border-slate-300 checked:bg-slate-800 checked:border-slate-800"
