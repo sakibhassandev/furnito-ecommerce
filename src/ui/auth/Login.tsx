@@ -55,10 +55,12 @@ export const Login = () => {
   const rememberMe = () => {
     const formData = getValues();
     setIsRememberMe(!isRememberMe);
-    if (isRememberMe) {
-      localStorage.setItem("rememberMe", JSON.stringify(formData));
-    } else {
-      localStorage.removeItem("rememberMe");
+    if (typeof window !== "undefined" && window.localStorage) {
+      if (isRememberMe) {
+        localStorage.setItem("rememberMe", JSON.stringify(formData));
+      } else {
+        localStorage.removeItem("rememberMe");
+      }
     }
   };
 
