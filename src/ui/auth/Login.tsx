@@ -16,6 +16,7 @@ import { Eye, Loader2 } from "lucide-react";
 export const Login = () => {
   const router = useRouter();
   const [isPasswordShow, setIsPasswordShow] = useState(false);
+  const [isRememberMe, setIsRememberMe] = useState(false);
 
   // Form & Error States
   const {
@@ -23,8 +24,10 @@ export const Login = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    getValues,
   } = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
+    defaultValues: JSON.parse(localStorage.getItem("rememberMe") || "{}"),
   });
 
   // Submit Handler
@@ -46,6 +49,17 @@ export const Login = () => {
       });
     }
     reset();
+  };
+
+  // Remember Me
+  const rememberMe = () => {
+    const formData = getValues();
+    setIsRememberMe(!isRememberMe);
+    if (isRememberMe) {
+      localStorage.setItem("rememberMe", JSON.stringify(formData));
+    } else {
+      localStorage.removeItem("rememberMe");
+    }
   };
 
   return (
@@ -223,6 +237,10 @@ export const Login = () => {
                           htmlFor="lp-remember"
                         >
                           <input
+                            checked={
+                              localStorage.getItem("rememberMe") ? true : false
+                            }
+                            onClick={rememberMe}
                             type="checkbox"
                             className="w-5 h-5 transition-all border rounded shadow appearance-none cursor-pointer peer hover:shadow-md border-slate-300 checked:bg-slate-800 checked:border-slate-800"
                             id="lp-remember"
