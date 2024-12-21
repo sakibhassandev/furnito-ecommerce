@@ -27,7 +27,10 @@ export const Login = () => {
     getValues,
   } = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
-    defaultValues: JSON.parse(localStorage.getItem("rememberMe") || "{}"),
+    defaultValues:
+      typeof window !== "undefined" &&
+      window.localStorage &&
+      JSON.parse(localStorage.getItem("rememberMe") || "{}"),
   });
 
   // Submit Handler
