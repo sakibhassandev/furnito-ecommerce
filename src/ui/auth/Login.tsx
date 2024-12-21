@@ -240,9 +240,13 @@ export const Login = () => {
                         >
                           <input
                             checked={
-                              localStorage.getItem("rememberMe") ? true : false
+                              typeof window !== "undefined" &&
+                              window.localStorage &&
+                              localStorage.getItem("rememberMe")
+                                ? true
+                                : false
                             }
-                            onClick={rememberMe}
+                            onChange={rememberMe}
                             type="checkbox"
                             className="w-5 h-5 transition-all border rounded shadow appearance-none cursor-pointer peer hover:shadow-md border-slate-300 checked:bg-slate-800 checked:border-slate-800"
                             id="lp-remember"
