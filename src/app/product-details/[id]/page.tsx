@@ -8,6 +8,7 @@ import axios, { AxiosError } from "axios";
 import { ApiError } from "@/utils/ApiError";
 import { toast } from "react-toastify";
 import { ProductType } from "@/lib/definitions";
+import { InfoHighlights } from "@/ui/common/InfoHighlights";
 
 const ProductDetailsPage = () => {
   const [product, setProduct] = useState<ProductType>({
@@ -35,7 +36,7 @@ const ProductDetailsPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "/api/get-product?productId=" + productId
+          `/api/get-product?productId=${productId}`
         );
         setProduct(response.data.data);
       } catch (error) {
@@ -54,14 +55,13 @@ const ProductDetailsPage = () => {
     fetchData();
   }, [productId]);
 
-  console.log(product);
-
   return (
-    <div>
+    <>
       <StoreProvider>
-        <ProductDetails quickViewProduct={product} />
+        <ProductDetails singleProduct={product} />
       </StoreProvider>
-    </div>
+      <InfoHighlights />
+    </>
   );
 };
 

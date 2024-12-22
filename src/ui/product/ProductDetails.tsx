@@ -1,20 +1,18 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { isQuickViewOpen } from "@/store/slices/quickViewSlice";
 import { addCartItem } from "@/store/slices/cartSlice";
 import { addWishListItem } from "@/store/slices/wishListSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { RootState } from "@/store";
 import { ProductType } from "@/lib/definitions";
 
 // Icons
-import { Facebook, Linkedin, Twitter, Youtube, Link } from "lucide-react";
+import { Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
 
 const ProductDetails = ({
-  quickViewProduct,
+  singleProduct,
 }: {
-  quickViewProduct: ProductType | null;
+  singleProduct: ProductType | null;
 }) => {
   // Indexes
   const [imgIndex, setImgIndex] = useState(0);
@@ -28,25 +26,25 @@ const ProductDetails = ({
   const sizesRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
-  const isQuickView = useSelector((state: RootState) => state.quickView);
   const discountPrice = parseFloat(
-    (quickViewProduct?.hasDiscount
-      ? quickViewProduct.price -
-        (quickViewProduct.price * quickViewProduct.hasDiscount) / 100
+    (singleProduct?.hasDiscount
+      ? singleProduct.price -
+        (singleProduct.price * singleProduct.hasDiscount) / 100
       : 0
     ).toFixed(2)
   );
 
   let bigImage: string = "";
-  if (quickViewProduct && quickViewProduct.images) {
-    bigImage = quickViewProduct.images[colorIndex]?.url[imgIndex];
+  if (singleProduct && singleProduct.images) {
+    bigImage = singleProduct.images[colorIndex]?.url[imgIndex];
   }
 
   // product details variables
-  const { name, price, id } = quickViewProduct || {};
+  const { name, price, id } = singleProduct || {};
 
   useEffect(() => {
     if (imagesRef.current) {
+      console.log(imagesRef.current.children.length);
       for (let i = 0; i < imagesRef.current.children.length; i++) {
         imagesRef.current.children[i].classList.add(
           "after:invisible",
@@ -77,12 +75,6 @@ const ProductDetails = ({
       sizesRef.current.children[sizesIndex]?.classList.add("sizes-active");
     }
 
-    if (isQuickView) {
-      document.querySelector("body")?.classList.add("overflow-hidden");
-    } else {
-      document.querySelector("body")?.classList.remove("overflow-hidden");
-    }
-
     return () => {
       setImgIndex(0);
       setColorIndex(0);
@@ -91,53 +83,34 @@ const ProductDetails = ({
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isQuickView]);
+  }, [singleProduct]);
 
   return (
-    <div
-      className={`opacity-0 invisible -top-12 fixed left-0 z-50 flex w-full ease-out duration-300 h-full overflow-x-hidden overflow-y-auto lg:items-center`}
-    >
-      <div className="relative max-w-[1200px] mx-auto product_modal z-50">
-        <div className="relative h-screen p-10 mx-3 overflow-y-auto bg-white shadow-md modal-content">
+    <div className={`flex w-full ease-out duration-300 lg:items-center`}>
+      <div className="max-w-[1300px] mx-auto">
+        <div className="min-h-screen p-10 flex items-center mx-3 bg-white">
           <div className="modal-wrapper">
-            <button
-              onClick={() => dispatch(isQuickViewOpen("closeQuickView"))}
-              className="absolute block space-y-1 duration-200 ease-linear hover:text-[#f50963] cursor-pointer top-5 right-5 hover:rotate-90"
-            >
-              <svg
-                stroke="currentColor"
-                fill="currentColor"
-                strokeWidth={0}
-                viewBox="0 0 512 512"
-                className="text-2xl font-normal"
-                height="1.5em"
-                width="1.5em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="m289.94 256 95-95A24 24 0 0 0 351 127l-95 95-95-95a24 24 0 0 0-34 34l95 95-95 95a24 24 0 1 0 34 34l95-95 95 95a24 24 0 0 0 34-34z" />
-              </svg>
-            </button>
-            <div className="flex flex-col lg:flex-row product-details">
+            <div className="flex flex-col gap-10 lg:flex-row product-details">
               <div className="self-center max-lg:self-center lg:mr-10 left">
                 <div className="product-img">
-                  <div className="lg:h-[400px] lg:w-[433px]">
+                  <div className="lg:h-[550px] lg:w-[550px]">
                     {bigImage && (
                       <Image
                         src={bigImage}
                         alt="cover-image"
                         width={1200}
                         height={900}
-                        className="object-fill w-full h-full shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]"
+                        className="object-fill w-full min-h-full shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]"
                       />
                     )}
                   </div>
                 </div>
                 <div
-                  className="flex flex-wrap gap-3 product-options"
+                  className="flex flex-wrap justify-between gap-3 product-options"
                   ref={imagesRef as unknown as React.RefObject<HTMLDivElement>}
                 >
-                  {quickViewProduct?.images &&
-                    quickViewProduct.images[colorIndex]?.url.map((url, i) => {
+                  {singleProduct?.images &&
+                    singleProduct.images[colorIndex]?.url.map((url, i) => {
                       return (
                         <button
                           onClick={() => {
@@ -156,7 +129,7 @@ const ProductDetails = ({
                               );
                             }
                           }}
-                          className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#f50963] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-24 lg:h-24`}
+                          className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#f50963] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-28 lg:h-28`}
                           key={i}
                         >
                           <Image
@@ -174,9 +147,9 @@ const ProductDetails = ({
               <div className="right">
                 <div className="product-information">
                   <h3 className="text-4xl font-medium mb-1 text-[#03041c] product-title">
-                    {quickViewProduct?.name}
+                    {singleProduct?.name}
                   </h3>
-                  <p className="my-5">{quickViewProduct?.description}</p>
+                  <p className="my-5">{singleProduct?.description}</p>
                   <div className="mb-4 sizes">
                     <p className="text-[#9F9F9F] text-sm mb-3">Size</p>
                     <div
@@ -185,7 +158,7 @@ const ProductDetails = ({
                         sizesRef as unknown as React.RefObject<HTMLDivElement>
                       }
                     >
-                      {quickViewProduct?.sizes?.map((size, i) => {
+                      {singleProduct?.sizes?.map((size, i) => {
                         return (
                           <span
                             onClick={() => {
@@ -201,7 +174,7 @@ const ProductDetails = ({
                               }
                             }}
                             key={i}
-                            className="bg-[#F9F1E7] py-2 px-3 flex justify-center text-sm items-center text-black rounded-md cursor-pointer"
+                            className="bg-[#F9F1E7] py-3 px-4 flex justify-center text-sm items-center text-black rounded-md cursor-pointer"
                           >
                             {size}
                           </span>
@@ -217,7 +190,7 @@ const ProductDetails = ({
                         colorsRef as unknown as React.RefObject<HTMLDivElement>
                       }
                     >
-                      {quickViewProduct?.colors?.map((color, i) => {
+                      {singleProduct?.colors?.map((color, i) => {
                         return (
                           <Image
                             onClick={() => {
@@ -242,26 +215,26 @@ const ProductDetails = ({
                             width={1200}
                             height={900}
                             title={`Select Color: ${color.name}`}
-                            className="relative w-[1.75rem] shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate] h-[1.75rem] p-[2px] border border-[#f50963] rounded-full cursor-pointer"
+                            className="relative w-[2rem] shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate] h-[2rem] p-[2px] border border-[#f50963] rounded-full cursor-pointer"
                           />
                         );
                       })}
                     </div>
                   </div>
-                  <div className="product__price text-[#525258]">
+                  <div className="product__price text-[#525258] text-lg">
                     <span>
                       $
-                      {quickViewProduct?.hasDiscount
+                      {singleProduct?.hasDiscount
                         ? discountPrice
-                        : quickViewProduct?.price}
+                        : singleProduct?.price}
                     </span>
                     <del
                       className={`${
-                        quickViewProduct?.hasDiscount ? "" : "hidden"
+                        singleProduct?.hasDiscount ? "" : "hidden"
                       } ml-2`}
                     >
-                      {quickViewProduct?.hasDiscount
-                        ? "$" + quickViewProduct?.price
+                      {singleProduct?.hasDiscount
+                        ? "$" + singleProduct?.price
                         : ""}
                     </del>
                   </div>
@@ -327,14 +300,14 @@ const ProductDetails = ({
                         dispatch(
                           addCartItem({
                             id,
-                            img: quickViewProduct?.images
-                              ? quickViewProduct.images[0].url[0]
+                            img: singleProduct?.images
+                              ? singleProduct.images[0].url[0]
                               : "",
                             name,
                             price,
                             discountPrice,
                             quantity,
-                            size: quickViewProduct?.sizes?.[sizesIndex],
+                            size: singleProduct?.sizes?.[sizesIndex],
                           })
                         );
                         toast.success(`${name} added to cart`, {
@@ -386,14 +359,14 @@ const ProductDetails = ({
                           dispatch(
                             addWishListItem({
                               id,
-                              img: quickViewProduct?.images
-                                ? quickViewProduct.images[0].url[0]
+                              img: singleProduct?.images
+                                ? singleProduct.images[0].url[0]
                                 : "",
                               name,
                               price,
                               discountPrice,
                               quantity,
-                              size: quickViewProduct?.sizes?.[sizesIndex],
+                              size: singleProduct?.sizes?.[sizesIndex],
                             })
                           );
                           toast.success(`${name} added to wishlist`, {
@@ -422,27 +395,19 @@ const ProductDetails = ({
                           Add To Wishlist
                         </span>
                       </button>
-                      <button className="relative group/product-detail flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-12 h-12">
-                        <Link className="text-2xl" />
-                        <span className="absolute group-hover/product-detail:-top-5 opacity-0 invisible group-hover/product-detail:visible group-hover/product-detail:opacity-100 ease-out duration-300 -translate-y-1/2 top-0 w-max left-1/2 -translate-x-1/2 bg-[#03041c] text-white py-1 px-2 text-xs z-10 inline-block leading-none after:content-[''] after:absolute after:bg-[#03041c] after:-bottom-1 after:-z-30 after:left-1/2 after:-translate-x-1/2 after:rotate-45 after:h-2 after:w-2 ">
-                          Product Details
-                        </span>
-                      </button>
                     </div>
                   </div>
-                  <div className="product__details-sku product__details-more">
+                  <div className="mb-4 product__details-sku product__details-more">
                     <p className="inline-block mb-1 font-semibold text-[#03041c]">
                       SKU:
                     </p>
-                    <span className="text-[#525258]">
-                      {quickViewProduct?.sku}
-                    </span>
+                    <span className="text-[#525258]">{singleProduct?.sku}</span>
                   </div>
                   <div className="mb-4 product__details-categories">
                     <p className="inline-block mb-1 font-semibold text-[#03041c]">
                       Categories:
                     </p>
-                    {quickViewProduct?.categories?.map((el, i) => {
+                    {singleProduct?.categories?.map((el, i) => {
                       return (
                         <span key={i}>
                           <a
@@ -459,7 +424,7 @@ const ProductDetails = ({
                     <span className="inline-block mb-1 mr-1 font-semibold text-[#03041c]">
                       Tags:
                     </span>
-                    {quickViewProduct?.tags?.map((el, i) => {
+                    {singleProduct?.tags?.map((el, i) => {
                       return (
                         <a
                           key={i}
@@ -510,12 +475,6 @@ const ProductDetails = ({
           </div>
         </div>
       </div>
-      <div
-        onClick={() => dispatch(isQuickViewOpen("closeQuickView"))}
-        className={`${
-          isQuickView ? "" : "hidden"
-        } body-overlay visible opacity-70 bg-[#03041c] h-full w-full fixed top-0 z-40 left-0 ease-out duration-300`}
-      ></div>
     </div>
   );
 };
