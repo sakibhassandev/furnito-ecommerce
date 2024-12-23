@@ -25,6 +25,8 @@ const ProductDetails = ({
   const colorsRef = useRef<HTMLDivElement>(null);
   const sizesRef = useRef<HTMLDivElement>(null);
 
+  console.log(singleProduct);
+
   const dispatch = useDispatch();
   const discountPrice = parseFloat(
     (singleProduct?.hasDiscount
@@ -44,7 +46,6 @@ const ProductDetails = ({
 
   useEffect(() => {
     if (imagesRef.current) {
-      console.log(imagesRef.current.children.length);
       for (let i = 0; i < imagesRef.current.children.length; i++) {
         imagesRef.current.children[i].classList.add(
           "after:invisible",
@@ -86,11 +87,11 @@ const ProductDetails = ({
   }, [singleProduct]);
 
   return (
-    <div className={`flex w-full ease-out duration-300 lg:items-center`}>
+    <div className={`flex w-full ease-out duration-300 mb-10 lg:items-center`}>
       <div className="max-w-[1300px] mx-auto">
         <div className="min-h-screen p-10 flex items-center mx-3 bg-white">
           <div className="modal-wrapper">
-            <div className="flex flex-col gap-10 lg:flex-row product-details">
+            <div className="flex flex-col gap-10 lg:flex-row product-details border-b border-[#dadce0] pb-4">
               <div className="self-center max-lg:self-center lg:mr-10 left">
                 <div className="product-img">
                   <div className="lg:h-[550px] lg:w-[550px]">
@@ -471,6 +472,15 @@ const ProductDetails = ({
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="description">
+              <h4 className="text-lg font-semibold text-[#03041c] my-5">
+                Description
+              </h4>
+              <h3 className="text-3xl font-semibold text-[#03041c] my-4">
+                {singleProduct?.name}
+              </h3>
+              <p className="text-[#525258]">{singleProduct?.description}</p>
             </div>
           </div>
         </div>
