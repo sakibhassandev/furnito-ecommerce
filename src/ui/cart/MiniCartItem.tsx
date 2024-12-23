@@ -4,13 +4,14 @@ import { removeCartItem } from "@/store/slices/cartSlice";
 import { toast } from "react-toastify";
 import { CartState } from "@/lib/definitions";
 import { X } from "lucide-react";
+import Link from "next/link";
 
 export const MiniCartItem = ({ name, price, quantity, img, id }: CartState) => {
   const dispatch = useDispatch();
   return (
     <div className="item items-center relative flex p-[20px_35px_20px_20px] border-b border-[1px_solid_hsla(0,0%,51%,.2)] ease duration-300">
       <div className="thumb mr-[15px]">
-        <a href="/product/123">
+        <Link href={`/product-details/${id}`}>
           <Image
             src={img}
             alt={name}
@@ -18,7 +19,7 @@ export const MiniCartItem = ({ name, price, quantity, img, id }: CartState) => {
             height={900}
             className="text-transparent object-contain w-[90px] h-[90px]"
           />
-        </a>
+        </Link>
       </div>
       <div className="content">
         <a

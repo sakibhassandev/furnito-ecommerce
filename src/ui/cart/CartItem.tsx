@@ -1,6 +1,7 @@
 import { CartState, CommonCartSectionProps } from "@/lib/definitions";
 import { X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -21,7 +22,7 @@ export const CartItem = ({
   return (
     <tr className="bg-white border-b ">
       <td className="px-4 py-5 border-r border-[#eaedff]">
-        <a href="/product-details">
+        <Link href={`/product-details/${id}`}>
           <Image
             src={img}
             alt={img}
@@ -29,15 +30,15 @@ export const CartItem = ({
             width={1200}
             height={900}
           />
-        </a>
+        </Link>
       </td>
       <td className="px-6 py-4 text-center border-r border-[#eaedff]">
-        <a
-          href="/product-details"
+        <Link
+          href={`/product-details/${id}`}
           className="hover:text-[#f50963] ease-out duration-300"
         >
           {name}
-        </a>
+        </Link>
       </td>
       <td className="px-6 py-4 text-center border-r border-[#eaedff]">
         <span className="amount">${discountPrice ? discountPrice : price}</span>

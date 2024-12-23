@@ -35,7 +35,7 @@ export const Product = ({
     <div className="product group">
       <div className="overflow-hidden rounded shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]">
         <div className="relative overflow-hidden ">
-          <Link href="/">
+          <Link href={`/product-details/${id}`}>
             <Image
               src={img}
               alt={name}
