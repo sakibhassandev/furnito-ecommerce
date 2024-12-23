@@ -35,6 +35,7 @@ export async function GET(request: Request) {
             name: true,
             rating: true,
             message: true,
+            updatedAt: true,
           },
         },
       },

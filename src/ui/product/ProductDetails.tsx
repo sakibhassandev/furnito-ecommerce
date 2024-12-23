@@ -473,7 +473,7 @@ const ProductDetails = ({
                 </div>
               </div>
             </div>
-            <div className="description">
+            <div className="description border-b border-[#dadce0] pb-4">
               <h4 className="text-lg font-semibold text-[#03041c] my-5">
                 Description
               </h4>
@@ -481,6 +481,54 @@ const ProductDetails = ({
                 {singleProduct?.name}
               </h3>
               <p className="text-[#525258]">{singleProduct?.description}</p>
+            </div>
+            <div className="reviews">
+              <h4 className="text-xl font-semibold text-[#03041c] my-5">
+                Reviews
+              </h4>
+              <div className="reviews-container flex flex-col gap-5">
+                {singleProduct?.reviews?.map((review, i) => {
+                  return (
+                    <div
+                      className="review border-b border-[#dadce0] pb-4"
+                      key={i}
+                    >
+                      <div className="review__header">
+                        <div className="review__header__left">
+                          <h4 className="mb-1 font-semibold text-[#03041c]">
+                            {review.name}
+                          </h4>
+                          <div className="mb-1 flex items-start gap-2">
+                            {Array.from({ length: 5 }, (_, index) => (
+                              <span
+                                key={index}
+                                className={
+                                  index < review.rating
+                                    ? "text-[#f50963]"
+                                    : "text-[#dadce0]"
+                                }
+                              >
+                                ★
+                              </span>
+                            ))}
+                            <span className="mb-1 text-[#525258]">
+                              {review.rating}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="mb-1 review__header__right">
+                          <span className="text-[#525258]">
+                            {review.updatedAt?.split("T")[0]}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="review__content">
+                        <p className="text-[#525258]">{review.message}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

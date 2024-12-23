@@ -25,7 +25,12 @@ export type ProductType = {
   sku: string;
   categories: string[];
   tags: string[];
-  reviews: { name: string; rating: number; message: string }[];
+  reviews: {
+    name: string;
+    rating: number;
+    message: string;
+    updatedAt?: string;
+  }[];
   hasDiscount?: number;
   sizes: string[];
   colors: { id: string; name: string; image: string }[];
