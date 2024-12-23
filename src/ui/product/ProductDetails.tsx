@@ -89,7 +89,7 @@ const ProductDetails = ({
   return (
     <div className={`flex w-full ease-out duration-300 mb-10 lg:items-center`}>
       <div className="max-w-[1300px] mx-auto">
-        <div className="min-h-screen p-10 flex items-center mx-3 bg-white">
+        <div className="min-h-screen max-xsm:pt-5 xsm:p-10 flex items-center mx-3 bg-white">
           <div className="modal-wrapper">
             <div className="flex flex-col gap-10 lg:flex-row product-details border-b border-[#dadce0] pb-4">
               <div className="self-center max-lg:self-center lg:mr-10 left">
@@ -147,10 +147,12 @@ const ProductDetails = ({
               </div>
               <div className="right">
                 <div className="product-information">
-                  <h3 className="text-4xl font-medium mb-1 text-[#03041c] product-title">
+                  <h3 className="text-xl xsm:text-2xl md:text-4xl font-medium mb-1 text-[#03041c] product-title">
                     {singleProduct?.name}
                   </h3>
-                  <p className="my-5">{singleProduct?.description}</p>
+                  <p className="my-5 max-xsm:text-sm">
+                    {singleProduct?.description}
+                  </p>
                   <div className="mb-4 sizes">
                     <p className="text-[#9F9F9F] text-sm mb-3">Size</p>
                     <div
@@ -175,7 +177,7 @@ const ProductDetails = ({
                               }
                             }}
                             key={i}
-                            className="bg-[#F9F1E7] py-3 px-4 flex justify-center text-sm items-center text-black rounded-md cursor-pointer"
+                            className="bg-[#F9F1E7] py-1 px-2 sm:py-3 sm:px-4 flex justify-center text-sm items-center text-black rounded-md cursor-pointer"
                           >
                             {size}
                           </span>
@@ -216,13 +218,13 @@ const ProductDetails = ({
                             width={1200}
                             height={900}
                             title={`Select Color: ${color.name}`}
-                            className="relative w-[2rem] shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate] h-[2rem] p-[2px] border border-[#f50963] rounded-full cursor-pointer"
+                            className="relative w-[1.5rem] sm:w-[2rem] shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate] h-[1.5rem] sm:h-[2rem] p-[2px] border border-[#f50963] rounded-full cursor-pointer"
                           />
                         );
                       })}
                     </div>
                   </div>
-                  <div className="product__price text-[#525258] text-lg">
+                  <div className="product__price text-[#525258] xsm:text-lg">
                     <span>
                       $
                       {singleProduct?.hasDiscount
@@ -246,7 +248,7 @@ const ProductDetails = ({
                           setQuantity((prev) => prev - 1);
                         }
                       }}
-                      className="w-6 h-6 hover:text-[#f50963] ease-out duration-300 p-1 rounded-full me-3"
+                      className="w-4 xsm:w-6 h-4 xsm:h-6 hover:text-[#f50963] ease-out duration-300 p-1 rounded-full me-3"
                       type="button"
                     >
                       <svg
@@ -318,7 +320,7 @@ const ProductDetails = ({
                         });
                       }}
                       type="button"
-                      className="max-sm:w-full flex p-[13px_35px] items-center gap-2 transition-all ease-out duration-300 hover:bg-[#f50963] text-white font-semibold bg-black"
+                      className="max-sm:w-full flex p-[9px_25px] xsm:p-[13px_35px] items-center gap-2 transition-all ease-out duration-300 hover:bg-[#f50963] text-white font-semibold bg-black"
                     >
                       <svg
                         width={18}
@@ -376,7 +378,7 @@ const ProductDetails = ({
                             theme: "light",
                           });
                         }}
-                        className="relative group/tooltip flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-12 h-12"
+                        className="relative group/tooltip flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-10 xsm:w-12 h-10 xsm:h-12"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -402,10 +404,12 @@ const ProductDetails = ({
                     <p className="inline-block mb-1 font-semibold text-[#03041c]">
                       SKU:
                     </p>
-                    <span className="text-[#525258]">{singleProduct?.sku}</span>
+                    <span className="max-xsm:text-sm text-[#525258]">
+                      {singleProduct?.sku}
+                    </span>
                   </div>
                   <div className="mb-4 product__details-categories">
-                    <p className="inline-block mb-1 font-semibold text-[#03041c]">
+                    <p className="inline-block mb-1 font-semibold max-xsm:text-sm text-[#03041c]">
                       Categories:
                     </p>
                     {singleProduct?.categories?.map((el, i) => {
@@ -421,7 +425,7 @@ const ProductDetails = ({
                       );
                     })}
                   </div>
-                  <div className="mb-4 product__details-tag">
+                  <div className="mb-4 product__details-tags">
                     <span className="inline-block mb-1 mr-1 font-semibold text-[#03041c]">
                       Tags:
                     </span>
@@ -430,7 +434,7 @@ const ProductDetails = ({
                         <a
                           key={i}
                           href="#"
-                          className="text-sm leading-none text-[#525258] p-[4px_12px] mb-2 inline-block border border-[#dadce0] hover:bg-[#f50963] hover:border-[#f50963] hover:text-white ease-out duration-300"
+                          className="text-sm leading-none text-[#525258] p-[2px_8px] xsm:p-[4px_12px] mb-2 inline-block border border-[#dadce0] hover:bg-[#f50963] hover:border-[#f50963] hover:text-white ease-out duration-300"
                         >
                           {el}
                         </a>
@@ -474,16 +478,18 @@ const ProductDetails = ({
               </div>
             </div>
             <div className="description border-b border-[#dadce0] pb-4">
-              <h4 className="text-lg font-semibold text-[#03041c] my-5">
+              <h4 className="xsm:text-lg font-semibold text-[#03041c] my-5">
                 Description
               </h4>
-              <h3 className="text-3xl font-semibold text-[#03041c] my-4">
+              <h3 className="xsm:text-3xl font-semibold text-[#03041c] my-4">
                 {singleProduct?.name}
               </h3>
-              <p className="text-[#525258]">{singleProduct?.description}</p>
+              <p className="max-xsm:text-sm text-[#525258]">
+                {singleProduct?.description}
+              </p>
             </div>
             <div className="reviews">
-              <h4 className="text-xl font-semibold text-[#03041c] my-5">
+              <h4 className="text-lg xsm:text-xl font-semibold text-[#03041c] my-5">
                 Reviews
               </h4>
               <div className="reviews-container flex flex-col gap-5">
@@ -495,10 +501,10 @@ const ProductDetails = ({
                     >
                       <div className="review__header">
                         <div className="review__header__left">
-                          <h4 className="mb-1 font-semibold text-[#03041c]">
+                          <h4 className="mb-1 font-semibold max-xsm:text-sm text-[#03041c]">
                             {review.name}
                           </h4>
-                          <div className="mb-1 flex items-start gap-2">
+                          <div className="mb-1 flex max-xsm:text-sm items-start gap-2">
                             {Array.from({ length: 5 }, (_, index) => (
                               <span
                                 key={index}
@@ -511,19 +517,21 @@ const ProductDetails = ({
                                 ★
                               </span>
                             ))}
-                            <span className="mb-1 text-[#525258]">
+                            <span className="mb-1 max-xsm:text-sm text-[#525258]">
                               {review.rating}
                             </span>
                           </div>
                         </div>
                         <div className="mb-1 review__header__right">
-                          <span className="text-[#525258]">
+                          <span className="max-xsm:text-sm text-[#525258]">
                             {review.updatedAt?.split("T")[0]}
                           </span>
                         </div>
                       </div>
                       <div className="review__content">
-                        <p className="text-[#525258]">{review.message}</p>
+                        <p className="xsm:text-sm text-[#525258]">
+                          {review.message}
+                        </p>
                       </div>
                     </div>
                   );
