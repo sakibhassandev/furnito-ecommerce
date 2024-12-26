@@ -18,8 +18,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // TODO: Add login state in header
-
     const user = await prisma.user.findUnique({
       where: { email },
       select: {
@@ -61,9 +59,13 @@ export async function POST(request: Request) {
       });
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "3h",
-    });
+    const token = jwt.sign(
+      { id: user.id, name: user.name },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "3h",
+      }
+    );
 
     (await cookies()).set("token", token, {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 3),

@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isMiniCartOpen } from "@/store/slices/miniCartSlice";
 import { CartState, WishListState } from "@/lib/definitions";
 import { RootState } from "@/store";
 
-export const Header = () => {
+export const Header = ({ loggedInUser }) => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cartItems);
   const wishList = useSelector((state: RootState) => state.wishList);
@@ -123,22 +123,26 @@ export const Header = () => {
               />
             </svg>
           </button>
-          <Link
-            onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
-            href="/login"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 20"
-              fill="none"
-              className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] signup"
+          {loggedInUser ? (
+            "In"
+          ) : (
+            <Link
+              onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
+              href="/login"
             >
-              <path
-                d="M21.333 10V4.167h2.334v7h-2.334m0 4.666h2.334V13.5h-2.334M9.667 11.167c3.115 0 9.333 1.563 9.333 4.666v3.5H.333v-3.5c0-3.103 6.219-4.666 9.334-4.666zm0-10.5a4.667 4.667 0 110 9.333 4.667 4.667 0 010-9.333zm0 12.716c-3.465 0-7.117 1.704-7.117 2.45v1.284h14.233v-1.284c0-.746-3.651-2.45-7.116-2.45zm0-10.5a2.45 2.45 0 100 4.9 2.45 2.45 0 000-4.9z"
-                fill="currentColor"
-              />
-            </svg>
-          </Link>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 20"
+                fill="none"
+                className="w-5 md:w-6 cursor-pointer ease-in-out transition-all duration-200 hover:text-[#1c1d25] signup"
+              >
+                <path
+                  d="M21.333 10V4.167h2.334v7h-2.334m0 4.666h2.334V13.5h-2.334M9.667 11.167c3.115 0 9.333 1.563 9.333 4.666v3.5H.333v-3.5c0-3.103 6.219-4.666 9.334-4.666zm0-10.5a4.667 4.667 0 110 9.333 4.667 4.667 0 010-9.333zm0 12.716c-3.465 0-7.117 1.704-7.117 2.45v1.284h14.233v-1.284c0-.746-3.651-2.45-7.116-2.45zm0-10.5a2.45 2.45 0 100 4.9 2.45 2.45 0 000-4.9z"
+                  fill="currentColor"
+                />
+              </svg>
+            </Link>
+          )}
 
           <Link
             onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
