@@ -12,6 +12,7 @@ import axios, { AxiosError } from "axios";
 import { ApiError } from "@/utils/ApiError";
 import { useRouter } from "next/navigation";
 import { Eye, Loader2 } from "lucide-react";
+import { setCookie } from "nookies";
 
 export const Login = () => {
   const router = useRouter();
@@ -51,6 +52,7 @@ export const Login = () => {
         autoClose: 2000,
         theme: "light",
       });
+      setCookie(null, "auth-token", response.data.data.id, { path: "/" });
       router.push("/");
     } catch (error) {
       const axiosError = error as AxiosError<ApiError>;

@@ -9,7 +9,6 @@ import { BackToTop } from "@/ui/common/BackToTop";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import { getSession } from "@/utils/getSession";
 
 export const metadata: Metadata = {
   title: {
@@ -28,15 +27,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const token = await getSession();
-  console.log(token);
   return (
     <html lang="en">
       <body
         className={`${poppins.className} antialiased selection:bg-black selection:text-white`}
       >
         <StoreProvider>
-          <Header loggedInUser={token} />
+          <Header />
           <MiniCart />
         </StoreProvider>
         {children}

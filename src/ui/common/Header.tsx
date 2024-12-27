@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { isMiniCartOpen } from "@/store/slices/miniCartSlice";
 import { CartState, WishListState } from "@/lib/definitions";
 import { RootState } from "@/store";
+import { parseCookies } from "nookies";
 
-export const Header = ({ loggedInUser }) => {
+export const Header = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cartItems);
   const wishList = useSelector((state: RootState) => state.wishList);
@@ -18,6 +19,13 @@ export const Header = ({ loggedInUser }) => {
   const wishlistCount = wishList.reduce((acc: number, curr: WishListState) => {
     return acc + curr.quantity;
   }, 0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const cookies = parseCookies();
+    const authToken = cookies["auth-token"];
+    setIsLoggedIn(!!authToken);
+  }, []);
 
   return (
     <div className="sticky top-0 z-40 w-full shadow-md backdrop-blur bg-[#ffffff70]">
@@ -123,7 +131,7 @@ export const Header = ({ loggedInUser }) => {
               />
             </svg>
           </button>
-          {loggedInUser ? (
+          {isLoggedIn ? (
             "In"
           ) : (
             <Link
