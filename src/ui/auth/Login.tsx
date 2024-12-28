@@ -51,7 +51,7 @@ export const Login = () => {
       });
 
       if (result?.error) {
-        toast.error(result.code?.split(".")[0], {
+        toast.error(result.code?.split(".")[0] || "Something went wrong", {
           position: "top-center",
           autoClose: 2000,
           theme: "light",
