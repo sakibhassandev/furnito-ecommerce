@@ -5,6 +5,7 @@ import { MiniCart } from "@/ui/cart/MiniCart";
 import { Footer } from "@/ui/common/Footer";
 import { ToastContainer } from "react-toastify";
 import StoreProvider from "@/store/StoreProvider";
+import { SessionProvider } from "next-auth/react";
 import { BackToTop } from "@/ui/common/BackToTop";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -33,7 +34,9 @@ export default async function RootLayout({
         className={`${poppins.className} antialiased selection:bg-black selection:text-white`}
       >
         <StoreProvider>
-          <Header />
+          <SessionProvider>
+            <Header />
+          </SessionProvider>
           <MiniCart />
         </StoreProvider>
         {children}

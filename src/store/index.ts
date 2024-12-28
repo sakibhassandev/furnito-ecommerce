@@ -4,7 +4,6 @@ import cartReducer from "@/store/slices/cartSlice";
 import wishListReducer from "@/store/slices/wishListSlice";
 import miniCartReducer from "@/store/slices/miniCartSlice";
 import quickViewReducer from "@/store/slices/quickViewSlice";
-import isLoggedInReducer from "@/store/slices/isLoggedIn";
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +12,6 @@ export const store = configureStore({
     wishList: wishListReducer,
     miniCart: miniCartReducer,
     quickView: quickViewReducer,
-    isLoggedIn: isLoggedInReducer,
   },
 });
 

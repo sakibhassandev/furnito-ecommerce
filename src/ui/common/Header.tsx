@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isMiniCartOpen } from "@/store/slices/miniCartSlice";
 import { CartState, WishListState } from "@/lib/definitions";
 import { RootState } from "@/store";
-import { parseCookies } from "nookies";
+import { signOut, useSession } from "next-auth/react";
 
 export const Header = () => {
+  const session = useSession();
+  console.log(session.status);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cartItems);
   const wishList = useSelector((state: RootState) => state.wishList);
@@ -19,13 +21,6 @@ export const Header = () => {
   const wishlistCount = wishList.reduce((acc: number, curr: WishListState) => {
     return acc + curr.quantity;
   }, 0);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const cookies = parseCookies();
-    const authToken = cookies["auth-token"];
-    setIsLoggedIn(!!authToken);
-  }, []);
 
   return (
     <div className="sticky top-0 z-40 w-full shadow-md backdrop-blur bg-[#ffffff70]">
@@ -131,7 +126,7 @@ export const Header = () => {
               />
             </svg>
           </button>
-          {isLoggedIn ? (
+          {session.status === "authenticated" ? (
             "In"
           ) : (
             <Link
