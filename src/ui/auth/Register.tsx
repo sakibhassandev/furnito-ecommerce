@@ -12,6 +12,7 @@ import { registerSchema } from "@/schemas/registerSchema";
 import axios, { AxiosError } from "axios";
 import { ApiError } from "@/utils/ApiError";
 import { useRouter } from "next/navigation";
+import GoogleLogin from "../common/GoogleLogin";
 
 export const Register = () => {
   const router = useRouter();
@@ -403,6 +404,7 @@ export const Register = () => {
                     </p>
                   </div>
                 </div>
+                <GoogleLogin />
               </div>
             </div>
           </div>

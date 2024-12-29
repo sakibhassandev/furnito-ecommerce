@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-
 import { User as AuthUser } from "@auth/core/types";
 
 interface ProfileDropdownProps {
@@ -44,7 +43,17 @@ export function HeaderProfile({ user, onSignOut }: ProfileDropdownProps) {
         onClick={() => setIsOpen(!isOpen)}
         className="bg-black flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
       >
-        {user.name ? getInitials(user.name) : ""}
+        {user.image ? (
+          <img
+            src={user.image}
+            alt="User Image"
+            className="w-8 h-8 rounded-full"
+          />
+        ) : user.name ? (
+          getInitials(user.name)
+        ) : (
+          "GU"
+        )}
       </button>
 
       {/* Dropdown menu */}

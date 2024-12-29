@@ -11,6 +11,7 @@ import { loginSchema } from "@/schemas/loginSchema";
 import { useRouter } from "next/navigation";
 import { Eye, Loader2 } from "lucide-react";
 import { signIn } from "next-auth/react";
+import GoogleLogin from "../common/GoogleLogin";
 
 export const Login = () => {
   const router = useRouter();
@@ -332,6 +333,7 @@ export const Login = () => {
                     </p>
                   </div>
                 </div>
+                <GoogleLogin />
               </div>
             </div>
           </div>
