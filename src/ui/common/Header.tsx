@@ -7,10 +7,10 @@ import { isMiniCartOpen } from "@/store/slices/miniCartSlice";
 import { CartState, WishListState } from "@/lib/definitions";
 import { RootState } from "@/store";
 import { signOut, useSession } from "next-auth/react";
+import { HeaderProfile } from "./HeaderProfile";
 
 export const Header = () => {
   const session = useSession();
-  console.log(session.status);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cartItems);
   const wishList = useSelector((state: RootState) => state.wishList);
@@ -127,7 +127,10 @@ export const Header = () => {
             </svg>
           </button>
           {session.status === "authenticated" ? (
-            "In"
+            <HeaderProfile
+              user={session.data?.user ?? {}}
+              onSignOut={signOut}
+            />
           ) : (
             <Link
               onClick={() => scrollTo({ top: 0, behavior: "smooth" })}
