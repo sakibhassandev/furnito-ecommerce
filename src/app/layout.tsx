@@ -36,8 +36,8 @@ export default async function RootLayout({
         <StoreProvider>
           <SessionProvider>
             <Header />
+            <MiniCart />
           </SessionProvider>
-          <MiniCart />
         </StoreProvider>
         {children}
         <Footer />

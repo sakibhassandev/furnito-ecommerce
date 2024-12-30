@@ -8,6 +8,7 @@ import { EmptyCart } from "@/ui/cart/EmptyCart";
 import { RootState } from "@/store";
 import { CartState } from "@/lib/definitions";
 import { X } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export const MiniCart = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export const MiniCart = () => {
       (curr.discountPrice ? curr.discountPrice : curr.price) * curr.quantity
     );
   }, 0);
+  const session = useSession();
 
   return (
     <>
@@ -89,7 +91,7 @@ export const MiniCart = () => {
               </Link>
               <Link
                 onClick={() => dispatch(isMiniCartOpen("closeMiniCart"))}
-                href="/checkout"
+                href={session.data?.user ? "/checkout" : "/login"}
                 className="capitalize rounded-sm p-[10px_30px] text-[#03041c] text-[15px] inline-block w-full hover:bg-[#03041c] hover:text-white ease-linear duration-300 font-medium text-center border-[#eaeaef] border relative z-10 "
               >
                 checkout

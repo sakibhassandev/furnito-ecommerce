@@ -75,6 +75,22 @@ export function HeaderProfile({ user, onSignOut }: ProfileDropdownProps) {
             >
               My Profile
             </Link>
+            <Link
+              href="/orders"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              role="menuitem"
+              onClick={() => setIsOpen(false)}
+            >
+              Orders
+            </Link>
+            <Link
+              href="/wishlist"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              role="menuitem"
+              onClick={() => setIsOpen(false)}
+            >
+              Wishlist
+            </Link>
 
             <button
               onClick={() => {

@@ -12,8 +12,11 @@ import {
 } from "@/store/slices/cartSlice";
 import { RootState } from "@/store";
 import { CartState } from "@/lib/definitions";
+import { useSession } from "next-auth/react";
 
 const CartPage = () => {
+  const session = useSession();
+  console.log(session);
   const cartItems = useSelector((state: RootState) => state.cartItems);
   const totalPrice = cartItems
     .reduce((acc: number, curr: CartState) => {
@@ -60,7 +63,7 @@ const CartPage = () => {
                 </li>
               </ul>
               <Link
-                href="/checkout"
+                href={session.data?.user ? "/checkout" : "/login"}
                 className="p-[16px_40px_18px] rounded-sm hover:bg-[#ddad3d] text-white ease-out duration-300 bg-[#03041c] text-sm"
               >
                 Proceed to checkout
