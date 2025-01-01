@@ -39,6 +39,38 @@ export type ProductType = {
   updatedAt?: string;
 };
 
+export type AddressType = {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  companyName?: string;
+  country: string;
+  street: string;
+  state: string;
+  city: string;
+  zip: string;
+  phone: string;
+  email: string;
+  additionalInfo?: string;
+  paymentMethod?: string;
+};
+
+export type FormAddressType = {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  companyName?: string;
+  country: { label: string; value: string };
+  street: string;
+  state: { label: string; value: string };
+  city: { label: string; value: string };
+  zip: string;
+  phone: string;
+  email: string;
+  additionalInfo?: string;
+  paymentMethod?: string;
+};
+
 export type CommonCartSectionProps = {
   productList?: CartState[];
   emptyCardName?: string;

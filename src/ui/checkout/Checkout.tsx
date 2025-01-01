@@ -4,22 +4,56 @@ import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { Country, State, City } from "country-state-city";
-
-// Simulated database functions
-const saveAddress = async (data: any) => {
-  localStorage.setItem("savedAddress", JSON.stringify(data));
-  return { success: true };
-};
-
-const getAddress = async () => {
-  const saved = localStorage.getItem("savedAddress");
-  return saved ? JSON.parse(saved) : null;
-};
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { AddressType, FormAddressType } from "@/lib/definitions";
 
 export default function Checkout() {
+  const session = useSession();
   const [isEditing, setIsEditing] = useState(true);
-  const [savedAddress, setSavedAddress] = useState<any>(null);
-  const [selectedCountry, setSelectedCountry] = useState<any>(null);
+  const [savedAddress, setSavedAddress] = useState<AddressType>(
+    {} as AddressType
+  );
+  const [selectedCountry, setSelectedCountry] = useState(
+    {} as { value: string; label: string }
+  );
+
+  const getAddress = async () => {
+    if (!session.data?.user?.id) return null;
+    const response = await axios.post("/api/get-user-address", {
+      userId: session.data.user.id,
+    });
+    if (response.data) return response.data;
+    return null;
+  };
+
+  const saveAddress = async (address: FormAddressType) => {
+    if (!session.data?.user?.id) return null;
+    const response = await axios.post("/api/set-user-address", {
+      address: {
+        userId: session.data.user.id,
+        firstName: address.firstName,
+        lastName: address.lastName,
+        companyName: address.companyName,
+        country: address.country.label,
+        street: address.street,
+        state: address.state.label,
+        city: address.city.label,
+        zip: address.zip,
+        phone: address.phone,
+        email: address.email,
+        additionalInfo: address.additionalInfo,
+      },
+    });
+    if (response.data) return response.data;
+    return null;
+  };
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      getAddress();
+    }
+  }, [session.status]);
 
   const {
     register,
@@ -28,7 +62,7 @@ export default function Checkout() {
     reset,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormAddressType>();
 
   const watchCountry = watch("country");
 
@@ -40,7 +74,8 @@ export default function Checkout() {
 
   useEffect(() => {
     async function loadAddress() {
-      const address = await getAddress();
+      const fetchAddress = await getAddress();
+      const address = fetchAddress?.data?.address[0];
       if (address) {
         setSavedAddress(address);
         setIsEditing(false);
@@ -48,13 +83,17 @@ export default function Checkout() {
         setSelectedCountry(address.country);
       }
     }
-    loadAddress();
-  }, [reset]);
+    if (session.status === "authenticated") {
+      loadAddress();
+    }
+  }, [reset, session.status]);
 
-  const onSubmit = async (data: any) => {
-    await saveAddress(data);
-    setSavedAddress(data);
-    setIsEditing(false);
+  const onSubmit = async (data: FormAddressType) => {
+    const address = await saveAddress(data);
+    if (address) {
+      setSavedAddress(address.data);
+      setIsEditing(false);
+    }
   };
 
   const customStyles = {
@@ -138,14 +177,13 @@ export default function Checkout() {
                   {savedAddress.firstName} {savedAddress.lastName}
                 </p>
                 {savedAddress.companyName && <p>{savedAddress.companyName}</p>}
-                <p>{savedAddress.streetAddress}</p>
+                <p>{savedAddress.street}</p>
                 <p>
-                  {savedAddress.city?.label}, {savedAddress.state?.label}{" "}
-                  {savedAddress.zipCode}
+                  {savedAddress.city}, {savedAddress.state} {savedAddress.zip}
                 </p>
                 <p>
                   {
-                    countries.find((c) => c.value === savedAddress.country)
+                    countries.find((c) => c.label === savedAddress.country)
                       ?.label
                   }
                 </p>
@@ -230,45 +268,20 @@ export default function Checkout() {
                     Street address
                   </label>
                   <input
-                    {...register("streetAddress", {
+                    {...register("street", {
                       required: "Street address is required",
                     })}
+                    defaultValue={savedAddress?.street}
                     className="w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#B88E2F] focus:border-[#B88E2F] transition duration-150 ease-in-out"
                   />
-                  {errors.streetAddress && (
+                  {errors.street && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors.streetAddress.message as string}
+                      {errors.street.message as string}
                     </p>
                   )}
                 </div>
 
                 <div className="grid gap-6 sm:grid-cols-2">
-                  <div>
-                    <label className="block text-sm font-medium text-[#333333] mb-1">
-                      Town / City
-                    </label>
-                    <Controller
-                      name="city"
-                      control={control}
-                      rules={{ required: "City is required" }}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          options={cities}
-                          styles={customStyles}
-                          placeholder="Select city"
-                          isDisabled={!watch("state")}
-                          className="react-select-container"
-                          classNamePrefix="react-select"
-                        />
-                      )}
-                    />
-                    {errors.city && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.city.message as string}
-                      </p>
-                    )}
-                  </div>
                   <div>
                     <label className="block text-sm font-medium text-[#333333] mb-1">
                       State / Province
@@ -295,6 +308,32 @@ export default function Checkout() {
                       </p>
                     )}
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[#333333] mb-1">
+                      Town / City
+                    </label>
+                    <Controller
+                      name="city"
+                      control={control}
+                      rules={{ required: "City is required" }}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          options={cities}
+                          styles={customStyles}
+                          placeholder="Select city"
+                          isDisabled={!watch("state")}
+                          className="react-select-container"
+                          classNamePrefix="react-select"
+                        />
+                      )}
+                    />
+                    {errors.city && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.city.message as string}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 <div>
@@ -302,14 +341,15 @@ export default function Checkout() {
                     ZIP / Postal code
                   </label>
                   <input
-                    {...register("zipCode", {
+                    {...register("zip", {
                       required: "ZIP/Postal code is required",
                     })}
+                    defaultValue={savedAddress?.zip}
                     className="w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#B88E2F] focus:border-[#B88E2F] transition duration-150 ease-in-out"
                   />
-                  {errors.zipCode && (
+                  {errors.zip && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors.zipCode.message as string}
+                      {errors.zip.message as string}
                     </p>
                   )}
                 </div>
