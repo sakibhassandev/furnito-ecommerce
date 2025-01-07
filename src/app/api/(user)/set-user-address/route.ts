@@ -4,7 +4,6 @@ import { ApiResponse } from "@/utils/ApiResponse";
 
 export async function POST(request: Request) {
   const { address } = await request.json();
-  console.log(address);
   if (!address) {
     return Response.json(new ApiError(404, false, "Address not found!."), {
       status: 404,
@@ -27,8 +26,6 @@ export async function POST(request: Request) {
         status: 404,
       });
     }
-
-    console.log(user);
 
     if (user.address.length === 1) {
       const updatedAddress = await prisma.address.update({

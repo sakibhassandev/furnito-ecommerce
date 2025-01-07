@@ -25,6 +25,25 @@ model User {
     isVerified          Boolean   @default(false)
     reviews             Review[]
     address             Address[]
+    orders              Order[]
+}
+
+model Order {
+    id         String      @id @default(auto()) @map("_id") @db.ObjectId
+    orderDate  DateTime    @default(now())
+    userId     String      @db.ObjectId
+    user       User        @relation(fields: [userId], references: [id])
+    orderItems OrderItem[]
+    updatedAt  DateTime    @updatedAt
+}
+
+model OrderItem {
+    id        String  @id @default(auto()) @map("_id") @db.ObjectId
+    orderId   String  @db.ObjectId
+    productId String  @db.ObjectId
+    order     Order   @relation(fields: [orderId], references: [id])
+    product   Product @relation(fields: [productId], references: [id])
+    quantity  Int
 }
 
 model Review {
@@ -85,8 +104,9 @@ model Product {
     reviews     Review[]
     hasDiscount Int?
     sizes       String[]
-    colors      Colors[]
     images      ProductImages[]
+    colors      Colors[]
+    orderItems  OrderItem[]
     price       Float
     createdAt   DateTime        @default(now())
     updatedAt   DateTime        @updatedAt
