@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { Country, State, City } from "country-state-city";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { AddressType, FormAddressType } from "@/lib/definitions";
+import CheckoutSummary from "./OrderSummary";
+import StoreProvider from "@/store/StoreProvider";
 
 export default function Checkout() {
   const session = useSession();
@@ -18,14 +20,14 @@ export default function Checkout() {
     {} as { value: string; label: string }
   );
 
-  const getAddress = async () => {
+  const getAddress = useCallback(async () => {
     if (!session.data?.user?.id) return null;
     const response = await axios.post("/api/get-user-address", {
       userId: session.data.user.id,
     });
     if (response.data) return response.data;
     return null;
-  };
+  }, [session.data?.user?.id]);
 
   const saveAddress = async (address: FormAddressType) => {
     if (!session.data?.user?.id) return null;
@@ -53,7 +55,7 @@ export default function Checkout() {
     if (session.status === "authenticated") {
       getAddress();
     }
-  }, [session.status]);
+  }, [session.status, getAddress]);
 
   const {
     register,
@@ -86,7 +88,7 @@ export default function Checkout() {
     if (session.status === "authenticated") {
       loadAddress();
     }
-  }, [reset, session.status]);
+  }, [reset, session.status, getAddress]);
 
   const onSubmit = async (data: FormAddressType) => {
     const address = await saveAddress(data);
@@ -106,7 +108,10 @@ export default function Checkout() {
         borderColor: "#B88E2F",
       },
     }),
-    option: (provided: any, state: { isSelected: any; isFocused: any }) => ({
+    option: (
+      provided: any,
+      state: { isSelected: boolean; isFocused: boolean }
+    ) => ({
       ...provided,
       backgroundColor: state.isSelected
         ? "#B88E2F"
@@ -144,7 +149,7 @@ export default function Checkout() {
       <div className="container mx-auto p-6 py-24 min-h-screen">
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Billing Details Section */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-white rounded-xl shadow-lg p-8 h-max">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-3xl font-bold text-[#333333]">
                 Billing details
@@ -289,7 +294,6 @@ export default function Checkout() {
                     <Controller
                       name="state"
                       control={control}
-                      rules={{ required: "State/Province is required" }}
                       render={({ field }) => (
                         <Select
                           {...field}
@@ -315,7 +319,6 @@ export default function Checkout() {
                     <Controller
                       name="city"
                       control={control}
-                      rules={{ required: "City is required" }}
                       render={({ field }) => (
                         <Select
                           {...field}
@@ -414,80 +417,9 @@ export default function Checkout() {
           </div>
 
           {/* Order Summary Section */}
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <h2 className="text-3xl font-bold text-[#333333] mb-8">
-              Your order
-            </h2>
-            <div className="space-y-6">
-              <div className="flex justify-between pb-4 border-b border-gray-200">
-                <div>
-                  <p className="font-medium">Asgaard sofa</p>
-                  <p className="text-sm text-gray-600">Quantity: 1</p>
-                </div>
-                <p className="font-medium">Rs. 250,000.00</p>
-              </div>
-
-              <div className="flex justify-between pb-4 border-b border-gray-200">
-                <p className="font-medium">Subtotal</p>
-                <p className="font-medium">Rs. 250,000.00</p>
-              </div>
-
-              <div className="flex justify-between font-semibold text-lg">
-                <p>Total</p>
-                <p className="text-[#B88E2F]">Rs. 250,000.00</p>
-              </div>
-
-              <div className="space-y-4 pt-4">
-                <div className="space-y-2 opacity-50">
-                  <label className="flex items-center space-x-3">
-                    <input
-                      type="radio"
-                      disabled
-                      value="bank"
-                      className="form-radio border-gray-300 text-gray-400"
-                    />
-                    <span className="font-medium text-gray-500">
-                      Direct Bank Transfer
-                    </span>
-                  </label>
-                  <p className="text-sm text-gray-500 ml-6">
-                    Make your payment directly into our bank account. Please use
-                    your Order ID as the payment reference. Your order will not
-                    be shipped until the funds have cleared in our account.
-                  </p>
-                </div>
-                <label className="flex items-center space-x-3">
-                  <input
-                    type="radio"
-                    {...register("paymentMethod")}
-                    value="cod"
-                    defaultChecked
-                    className="form-radio text-[#B88E2F] focus:ring-[#B88E2F]"
-                  />
-                  <span className="font-medium">Cash On Delivery</span>
-                </label>
-              </div>
-
-              <p className="text-sm text-gray-600">
-                Your personal data will be used to support your experience
-                throughout this website, to manage access to your account, and
-                for other purposes described in our{" "}
-                <a href="#" className="text-[#B88E2F] hover:underline">
-                  privacy policy
-                </a>
-                .
-              </p>
-
-              <div className="flex justify-center">
-                <button
-                  onClick={handleSubmit(onSubmit)}
-                  className="rounded-lg w-2/3 border-2 border-[#B88E2F] text-[#B88E2F] py-3 px-4 hover:bg-[#B88E2F] hover:text-white transition-colors duration-200 font-medium mt-6"
-                >
-                  Place order
-                </button>
-              </div>
-            </div>
-          </div>
+          <StoreProvider>
+            <CheckoutSummary />
+          </StoreProvider>
         </div>
       </div>
     </section>
