@@ -1,3 +1,4 @@
+import { InfoHighlights } from "@/ui/common/InfoHighlights";
 import { SectionCommonHeader } from "@/ui/common/SectionCommonHeader";
 import OrderDetails from "@/ui/my-orders/OrderDetails";
 import { Metadata } from "next";
@@ -20,6 +21,7 @@ export default async function OrderDetailsPage({
         curr="Order Details"
       />
       <OrderDetails orderId={id} />
+      <InfoHighlights />
     </>
   );
 }

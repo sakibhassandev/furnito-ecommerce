@@ -1,3 +1,4 @@
+import { InfoHighlights } from "@/ui/common/InfoHighlights";
 import { SectionCommonHeader } from "@/ui/common/SectionCommonHeader";
 import MyOrders from "@/ui/my-orders/MyOrders";
 import { Metadata } from "next";
@@ -14,6 +15,7 @@ const MyOrdersPage = () => {
       <SessionProvider>
         <MyOrders />
       </SessionProvider>
+      <InfoHighlights />
     </>
   );
 };

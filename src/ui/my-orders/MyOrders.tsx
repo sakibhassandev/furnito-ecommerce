@@ -47,7 +47,7 @@ const MyOrders = () => {
         setOrders(response.data.data);
       } catch (error) {
         const err = error as AxiosError<ApiError>;
-        console.log(err);
+        console.error(err);
       }
     };
 
