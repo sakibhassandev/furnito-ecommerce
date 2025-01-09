@@ -45,7 +45,6 @@ const MyOrders = () => {
           userId,
         });
         setOrders(response.data.data);
-        console.log(response);
       } catch (error) {
         const err = error as AxiosError<ApiError>;
         console.log(err);
@@ -75,7 +74,7 @@ const MyOrders = () => {
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto px-4 py-8">
+    <div className="max-w-screen-2xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">My Orders</h1>
       <div className="space-y-6">
         {orders.length > 0 ? (
@@ -122,29 +121,42 @@ const MyOrders = () => {
               {expandedOrder === order.id && (
                 <div className="px-6 pb-6">
                   <div className="mt-4 divide-y">
-                    {order.orderItems.map((item) => (
-                      <div
-                        key={item.product.id}
-                        className="py-4 flex items-center space-x-4"
-                      >
-                        <Image
-                          src={item.product.images[0].url[0]}
-                          alt={item.product.name}
-                          width={64}
-                          height={64}
-                          className="object-cover rounded"
-                        />
-                        <div className="flex-1">
-                          <h3 className="font-medium">{item.product.name}</h3>
-                          <p className="text-sm text-gray-600">
-                            Quantity: {item.quantity}
+                    {order.orderItems.map((item) => {
+                      const discountPrice = parseFloat(
+                        (item.product.hasDiscount
+                          ? item.product.price -
+                            (item.product.price * item.product.hasDiscount) /
+                              100
+                          : 0
+                        ).toFixed(2)
+                      );
+                      return (
+                        <div
+                          key={item.product.id}
+                          className="py-4 flex items-center space-x-4"
+                        >
+                          <Image
+                            src={item.product.images[0].url[0]}
+                            alt={item.product.name}
+                            width={64}
+                            height={64}
+                            className="object-cover rounded"
+                          />
+                          <div className="flex-1">
+                            <h3 className="font-medium">{item.product.name}</h3>
+                            <p className="text-sm text-gray-600">
+                              Quantity: {item.quantity}
+                            </p>
+                          </div>
+                          <p className="font-medium">
+                            $
+                            {discountPrice
+                              ? discountPrice
+                              : item.product.price.toLocaleString()}
                           </p>
                         </div>
-                        <p className="font-medium">
-                          ${item.product.price.toLocaleString()}
-                        </p>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                   <div className="mt-6 flex justify-end">
                     <Link

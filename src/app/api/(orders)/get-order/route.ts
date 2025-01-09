@@ -3,28 +3,18 @@ import { ApiError } from "@/utils/ApiError";
 import { ApiResponse } from "@/utils/ApiResponse";
 
 export async function POST(request: Request) {
-  const { userId } = await request.json();
+  const { orderId } = await request.json();
 
-  if (!userId) {
-    return Response.json(
-      new ApiError(404, false, "User Id Not Found Or User Not Logged In."),
-      {
-        status: 404,
-      }
-    );
+  if (!orderId) {
+    return Response.json(new ApiError(404, false, "Order Id Not Found."), {
+      status: 404,
+    });
   }
 
   try {
-    const orders = await prisma.order.findMany({
+    const order = await prisma.order.findFirst({
       where: {
-        OR: [
-          {
-            userId,
-          },
-          {
-            id: userId,
-          },
-        ],
+        id: orderId,
       },
       select: {
         id: true,
@@ -59,17 +49,18 @@ export async function POST(request: Request) {
         status: true,
         trackingNumber: true,
         orderDate: true,
+        deliveryCharge: true,
       },
     });
 
-    if (!orders) {
-      return Response.json(new ApiError(404, false, "Orders not found"), {
+    if (!order) {
+      return Response.json(new ApiError(404, false, "Order not found"), {
         status: 404,
       });
     }
 
     return Response.json(
-      new ApiResponse(200, true, orders, "Orders fetched successfully!"),
+      new ApiResponse(200, true, order, "Order fetched successfully!"),
       {
         status: 200,
       }

@@ -17,6 +17,7 @@ interface OrderItem {
   name: string;
   quantity: number;
   price: number;
+  discountPrice?: number;
 }
 
 export default function CheckoutSummary() {
@@ -34,7 +35,9 @@ export default function CheckoutSummary() {
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
   const subtotal = orderItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) =>
+      acc +
+      (item.discountPrice ? item.discountPrice : item.price) * item.quantity,
     0
   );
   const deliveryCharge =
@@ -64,7 +67,7 @@ export default function CheckoutSummary() {
                 key={item.id}
                 productName={item.name}
                 quantity={item.quantity}
-                price={item.price}
+                price={item.discountPrice ? item.discountPrice : item.price}
               />
             ))
           )}
@@ -170,13 +173,14 @@ export default function CheckoutSummary() {
                   paymentMethod,
                   total,
                   status: "pending",
+                  deliveryCharge,
                 });
                 toast.success(`Your ${response.data?.message}`, {
                   position: "top-center",
                   autoClose: 2000,
                   theme: "light",
                 });
-                router.push("/cart");
+                router.push("/my-orders");
               } catch (error) {
                 const axiosError = error as AxiosError<ApiError>;
                 toast.error(

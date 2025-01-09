@@ -29,16 +29,18 @@ model User {
 }
 
 model Order {
-    id            String      @id @default(auto()) @map("_id") @db.ObjectId
-    orderDate     DateTime    @default(now())
-    userId        String      @db.ObjectId
-    user          User        @relation(fields: [userId], references: [id])
-    orderItems    OrderItem[]
-    paymentMethod String
-    total         Float
-    status        String
-    createdAt     DateTime    @default(now())
-    updatedAt     DateTime    @updatedAt
+    id             String      @id @default(auto()) @map("_id") @db.ObjectId
+    orderDate      DateTime    @default(now())
+    userId         String      @db.ObjectId
+    user           User        @relation(fields: [userId], references: [id])
+    orderItems     OrderItem[]
+    paymentMethod  String
+    total          Float
+    status         String
+    trackingNumber String
+    deliveryCharge Float
+    createdAt      DateTime    @default(now())
+    updatedAt      DateTime    @updatedAt
 }
 
 model OrderItem {

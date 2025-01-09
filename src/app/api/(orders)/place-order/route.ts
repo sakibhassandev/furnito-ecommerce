@@ -10,10 +10,17 @@ interface OrderItem {
 }
 
 export async function POST(request: Request) {
-  const { userId, orderItems, paymentMethod, total, status } =
+  const { userId, orderItems, paymentMethod, total, status, deliveryCharge } =
     await request.json();
 
-  if (!userId || !orderItems || !paymentMethod || !total || !status) {
+  if (
+    !userId ||
+    !orderItems ||
+    !paymentMethod ||
+    !total ||
+    !status ||
+    !deliveryCharge
+  ) {
     return Response.json(
       new ApiError(404, false, "Missing required fields!."),
       {
@@ -21,6 +28,9 @@ export async function POST(request: Request) {
       }
     );
   }
+
+  //   generating tracking number
+  const trackingNumber = `TRACK${Math.floor(Math.random() * 1000000000)}`;
 
   try {
     const order = await prisma.order.create({
@@ -32,9 +42,11 @@ export async function POST(request: Request) {
             quantity: item.quantity,
           })),
         },
+        trackingNumber,
         paymentMethod,
         total,
         status,
+        deliveryCharge,
       },
       select: {
         orderItems: {
