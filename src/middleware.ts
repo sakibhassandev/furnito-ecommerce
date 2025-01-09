@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const loginToken = request.cookies.get("token");
+  const loginToken = request.cookies.get("authjs.session-token");
   const passwordToken = new URL(request.url).searchParams.get("token");
   const verifyEmail = new URL(request.url).searchParams.get("email");
 
@@ -32,6 +32,17 @@ export function middleware(request: NextRequest) {
       request.nextUrl.pathname === "/register")
   ) {
     return NextResponse.redirect(new URL("/", request.url), { status: 302 });
+  }
+
+  if (
+    !loginToken &&
+    (request.nextUrl.pathname === "/checkout" ||
+      request.nextUrl.pathname === "/my-orders" ||
+      request.nextUrl.pathname.startsWith("/order-details"))
+  ) {
+    return NextResponse.redirect(new URL("/login", request.url), {
+      status: 302,
+    });
   }
 
   return NextResponse.next();

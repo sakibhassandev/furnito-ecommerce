@@ -26,8 +26,6 @@ const ProductDetails = ({
   const colorsRef = useRef<HTMLDivElement>(null);
   const sizesRef = useRef<HTMLDivElement>(null);
 
-  console.log(singleProduct);
-
   const dispatch = useDispatch();
   const discountPrice = parseFloat(
     (singleProduct?.hasDiscount

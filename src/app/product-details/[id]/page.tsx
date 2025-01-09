@@ -30,8 +30,6 @@ const ProductDetailsPage = () => {
   const params = useParams();
   const productId = params.id;
 
-  console.log(productId);
-
   useEffect(() => {
     const fetchData = async () => {
       try {

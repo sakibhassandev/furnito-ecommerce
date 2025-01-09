@@ -19,6 +19,10 @@
   transition: transform 0.45s ease-in-out, opacity 0.45s ease-in-out;
 }
 
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
 .translate-x-full-plus-80 {
   transform: translateX(calc(100% + 80px));
 }

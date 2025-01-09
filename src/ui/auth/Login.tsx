@@ -8,10 +8,10 @@ import { toast } from "react-toastify";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/loginSchema";
-import axios, { AxiosError } from "axios";
-import { ApiError } from "@/utils/ApiError";
 import { useRouter } from "next/navigation";
 import { Eye, Loader2 } from "lucide-react";
+import { signIn } from "next-auth/react";
+import GoogleLogin from "../common/GoogleLogin";
 
 export const Login = () => {
   const router = useRouter();
@@ -45,16 +45,30 @@ export const Login = () => {
   // Submit Handler
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try {
-      const response = await axios.post("/api/login", data);
-      toast.success(`Hey, ${response.data.data.name}. Welcome back!`, {
-        position: "top-center",
-        autoClose: 2000,
-        theme: "light",
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.password,
       });
-      router.push("/");
+
+      if (result?.error) {
+        toast.error(result.code?.split(".")[0] || "Something went wrong", {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "light",
+        });
+      } else {
+        toast.success("Welcome back!", {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "light",
+        });
+        router.push("/");
+      }
     } catch (error) {
-      const axiosError = error as AxiosError<ApiError>;
-      toast.error(axiosError.response?.data.message || "Something went wrong", {
+      const errorMessage =
+        error instanceof Error ? error.message : "Something went wrong";
+      toast.error(errorMessage, {
         position: "top-center",
         autoClose: 2000,
         theme: "light",
@@ -319,6 +333,7 @@ export const Login = () => {
                     </p>
                   </div>
                 </div>
+                <GoogleLogin />
               </div>
             </div>
           </div>

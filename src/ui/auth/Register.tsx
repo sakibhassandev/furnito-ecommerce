@@ -12,6 +12,7 @@ import { registerSchema } from "@/schemas/registerSchema";
 import axios, { AxiosError } from "axios";
 import { ApiError } from "@/utils/ApiError";
 import { useRouter } from "next/navigation";
+import GoogleLogin from "../common/GoogleLogin";
 
 export const Register = () => {
   const router = useRouter();
@@ -59,7 +60,7 @@ export const Register = () => {
           {<AuthParticles />}
           <div className="flex justify-center">
             <div className="w-full max-w-full mx-5 xl:w-1/2 lg:w-2/3 md:w-10/12">
-              <div className="max-xl:p-[50px_45px_55px] xl:p-[50px_60px_55px] max-2xl:p-[50px_85px_55px] bg-white shadow-[0_30px_60px_rgba(3,4,28,.1)]">
+              <div className="max-xl:p-[50px_45px_55px] xl:p-[50px_60px_55px] max-2xl:p-[50px_85px_</div>55px] bg-white shadow-[0_30px_60px_rgba(3,4,28,.1)]">
                 <div className="mb-8 text-center text">
                   <h3 className="mb-3 text-3xl font-semibold login__title">
                     Register Now!
@@ -403,6 +404,7 @@ export const Register = () => {
                     </p>
                   </div>
                 </div>
+                <GoogleLogin />
               </div>
             </div>
           </div>

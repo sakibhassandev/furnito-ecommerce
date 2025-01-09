@@ -24,6 +24,32 @@ model User {
     forgotPasswordExp   DateTime?
     isVerified          Boolean   @default(false)
     reviews             Review[]
+    address             Address[]
+    orders              Order[]
+}
+
+model Order {
+    id             String      @id @default(auto()) @map("_id") @db.ObjectId
+    orderDate      DateTime    @default(now())
+    userId         String      @db.ObjectId
+    user           User        @relation(fields: [userId], references: [id])
+    orderItems     OrderItem[]
+    paymentMethod  String
+    total          Float
+    status         String
+    trackingNumber String
+    deliveryCharge Float
+    createdAt      DateTime    @default(now())
+    updatedAt      DateTime    @updatedAt
+}
+
+model OrderItem {
+    id        String  @id @default(auto()) @map("_id") @db.ObjectId
+    orderId   String  @db.ObjectId
+    productId String  @db.ObjectId
+    order     Order   @relation(fields: [orderId], references: [id])
+    product   Product @relation(fields: [productId], references: [id])
+    quantity  Int
 }
 
 model Review {
@@ -37,6 +63,25 @@ model Review {
     product   Product  @relation(fields: [productId], references: [id])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+}
+
+model Address {
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    firstName      String
+    lastName       String
+    companyName    String?
+    country        String
+    street         String
+    state          String
+    city           String
+    zip            String
+    phone          String
+    email          String
+    additionalInfo String?
+    User           User     @relation(fields: [userId], references: [id])
+    userId         String   @db.ObjectId
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
 }
 
 model Colors {
@@ -65,8 +110,9 @@ model Product {
     reviews     Review[]
     hasDiscount Int?
     sizes       String[]
-    colors      Colors[]
     images      ProductImages[]
+    colors      Colors[]
+    orderItems  OrderItem[]
     price       Float
     createdAt   DateTime        @default(now())
     updatedAt   DateTime        @updatedAt

@@ -37,7 +37,6 @@ export const ResetPassword = () => {
         `/api/reset-password?token=${params.get("token")}`,
         data
       );
-      console.log(response);
       toast.success(
         `Hey, ${response.data.data.name}. Your password has been reset successfully!`,
         {

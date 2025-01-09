@@ -43,8 +43,6 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log(user.verifyCode, otp);
-
     if (user.isVerified) {
       return Response.json(new ApiError(400, false, "User already verified."), {
         status: 400,

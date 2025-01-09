@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import StoreProvider from "@/store/StoreProvider";
 import CartPage from "@/ui/cart/CartPage";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Cart",
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 const Cart = () => {
   return (
     <StoreProvider>
-      <CartPage />
+      <SessionProvider>
+        <CartPage />
+      </SessionProvider>
     </StoreProvider>
   );
 };
