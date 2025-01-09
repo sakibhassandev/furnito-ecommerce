@@ -6,6 +6,11 @@ import CheckoutProduct from "./CheckoutProduct";
 
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/index";
+import axios, { AxiosError } from "axios";
+import { useSession } from "next-auth/react";
+import { ApiError } from "@/utils/ApiError";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 interface OrderItem {
   id: string;
@@ -15,10 +20,17 @@ interface OrderItem {
 }
 
 export default function CheckoutSummary() {
+  const router = useRouter();
+
   // Getting products from the Redux store from the cartItems slice
   const orderItems: OrderItem[] = useSelector(
     (state: RootState) => state.cartItems
   );
+
+  //   Getting the user id from next-auth
+  const { data } = useSession();
+  const userId = data?.user?.id;
+
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
   const subtotal = orderItems.reduce(
@@ -148,10 +160,34 @@ export default function CheckoutSummary() {
               ? "bg-gray-300 border-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-[#B88E2F] border-[#B88E2F] text-white hover:bg-[#A77A1F] hover:border-[#A77A1F]"
           }`}
-          onClick={() => {
+          onClick={async () => {
             if (orderItems.length > 0) {
               // Handle order placement
-              console.log("Order placed with payment method:", paymentMethod);
+              try {
+                const response = await axios.post("/api/place-order", {
+                  userId,
+                  orderItems,
+                  paymentMethod,
+                  total,
+                  status: "pending",
+                });
+                toast.success(`Your ${response.data?.message}`, {
+                  position: "top-center",
+                  autoClose: 2000,
+                  theme: "light",
+                });
+                router.push("/cart");
+              } catch (error) {
+                const axiosError = error as AxiosError<ApiError>;
+                toast.error(
+                  axiosError.response?.data?.message || "Something went wrong",
+                  {
+                    position: "top-center",
+                    autoClose: 2000,
+                    theme: "light",
+                  }
+                );
+              }
             }
           }}
         >

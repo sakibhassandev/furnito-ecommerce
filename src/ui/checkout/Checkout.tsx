@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import { Country, State, City } from "country-state-city";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import { AddressType, FormAddressType } from "@/lib/definitions";
 import CheckoutSummary from "./OrderSummary";
 import StoreProvider from "@/store/StoreProvider";
@@ -418,7 +418,9 @@ export default function Checkout() {
 
           {/* Order Summary Section */}
           <StoreProvider>
-            <CheckoutSummary />
+            <SessionProvider>
+              <CheckoutSummary />
+            </SessionProvider>
           </StoreProvider>
         </div>
       </div>

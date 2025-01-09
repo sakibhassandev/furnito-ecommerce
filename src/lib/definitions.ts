@@ -25,7 +25,7 @@ export type ProductType = {
   sku: string;
   categories: string[];
   tags: string[];
-  reviews: {
+  reviews?: {
     name: string;
     rating: number;
     message: string;

@@ -76,12 +76,12 @@ export function HeaderProfile({ user, onSignOut }: ProfileDropdownProps) {
               My Profile
             </Link>
             <Link
-              href="/orders"
+              href="/my-orders"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               role="menuitem"
               onClick={() => setIsOpen(false)}
             >
-              Orders
+              My Orders
             </Link>
             <Link
               href="/wishlist"
