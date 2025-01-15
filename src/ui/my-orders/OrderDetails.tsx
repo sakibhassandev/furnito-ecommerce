@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowLeftIcon,
   PackageIcon,
@@ -18,6 +18,7 @@ import { OrderType } from "@/lib/definitions";
 
 export default function OrderDetails({ orderId }: { orderId: string }) {
   const [order, setOrder] = useState<OrderType>({} as OrderType);
+  const orderDetailsRef = useRef(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -63,9 +64,8 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
 
   const handleInvoiceDownload = async () => {
     const html2pdf = (await import("html2pdf.js")).default;
-    const element = document.getElementById("order-details");
-    if (element) {
-      html2pdf(element, {
+    if (orderDetailsRef.current) {
+      html2pdf(orderDetailsRef.current, {
         margin: 1,
         filename: `furnito-invoice.pdf`,
       });
@@ -83,7 +83,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
       </Link>
 
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="p-6 sm:p-10" id="order-details">
+        <div className="p-6 sm:p-10" ref={orderDetailsRef}>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 g?ap-4">
             <h1 className="text-3xl font-bold">Order #{order?.id}</h1>
             <div
