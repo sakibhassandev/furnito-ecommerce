@@ -40,7 +40,8 @@ export function middleware(request: NextRequest) {
     !loginToken &&
     (request.nextUrl.pathname === "/checkout" ||
       request.nextUrl.pathname === "/my-orders" ||
-      request.nextUrl.pathname.startsWith("/order-details"))
+      request.nextUrl.pathname.startsWith("/order-details") ||
+      request.nextUrl.pathname === "/profile")
   ) {
     return NextResponse.redirect(new URL("/login", request.url), {
       status: 302,

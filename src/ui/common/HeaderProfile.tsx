@@ -45,7 +45,7 @@ export function HeaderProfile({ user, onSignOut }: ProfileDropdownProps) {
       >
         {user.image ? (
           <img
-            src={user.image}
+            src={user?.image}
             alt="User Image"
             className="w-8 h-8 rounded-full"
           />
