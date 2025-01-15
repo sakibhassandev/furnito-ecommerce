@@ -69,7 +69,7 @@ export default function MyProfile() {
 
       {/* Main Content */}
       <div className="flex-1 md:pl-10 overflow-auto py-1">
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="p-6">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">
               Profile Information
