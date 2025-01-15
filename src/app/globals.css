@@ -70,3 +70,9 @@
   background-color: #b88e2f !important;
   color: white !important;
 }
+
+@layer base {
+  img {
+    display: initial;
+  }
+}
