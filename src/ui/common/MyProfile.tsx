@@ -11,7 +11,6 @@ import {
   User,
   Briefcase,
 } from "lucide-react";
-import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
 import { ProfileData } from "@/lib/definitions";
