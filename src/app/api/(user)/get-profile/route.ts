@@ -20,7 +20,7 @@ export async function GET() {
     }
     const user = await prisma.user.findUnique({
       where: {
-        email: session?.user?.email ?? undefined,
+        id: session?.user?.id,
       },
       select: {
         name: true,
@@ -38,18 +38,8 @@ export async function GET() {
       });
     }
 
-    const foundUser = {
-      user,
-      avatar: session?.user?.image,
-    };
-
     return Response.json(
-      new ApiResponse(
-        200,
-        true,
-        foundUser,
-        "User profile fetched successfully."
-      )
+      new ApiResponse(200, true, user, "User profile fetched successfully.")
     );
   } catch (error) {
     console.log(error);

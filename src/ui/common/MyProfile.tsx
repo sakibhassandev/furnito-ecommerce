@@ -16,6 +16,15 @@ import axios from "axios";
 import Link from "next/link";
 import { ProfileData } from "@/lib/definitions";
 
+// Get user initials
+const getInitials = (name: string) => {
+  const names = name.split(" ");
+  if (names.length >= 2) {
+    return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase();
+  }
+  return name.slice(0, 2).toUpperCase();
+};
+
 export default function MyProfile() {
   const [profile, setProfile] = useState<ProfileData | null>(null);
 
@@ -37,16 +46,12 @@ export default function MyProfile() {
       <div className={`w-full md:w-64 bg-white shadow-lg block`}>
         <div className="">
           <div className="relative w-32 h-32 mx-auto mb-4">
-            <Image
-              src={profile?.avatar || "/assets/images/dummy-profile.png"}
-              alt={profile?.user.name || ""}
-              width={128}
-              height={128}
-              className="rounded-full object-cover border-4 border-[#B88E2F]"
-            />
+            <div className="text-5xl bg-black flex items-center justify-center w-32 h-32 rounded-full bg-primary text-white">
+              {profile?.name ? getInitials(profile?.name) : "GU"}
+            </div>
           </div>
           <h1 className="text-2xl font-bold text-center text-gray-900 mb-6">
-            {profile?.user.name}
+            {profile?.name}
           </h1>
         </div>
         <nav className="mt-6">
@@ -79,7 +84,7 @@ export default function MyProfile() {
                 <User className="w-6 h-6 text-[#B88E2F] flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-500">Name</p>
-                  <p className="text-gray-900">{profile?.user?.name}</p>
+                  <p className="text-gray-900">{profile?.name}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -87,7 +92,7 @@ export default function MyProfile() {
                 <div>
                   <p className="text-sm font-medium text-gray-500">Company</p>
                   <p className="text-gray-900">
-                    {profile?.user?.address[0]?.companyName}
+                    {profile?.address[0]?.companyName}
                   </p>
                 </div>
               </div>
@@ -95,34 +100,28 @@ export default function MyProfile() {
                 <Mail className="w-6 h-6 text-[#B88E2F] flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-500">Email</p>
-                  <p className="text-gray-900 break-all">
-                    {profile?.user?.email}
-                  </p>
+                  <p className="text-gray-900 break-all">{profile?.email}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
                 <Phone className="w-6 h-6 text-[#B88E2F] flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-500">Phone</p>
-                  <p className="text-gray-900">
-                    {profile?.user?.address[0]?.phone}
-                  </p>
+                  <p className="text-gray-900">{profile?.address[0]?.phone}</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
                 <MapPin className="w-6 h-6 text-[#B88E2F] flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-500">Address</p>
+                  <p className="text-gray-900">{profile?.address[0]?.street}</p>
                   <p className="text-gray-900">
-                    {profile?.user?.address[0]?.street}
-                  </p>
-                  <p className="text-gray-900">
-                    {profile?.user?.address?.[0]
-                      ? `${profile?.user?.address[0]?.city}, ${profile?.user?.address[0]?.state} ${profile?.user?.address[0]?.zip}`
+                    {profile?.address?.[0]
+                      ? `${profile?.address[0]?.city}, ${profile?.address[0]?.state} ${profile?.address[0]?.zip}`
                       : ""}
                   </p>
                   <p className="text-gray-900">
-                    {profile?.user?.address[0]?.country}
+                    {profile?.address[0]?.country}
                   </p>
                 </div>
               </div>
@@ -131,13 +130,14 @@ export default function MyProfile() {
                 <div>
                   <p className="text-sm font-medium text-gray-500">Joined</p>
                   <p className="text-gray-900">
-                    {new Date(
-                      profile?.user?.createdAt || ""
-                    ).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
+                    {new Date(profile?.createdAt || "").toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }
+                    )}
                   </p>
                 </div>
               </div>

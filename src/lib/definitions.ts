@@ -83,29 +83,26 @@ export interface OrderType {
 }
 
 export interface ProfileData {
-  user: {
-    name: string;
+  name: string;
+  email: string;
+  address: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    companyName: string;
+    country: string;
+    street: string;
+    state: string;
+    city: string;
+    zip: string;
+    phone: string;
     email: string;
-    address: {
-      id: string;
-      firstName: string;
-      lastName: string;
-      companyName: string;
-      country: string;
-      street: string;
-      state: string;
-      city: string;
-      zip: string;
-      phone: string;
-      email: string;
-      additionalInfo: string;
-      userId: string;
-      createdAt: string;
-      updatedAt: string;
-    }[];
+    additionalInfo: string;
+    userId: string;
     createdAt: string;
-  };
-  avatar: string;
+    updatedAt: string;
+  }[];
+  createdAt: string;
 }
 
 export type FormAddressType = {
