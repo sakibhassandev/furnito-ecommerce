@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const loginToken = request.cookies.get("authjs.session-token");
+  const loginToken =
+    request.cookies.get("__Secure-authjs.session-token") ||
+    request.cookies.get("authjs.session-token");
   const passwordToken = new URL(request.url).searchParams.get("token");
   const verifyEmail = new URL(request.url).searchParams.get("email");
 
