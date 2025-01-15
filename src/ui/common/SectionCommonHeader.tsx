@@ -19,7 +19,7 @@ export const SectionCommonHeader = ({
         width={1920}
         height={786}
       />
-      <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+      <div className="flex flex-col items-center justify-center absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
         <Image
           src="/assets/furnito-icon.svg"
           alt="icon"

@@ -26,6 +26,7 @@ model User {
     reviews             Review[]
     address             Address[]
     orders              Order[]
+    createdAt           DateTime  @default(now())
 }
 
 model Order {

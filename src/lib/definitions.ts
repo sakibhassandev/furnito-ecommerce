@@ -55,6 +55,56 @@ export type AddressType = {
   paymentMethod?: string;
 };
 
+interface OrderItem {
+  product: ProductType;
+  quantity: number;
+}
+
+export interface OrderType {
+  id: string;
+  orderDate: string;
+  orderItems: OrderItem[];
+  paymentMethod: string;
+  status: "pending" | "processing" | "shipped" | "delivered";
+  trackingNumber: string;
+  total: number;
+  deliveryCharge: number;
+  user: {
+    email: string;
+    name: string;
+    address: {
+      street: string;
+      city: string;
+      state: string;
+      country: string;
+      zip: string;
+    }[];
+  };
+}
+
+export interface ProfileData {
+  name: string;
+  email: string;
+  address: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    companyName: string;
+    country: string;
+    street: string;
+    state: string;
+    city: string;
+    zip: string;
+    phone: string;
+    email: string;
+    additionalInfo: string;
+    userId: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
+  createdAt: string;
+}
+
 export type FormAddressType = {
   userId: string;
   firstName: string;
