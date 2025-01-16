@@ -33,7 +33,7 @@ const Contact = () => {
             <div className="flex flex-wrap justify-between mb-8 contact-items">
               <div className="w-full p-3 md:w-2/4 lg:w-1/3">
                 <div className="item p-[60px_40px_58px] shadow-[0_0px_30px_rgba(3,4,28,.06)] bg-white">
-                  <div className="icon mb-9 min-h-20">
+                  <div className="icon mb-9 min-h-20 flex">
                     <Image
                       src="/assets/images/contact-page/message-icon.webp"
                       alt="messageIcon"
@@ -58,7 +58,7 @@ const Contact = () => {
 
               <div className="w-full p-3 md:w-2/4 lg:w-1/3">
                 <div className="item p-[60px_40px_58px] shadow-[0_0px_30px_rgba(3,4,28,.06)] bg-white">
-                  <div className="icon mb-9 min-h-20">
+                  <div className="icon mb-9 min-h-20 flex">
                     <Image
                       src="/assets/images/contact-page/location-icon.webp"
                       alt="locationIcon"
@@ -85,7 +85,7 @@ const Contact = () => {
 
               <div className="w-full p-3 md:w-2/4 lg:w-1/3">
                 <div className="item p-[60px_40px_58px] shadow-[0_0px_30px_rgba(3,4,28,.06)] bg-white">
-                  <div className="icon mb-9 min-h-20">
+                  <div className="icon mb-9 min-h-20 flex">
                     <Image
                       src="/assets/images/contact-page/social-icon.webp"
                       alt="socialIcon"

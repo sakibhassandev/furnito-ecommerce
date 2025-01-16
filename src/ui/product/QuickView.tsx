@@ -102,7 +102,7 @@ export const QuickView = ({
       } fixed left-0 z-50 flex w-full ease-out duration-300 h-full overflow-x-hidden overflow-y-auto lg:items-center`}
     >
       <div className="relative max-w-[1200px] mx-auto product_modal z-50">
-        <div className="relative h-screen p-10 mx-3 overflow-y-auto bg-white shadow-md modal-content">
+        <div className="relative py-16 px-10 mx-3 overflow-y-auto bg-white shadow-md modal-content">
           <div className="modal-wrapper">
             <button
               onClick={() => dispatch(isQuickViewOpen("closeQuickView"))}

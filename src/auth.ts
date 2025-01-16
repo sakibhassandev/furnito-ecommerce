@@ -3,6 +3,17 @@ import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
+declare module "next-auth" {
+  interface User {
+    role?: string;
+  }
+  interface Session {
+    user: User & {
+      role?: string;
+    };
+  }
+}
+
 class CustomError extends CredentialsSignin {
   message: string;
   constructor(message: string) {
@@ -34,6 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               email: true,
               password: true,
               isVerified: true,
+              role: true, // Add role to select
             },
           });
 
@@ -73,6 +85,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (token.sub) {
         session.user.id = token.sub;
+        // Get user from database to include role
+        const user = await prisma.user.findUnique({
+          where: { id: token.sub },
+          select: { role: true },
+        });
+        session.user.role = user?.role;
       }
       return session;
     },
