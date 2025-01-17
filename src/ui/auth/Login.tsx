@@ -50,7 +50,16 @@ export const Login = () => {
         password: data.password,
       });
 
-      if (result?.error !== "unauthorized") {
+      console.log(result);
+
+      if (!result?.error) {
+        toast.success("Welcome back!", {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "light",
+        });
+        router.push("/");
+      } else if (result.error !== "unauthorized") {
         toast.error("Something went wrong", {
           position: "top-center",
           autoClose: 2000,
