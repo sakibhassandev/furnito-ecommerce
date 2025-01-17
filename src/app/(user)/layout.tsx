@@ -9,7 +9,7 @@ import { SessionProvider } from "next-auth/react";
 import { BackToTop } from "@/ui/common/BackToTop";
 
 import "react-toastify/dist/ReactToastify.css";
-import "./globals.css";
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: {
