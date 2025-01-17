@@ -16,7 +16,6 @@ import { useSession } from "next-auth/react";
 
 const CartPage = () => {
   const session = useSession();
-  console.log(session);
   const cartItems = useSelector((state: RootState) => state.cartItems);
   const totalPrice = cartItems
     .reduce((acc: number, curr: CartState) => {
