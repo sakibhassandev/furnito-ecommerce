@@ -82,7 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   secret: process.env.AUTH_SECRET,
   callbacks: {
-    async session({ session, token }) {
+    async session({ token, session }) {
       if (token.sub) {
         session.user.id = token.sub;
         // Get user from database to include role

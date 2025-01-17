@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import "@/app/globals.css";
+
 export const metadata: Metadata = {
   title: "404 Not Found",
   description: "The page you are looking for does not exist.",

@@ -1,0 +1,26 @@
+"use client";
+
+import { getSession, signOut } from "next-auth/react";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+const AdminPage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const session = await getSession();
+
+      if (session?.user.role !== "admin") {
+        await signOut();
+        router.push("/login?error=unauthorized");
+      }
+    };
+
+    checkAdmin();
+  }, [router]);
+
+  return <div className="container mx-auto p-4">Admin Dashboard</div>;
+};
+
+export default AdminPage;
