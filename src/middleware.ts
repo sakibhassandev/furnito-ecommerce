@@ -31,7 +31,8 @@ export function middleware(request: NextRequest) {
   if (
     loginToken &&
     (request.nextUrl.pathname === "/login" ||
-      request.nextUrl.pathname === "/register")
+      request.nextUrl.pathname === "/register" ||
+      request.nextUrl.pathname === "/login?error=unauthorized")
   ) {
     return NextResponse.redirect(new URL("/", request.url), { status: 302 });
   }

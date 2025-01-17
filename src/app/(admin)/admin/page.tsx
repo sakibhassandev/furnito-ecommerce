@@ -13,7 +13,7 @@ const AdminPage = () => {
 
       if (session?.user.role !== "admin") {
         await signOut();
-        router.push("/login?error=unauthorized");
+        router.replace("/login?error=unauthorized");
       }
     };
 

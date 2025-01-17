@@ -50,12 +50,13 @@ export const Login = () => {
         password: data.password,
       });
 
-      if (result?.error) {
-        toast.error(result.code?.split(".")[0] || "Something went wrong", {
+      if (result?.error !== "unauthorized") {
+        toast.error("Something went wrong", {
           position: "top-center",
           autoClose: 2000,
           theme: "light",
         });
+        router.refresh();
       } else {
         toast.success("Welcome back!", {
           position: "top-center",
