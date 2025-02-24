@@ -1,7 +1,7 @@
 import React from "react";
 import { DollarSign, Package, ShoppingCart, TrendingUp } from "lucide-react";
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
@@ -71,4 +71,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

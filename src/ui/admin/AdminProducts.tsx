@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import { Plus, Edit, Trash2, Eye, Search, X } from "lucide-react";
 import Link from "next/link";
 
-const Products = () => {
+const AdminProducts = () => {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [products, setProducts] = useState([
     {
@@ -292,4 +294,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default AdminProducts;

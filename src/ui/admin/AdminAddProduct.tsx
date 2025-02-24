@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState } from "react";
 import { Upload } from "lucide-react";
 
-const AddProduct = () => {
+const AdminAddProduct = () => {
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
 
@@ -173,4 +175,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default AdminAddProduct;

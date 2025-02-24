@@ -1,9 +1,9 @@
+"use client";
+
 import React, { useState } from "react";
 import { Upload } from "lucide-react";
-import { useParams } from "react-router-dom";
 
-const EditProduct = () => {
-  const { id } = useParams();
+const AdminEditProduct = () => {
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([
     "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=100&q=80",
@@ -191,4 +191,4 @@ const EditProduct = () => {
   );
 };
 
-export default EditProduct;
+export default AdminEditProduct;

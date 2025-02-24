@@ -3,6 +3,7 @@
 import { getSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import AdminDashboard from "@/ui/admin/AdminDashboard";
 
 const AdminPage = () => {
   const router = useRouter();
@@ -20,7 +21,11 @@ const AdminPage = () => {
     checkAdmin();
   }, [router]);
 
-  return <div className="container mx-auto p-4">Admin Dashboard</div>;
+  return (
+    <div className="container mx-auto p-4">
+      <AdminDashboard />
+    </div>
+  );
 };
 
 export default AdminPage;

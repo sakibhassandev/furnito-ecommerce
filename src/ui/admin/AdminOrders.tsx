@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState } from "react";
 import { Check, X, Eye, Search, Filter } from "lucide-react";
 
-const Orders = () => {
+const AdminOrders = () => {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [orders, setOrders] = useState([
     {
@@ -315,4 +317,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default AdminOrders;
