@@ -171,7 +171,7 @@ export default function CheckoutSummary() {
                   userId,
                   orderItems,
                   paymentMethod,
-                  total,
+                  total: parseFloat(total.toFixed(2)),
                   status: "pending",
                   deliveryCharge,
                 });
