@@ -118,87 +118,90 @@ export default function AdminDashboardRecentOrders({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {orders.map((order) => (
-              <TableRow key={order.id} className="group">
-                <TableCell className="font-medium">
-                  <div className="flex items-center gap-2">
-                    <Package className="h-4 w-4 text-muted-foreground" />#
-                    {order.id}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    variant={
-                      order.status === "delivered"
-                        ? "default"
-                        : order.status === "pending"
-                        ? "secondary"
-                        : "destructive"
-                    }
-                  >
-                    {order.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <div className="flex flex-col">
-                    <span className="font-medium">{order?.user?.name}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {order?.user?.email}
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge variant="outline">
-                    {order.orderItems.length} items
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  {new Date(order.orderDate).toLocaleDateString("en-Gb")}
-                </TableCell>
-                <TableCell className="text-right font-medium">
-                  ${order.total.toFixed(2)}
-                </TableCell>
-                <TableCell className="text-right">
-                  <div className="flex justify-end gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="opacity-0 group-hover:opacity-100"
-                      asChild
+            {[...orders]
+              .reverse()
+              .slice(0, 10)
+              .map((order) => (
+                <TableRow key={order.id} className="group">
+                  <TableCell className="font-medium">
+                    <div className="flex items-center gap-2">
+                      <Package className="h-4 w-4 text-muted-foreground" />#
+                      {order.id}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        order.status === "delivered"
+                          ? "default"
+                          : order.status === "pending"
+                          ? "secondary"
+                          : "destructive"
+                      }
                     >
-                      <Link href={`/orders/${order.id}`}>
-                        <Eye className="h-4 w-4" />
-                        <span className="sr-only">View order details</span>
-                      </Link>
-                    </Button>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="opacity-0 group-hover:opacity-100"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Open menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>Update Status</DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => {
-                            window.location.href = `mailto:${order.user.email}`;
-                          }}
-                        >
-                          Contact Customer
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
+                      {order.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex flex-col">
+                      <span className="font-medium">{order?.user?.name}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {order?.user?.email}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline">
+                      {order.orderItems.length} items
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    {new Date(order.orderDate).toLocaleDateString("en-Gb")}
+                  </TableCell>
+                  <TableCell className="text-right font-medium">
+                    ${order.total.toFixed(2)}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex justify-end gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="opacity-0 group-hover:opacity-100"
+                        asChild
+                      >
+                        <Link href={`/orders/${order.id}`}>
+                          <Eye className="h-4 w-4" />
+                          <span className="sr-only">View order details</span>
+                        </Link>
+                      </Button>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="opacity-0 group-hover:opacity-100"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Open menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem>Update Status</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => {
+                              window.location.href = `mailto:${order.user.email}`;
+                            }}
+                          >
+                            Contact Customer
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </CardContent>
