@@ -27,64 +27,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
-
-type ProductImage = {
-  id: string;
-  color: string;
-  url: string[];
-  productId: string;
-};
-
-type Product = {
-  id: string;
-  name: string;
-  description: string;
-  sku: string;
-  categories: string[];
-  tags: string[];
-  hasDiscount: number | null;
-  sizes: string[];
-  price: number;
-  createdAt: string;
-  updatedAt: string;
-  images: ProductImage[];
-};
-
-type OrderItem = {
-  product: Product;
-  quantity: number;
-};
-
-type UserAddress = {
-  street: string;
-  city: string;
-  state: string;
-  country: string;
-  zip: string;
-};
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  address: UserAddress[];
-};
-
-type Order = {
-  id: string;
-  orderItems: OrderItem[];
-  user: User;
-  paymentMethod: string;
-  total: number;
-  status: "pending" | "delivered" | "cancelled";
-  trackingNumber: string;
-  orderDate: string;
-};
+import { OrderType } from "@/lib/definitions";
 
 export default function AdminDashboardRecentOrders({
   orders,
 }: {
-  orders: Order[];
+  orders: OrderType[];
 }) {
   const router = useRouter();
   return (
@@ -169,7 +117,7 @@ export default function AdminDashboardRecentOrders({
                         className="opacity-0 group-hover:opacity-100"
                         asChild
                       >
-                        <Link href={`/orders/${order.id}`}>
+                        <Link href={`/admin/orders?id=${order.id}`}>
                           <Eye className="h-4 w-4" />
                           <span className="sr-only">View order details</span>
                         </Link>
@@ -188,7 +136,13 @@ export default function AdminDashboardRecentOrders({
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem>Update Status</DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => {
+                              router.push(`/admin/orders?id=${order.id}`);
+                            }}
+                          >
+                            Update Status
+                          </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => {
                               window.location.href = `mailto:${order.user.email}`;

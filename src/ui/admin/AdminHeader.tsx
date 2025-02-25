@@ -21,7 +21,7 @@ const AdminHeader = () => {
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex-shrink-0 flex items-center">
+          <Link href="/admin" className="flex-shrink-0 flex items-center">
             {/* Furnito Logo */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ const AdminHeader = () => {
               </defs>
             </svg>
             <h1 className="text-2xl font-bold text-[#B88E2F]">Furnito Admin</h1>
-          </div>
+          </Link>
           {/* Desktop Navigation */}
           <div className="hidden md:ml-6 mx-auto md:flex justify-center w-full md:space-x-8">
             <Link

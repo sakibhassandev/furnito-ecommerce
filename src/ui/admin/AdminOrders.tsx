@@ -1,49 +1,81 @@
 "use client";
 
-import React, { useState } from "react";
-import { Check, X, Eye, Search, Filter } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { X, Eye, Search } from "lucide-react";
+import axios from "axios";
+import { OrderType } from "@/lib/definitions";
+import { toast } from "react-toastify";
 
 const AdminOrders = () => {
-  const [selectedOrder, setSelectedOrder] = useState<any>(null);
-  const [orders, setOrders] = useState([
-    {
-      id: "#ORD-001",
-      customer: {
-        name: "John Smith",
-        email: "john@example.com",
-        address: "123 Main St, City, Country",
-      },
-      products: [
-        { name: "Modern Chair", quantity: 2, price: 299 },
-        { name: "Wooden Table", quantity: 1, price: 299 },
-      ],
-      total: 897,
-      status: "pending",
-      date: "2024-03-15",
-    },
-    // Add more orders as needed
-  ]);
+  const [selectedOrder, setSelectedOrder] = useState<OrderType>(
+    {} as OrderType
+  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [orders, setOrders] = useState<OrderType[]>([]);
 
-  const handleStatusChange = (orderId: string, newStatus: string) => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const selectedOrderId = searchParams.get("id");
+
+  useEffect(() => {
+    if (selectedOrderId) {
+      const order = orders.find((order) => order.id === selectedOrderId);
+      if (order) {
+        setSearchQuery(selectedOrderId);
+        setSelectedOrder(order);
+      }
+    }
+  }, [orders, selectedOrderId]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const response = await axios.get("/api/get-all-orders");
+      setOrders(response.data.data);
+    };
+    fetchOrders();
+  }, []);
+
+  const handleStatusChange = (
+    orderId: string,
+    newStatus: "pending" | "processing" | "shipped" | "delivered"
+  ) => {
     setOrders(
       orders.map((order) =>
         order.id === orderId ? { ...order, status: newStatus } : order
       )
     );
+    axios
+      .put("/api/get-order", { orderId, status: newStatus })
+      .then(({ data }) => {
+        if (data.success) {
+          toast.success("Order status updated successfully!");
+        } else {
+          toast.error("Failed to update order status!");
+        }
+      });
   };
 
   const handleDeleteOrder = (orderId: string) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
       setOrders(orders.filter((order) => order.id !== orderId));
     }
+    axios.delete("/api/get-order", { data: { orderId } }).then(({ data }) => {
+      if (data.success) {
+        toast.success("Order deleted successfully!");
+      } else {
+        toast.error("Failed to delete order!");
+      }
+    });
   };
 
-  const handleApproveOrder = (orderId: string) => {
-    handleStatusChange(orderId, "processing");
-  };
+  const filteredOrders = orders.filter(
+    (order) =>
+      order?.id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order?.user?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order?.user?.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
+    switch (status?.toLowerCase()) {
       case "pending":
         return "bg-yellow-100 text-yellow-800";
       case "processing":
@@ -52,8 +84,6 @@ const AdminOrders = () => {
         return "bg-purple-100 text-purple-800";
       case "delivered":
         return "bg-green-100 text-green-800";
-      case "cancelled":
-        return "bg-red-100 text-red-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
@@ -68,14 +98,12 @@ const AdminOrders = () => {
             <input
               type="text"
               placeholder="Search orders..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
           </div>
-          <button className="flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
-            <Filter className="w-5 h-5 mr-2" />
-            Filter
-          </button>
         </div>
       </div>
 
@@ -105,27 +133,29 @@ const AdminOrders = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {orders.map((order) => (
+              {filteredOrders.map((order) => (
                 <tr key={order.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
                     <div className="text-sm font-medium text-gray-900">
                       {order.id}
                     </div>
-                    <div className="text-sm text-gray-500">{order.date}</div>
+                    <div className="text-sm text-gray-500">
+                      {new Date(order.orderDate).toLocaleDateString("en-Gb")}
+                    </div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-sm font-medium text-gray-900">
-                      {order.customer.name}
+                      {order.user.name}
                     </div>
                     <div className="text-sm text-gray-500">
-                      {order.customer.email}
+                      {order.user.email}
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <div className="text-sm text-gray-900">
-                      {order.products.map((product, index) => (
-                        <div key={index}>
-                          {product.name} x {product.quantity}
+                      {order.orderItems.map((product) => (
+                        <div key={product.product.id}>
+                          {product.product.name} |
                         </div>
                       ))}
                     </div>
@@ -143,7 +173,14 @@ const AdminOrders = () => {
                         )} border-none focus:outline-none focus:ring-2 focus:ring-[#B88E2F] bg-opacity-70`}
                         value={order.status}
                         onChange={(e) =>
-                          handleStatusChange(order.id, e.target.value)
+                          handleStatusChange(
+                            order.id,
+                            e.target.value as
+                              | "pending"
+                              | "processing"
+                              | "shipped"
+                              | "delivered"
+                          )
                         }
                       >
                         <option value="pending">Pending</option>
@@ -164,13 +201,6 @@ const AdminOrders = () => {
                         <Eye className="w-5 h-5" />
                       </button>
                       <button
-                        onClick={() => handleApproveOrder(order.id)}
-                        className="text-green-600 hover:text-green-900 p-1 hover:bg-green-50 rounded"
-                        title="Approve Order"
-                      >
-                        <Check className="w-5 h-5" />
-                      </button>
-                      <button
                         onClick={() => handleDeleteOrder(order.id)}
                         className="text-red-600 hover:text-red-900 p-1 hover:bg-red-50 rounded"
                         title="Delete Order"
@@ -187,14 +217,14 @@ const AdminOrders = () => {
       </div>
 
       {/* Order Details Modal */}
-      {selectedOrder && (
+      {selectedOrder.id && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold">Order Details</h2>
                 <button
-                  onClick={() => setSelectedOrder(null)}
+                  onClick={() => setSelectedOrder({} as OrderType)}
                   className="text-gray-500 hover:text-gray-700 p-2 hover:bg-gray-100 rounded-full"
                 >
                   <X className="w-6 h-6" />
@@ -213,7 +243,11 @@ const AdminOrders = () => {
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">Date</p>
-                      <p className="font-medium">{selectedOrder.date}</p>
+                      <p className="font-medium">
+                        {new Date(selectedOrder.orderDate).toLocaleDateString(
+                          "en-Gb"
+                        )}
+                      </p>
                     </div>
                     <div>
                       <p className="text-sm text-gray-500">Status</p>
@@ -233,15 +267,15 @@ const AdminOrders = () => {
                   <div className="space-y-2">
                     <p>
                       <span className="text-gray-500">Name:</span>{" "}
-                      {selectedOrder.customer.name}
+                      {selectedOrder?.user?.name}
                     </p>
                     <p>
                       <span className="text-gray-500">Email:</span>{" "}
-                      {selectedOrder.customer.email}
+                      {selectedOrder?.user?.email}
                     </p>
                     <p>
                       <span className="text-gray-500">Address:</span>{" "}
-                      {selectedOrder.customer.address}
+                      {selectedOrder?.user?.address[0]?.street}
                     </p>
                   </div>
                 </div>
@@ -267,18 +301,16 @@ const AdminOrders = () => {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200">
-                        {selectedOrder.products.map(
-                          (product: any, index: number) => (
-                            <tr key={index}>
-                              <td className="px-4 py-2">{product.name}</td>
-                              <td className="px-4 py-2">{product.quantity}</td>
-                              <td className="px-4 py-2">${product.price}</td>
-                              <td className="px-4 py-2">
-                                ${product.price * product.quantity}
-                              </td>
-                            </tr>
-                          )
-                        )}
+                        {selectedOrder?.orderItems?.map((item, index) => (
+                          <tr key={index}>
+                            <td className="px-4 py-2">{item.product.name}</td>
+                            <td className="px-4 py-2">{item.quantity}</td>
+                            <td className="px-4 py-2">${item.product.price}</td>
+                            <td className="px-4 py-2">
+                              ${(item.product.price * item.quantity).toFixed(2)}
+                            </td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -287,22 +319,24 @@ const AdminOrders = () => {
                 <div className="flex justify-between items-center pt-4 border-t">
                   <div className="text-lg font-medium">Total Amount</div>
                   <div className="text-xl font-bold text-[#B88E2F]">
-                    ${selectedOrder.total.toFixed(2)}
+                    ${selectedOrder?.total?.toFixed(2)}
                   </div>
                 </div>
 
                 <div className="flex justify-end space-x-4 pt-4">
+                  {selectedOrder.status === "pending" && (
+                    <button
+                      onClick={() => {
+                        handleStatusChange(selectedOrder.id, "processing");
+                        setSelectedOrder({} as OrderType);
+                      }}
+                      className="bg-[#B88E2F] text-white px-4 py-2 rounded-lg hover:bg-[#96732B]"
+                    >
+                      Approve Order
+                    </button>
+                  )}
                   <button
-                    onClick={() => {
-                      handleStatusChange(selectedOrder.id, "processing");
-                      setSelectedOrder(null);
-                    }}
-                    className="bg-[#B88E2F] text-white px-4 py-2 rounded-lg hover:bg-[#96732B]"
-                  >
-                    Approve Order
-                  </button>
-                  <button
-                    onClick={() => setSelectedOrder(null)}
+                    onClick={() => setSelectedOrder({} as OrderType)}
                     className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
                   >
                     Close
