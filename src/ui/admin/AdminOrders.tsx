@@ -12,9 +12,12 @@ const AdminOrders = () => {
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [orders, setOrders] = useState<OrderType[]>([]);
+  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
 
-  const searchParams = new URLSearchParams(window.location.search);
-  const selectedOrderId = searchParams.get("id");
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    setSelectedOrderId(searchParams.get("id"));
+  }, []);
 
   useEffect(() => {
     if (selectedOrderId) {
