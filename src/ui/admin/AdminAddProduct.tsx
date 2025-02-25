@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import { Upload } from "lucide-react";
 
 const AdminAddProduct = () => {
-  const [images, setImages] = useState<File[]>([]);
+  //   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files).slice(0, 4);
-      setImages(filesArray);
+      //   setImages(filesArray);
 
       const previewsArray = filesArray.map((file) => URL.createObjectURL(file));
       setPreviews(previewsArray);

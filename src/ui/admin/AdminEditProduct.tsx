@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Upload } from "lucide-react";
 
 const AdminEditProduct = () => {
-  const [images, setImages] = useState<File[]>([]);
+  //   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([
     "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=100&q=80",
   ]);
@@ -12,7 +12,7 @@ const AdminEditProduct = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files).slice(0, 4);
-      setImages(filesArray);
+      //   setImages(filesArray);
 
       const previewsArray = filesArray.map((file) => URL.createObjectURL(file));
       setPreviews((prev) => [...prev, ...previewsArray]);
