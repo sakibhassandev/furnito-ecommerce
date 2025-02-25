@@ -31,7 +31,8 @@ export function middleware(request: NextRequest) {
   if (
     loginToken &&
     (request.nextUrl.pathname === "/login" ||
-      request.nextUrl.pathname === "/register")
+      request.nextUrl.pathname === "/register" ||
+      request.nextUrl.pathname === "/login?error=unauthorized")
   ) {
     return NextResponse.redirect(new URL("/", request.url), { status: 302 });
   }
@@ -41,7 +42,8 @@ export function middleware(request: NextRequest) {
     (request.nextUrl.pathname === "/checkout" ||
       request.nextUrl.pathname === "/my-orders" ||
       request.nextUrl.pathname.startsWith("/order-details") ||
-      request.nextUrl.pathname === "/profile")
+      request.nextUrl.pathname === "/profile" ||
+      request.nextUrl.pathname === "/admin")
   ) {
     return NextResponse.redirect(new URL("/login", request.url), {
       status: 302,

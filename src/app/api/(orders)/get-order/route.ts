@@ -72,3 +72,77 @@ export async function POST(request: Request) {
     });
   }
 }
+
+export async function PUT(request: Request) {
+  const { orderId, status } = await request.json();
+
+  if (!orderId || !status) {
+    return Response.json(
+      new ApiError(404, false, "Order Id or Status Not Found."),
+      {
+        status: 404,
+      }
+    );
+  }
+
+  try {
+    const order = await prisma.order.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        status,
+      },
+    });
+
+    return Response.json(
+      new ApiResponse(200, true, order, "Order updated successfully!"),
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return Response.json(new ApiError(500, false, "Internal Server Error"), {
+      status: 500,
+    });
+  }
+}
+
+export async function DELETE(request: Request) {
+  const { orderId } = await request.json();
+
+  console.log(orderId);
+
+  if (!orderId) {
+    return Response.json(new ApiError(404, false, "Order Id Not Found."), {
+      status: 404,
+    });
+  }
+
+  try {
+    await prisma.orderItem.deleteMany({
+      where: {
+        orderId: orderId,
+      },
+    });
+
+    const order = await prisma.order.delete({
+      where: {
+        id: orderId,
+      },
+    });
+
+    return Response.json(
+      new ApiResponse(200, true, order, "Order deleted successfully!"),
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return Response.json(new ApiError(500, false, "Internal Server Error"), {
+      status: 500,
+    });
+  }
+}
