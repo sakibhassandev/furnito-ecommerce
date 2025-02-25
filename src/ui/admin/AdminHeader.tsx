@@ -93,7 +93,11 @@ const AdminHeader = () => {
           </div>
           <div className="flex items-center">
             <button
-              onClick={() => signOut()}
+              onClick={() =>
+                signOut({
+                  redirect: true,
+                })
+              }
               className="hidden md:flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
             >
               <LogOut className="w-4 h-4 mr-2" />
@@ -160,7 +164,11 @@ const AdminHeader = () => {
           </Link>
           <button
             className="block w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
-            onClick={() => signOut()}
+            onClick={() =>
+              signOut({
+                redirect: true,
+              })
+            }
           >
             <div className="flex items-center">
               <LogOut className="w-4 h-4 mr-2" />
