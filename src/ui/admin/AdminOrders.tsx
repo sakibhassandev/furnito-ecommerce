@@ -1,10 +1,34 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { X, Eye, Search } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { X, Eye, Search, ChevronDown, Trash2 } from "lucide-react";
 import axios from "axios";
-import { OrderType } from "@/lib/definitions";
+import { OrderStatus, OrderType } from "@/lib/definitions";
 import { toast } from "react-toastify";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const AdminOrders = () => {
   const [selectedOrder, setSelectedOrder] = useState<OrderType>(
@@ -13,6 +37,7 @@ const AdminOrders = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [orders, setOrders] = useState<OrderType[]>([]);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<OrderStatus | "all">("all");
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -37,10 +62,7 @@ const AdminOrders = () => {
     fetchOrders();
   }, []);
 
-  const handleStatusChange = (
-    orderId: string,
-    newStatus: "pending" | "processing" | "shipped" | "delivered"
-  ) => {
+  const handleStatusChange = (orderId: string, newStatus: OrderStatus) => {
     setOrders(
       orders.map((order) =>
         order.id === orderId ? { ...order, status: newStatus } : order
@@ -60,22 +82,27 @@ const AdminOrders = () => {
   const handleDeleteOrder = (orderId: string) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
       setOrders(orders.filter((order) => order.id !== orderId));
+      axios.delete("/api/get-order", { data: { orderId } }).then(({ data }) => {
+        if (data.success) {
+          toast.success("Order deleted successfully!");
+        } else {
+          toast.error("Failed to delete order!");
+        }
+      });
     }
-    axios.delete("/api/get-order", { data: { orderId } }).then(({ data }) => {
-      if (data.success) {
-        toast.success("Order deleted successfully!");
-      } else {
-        toast.error("Failed to delete order!");
-      }
-    });
   };
 
-  const filteredOrders = orders.filter(
-    (order) =>
-      order?.id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order?.user?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order?.user?.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredOrders = useMemo(() => {
+    return orders.filter((order) => {
+      const matchesSearch =
+        order?.id?.toLowerCase()?.includes(searchQuery.toLowerCase()) ||
+        order?.user?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        order?.user?.email?.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesStatus =
+        statusFilter === "all" || order.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  }, [orders, searchQuery, statusFilter]);
 
   const getStatusColor = (status: string) => {
     switch (status?.toLowerCase()) {
@@ -93,131 +120,180 @@ const AdminOrders = () => {
   };
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Orders</h1>
-        <div className="mt-4 flex flex-col sm:flex-row gap-4">
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Orders</h1>
+        <div className="relative flex items-center gap-2">
           <div className="relative flex-1">
-            <input
-              type="text"
-              placeholder="Search orders..."
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search orders by ID, customer name, or email"
+              className="pl-9 h-12 text-base font-mono bg-white"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
-            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
           </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="h-12 px-4 font-normal">
+                {statusFilter === "all"
+                  ? "All Orders"
+                  : statusFilter.charAt(0).toUpperCase() +
+                    statusFilter.slice(1)}
+                <ChevronDown className="ml-2 h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onSelect={() => setStatusFilter("all")}>
+                All Orders
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setStatusFilter("delivered")}>
+                Delivered
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setStatusFilter("processing")}>
+                Processing
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setStatusFilter("pending")}>
+                Pending
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setStatusFilter("shipped")}>
+                Shipped
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => setStatusFilter("cancelled")}>
+                Cancelled
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Order Info
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Customer
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Products
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Total
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">
-                      {order.id}
+      <Card>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[250px] uppercase text-xs font-medium">
+                Order Info
+              </TableHead>
+              <TableHead className="w-[200px] uppercase text-xs font-medium">
+                Customer
+              </TableHead>
+              <TableHead className="min-w-[300px] uppercase text-xs font-medium">
+                Products
+              </TableHead>
+              <TableHead className="text-right uppercase text-xs font-medium">
+                Total
+              </TableHead>
+              <TableHead className="w-[150px] uppercase text-xs font-medium">
+                Status
+              </TableHead>
+              <TableHead className="w-[100px] text-right uppercase text-xs font-medium">
+                Actions
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredOrders.map((order) => (
+              <TableRow key={order?.id} className="group">
+                <TableCell>
+                  <div className="space-y-0.5">
+                    <div className="font-medium">{order.id}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {new Date(order?.orderDate)?.toLocaleDateString("en-GB")}
                     </div>
-                    <div className="text-sm text-gray-500">
-                      {new Date(order.orderDate).toLocaleDateString("en-Gb")}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="space-y-0.5">
+                    <div className="font-medium">{order?.user?.name}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {order?.user?.email}
                     </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">
-                      {order.user.name}
-                    </div>
-                    <div className="text-sm text-gray-500">
-                      {order.user.email}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900">
-                      {order.orderItems.map((product) => (
-                        <div key={product.product.id}>
-                          {product.product.name} |
-                        </div>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">
-                      ${order.total.toFixed(2)}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="relative">
-                      <select
-                        className={`text-sm rounded-full px-3 py-1 capitalize font-medium ${getStatusColor(
-                          order.status
-                        )} border-none focus:outline-none focus:ring-2 focus:ring-[#B88E2F] bg-opacity-70`}
-                        value={order.status}
-                        onChange={(e) =>
-                          handleStatusChange(
-                            order.id,
-                            e.target.value as
-                              | "pending"
-                              | "processing"
-                              | "shipped"
-                              | "delivered"
-                          )
-                        }
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="space-y-0.5">
+                    {order.orderItems.map((item, index) => (
+                      <div key={index} className="text-sm">
+                        {item.product.name}
+                      </div>
+                    ))}
+                  </div>
+                </TableCell>
+                <TableCell className="text-right">
+                  <div className="font-medium">${order.total.toFixed(2)}</div>
+                </TableCell>
+                <TableCell>
+                  <Select
+                    value={order.status}
+                    onValueChange={(value) =>
+                      handleStatusChange(order.id, value as OrderStatus)
+                    }
+                  >
+                    <SelectTrigger
+                      className={`w-[130px] border-0 font-medium ${
+                        order.status === "delivered"
+                          ? "bg-emerald-100 text-emerald-700"
+                          : order.status === "pending"
+                          ? "bg-amber-100 text-amber-700"
+                          : order.status === "processing"
+                          ? "bg-blue-100 text-blue-700"
+                          : order.status === "shipped"
+                          ? "bg-purple-100 text-purple-700"
+                          : "bg-red-100 text-red-700"
+                      }`}
+                    >
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem
+                        value="delivered"
+                        className="text-emerald-600"
                       >
-                        <option value="pending">Pending</option>
-                        <option value="processing">Processing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
-                      </select>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex space-x-2">
-                      <button
-                        onClick={() => setSelectedOrder(order)}
-                        className="text-[#B88E2F] hover:text-[#96732B] p-1 hover:bg-[#B88E2F] hover:bg-opacity-10 rounded"
-                        title="View Details"
-                      >
-                        <Eye className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteOrder(order.id)}
-                        className="text-red-600 hover:text-red-900 p-1 hover:bg-red-50 rounded"
-                        title="Delete Order"
-                      >
-                        <X className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                        Delivered
+                      </SelectItem>
+                      <SelectItem value="pending" className="text-amber-600">
+                        Pending
+                      </SelectItem>
+                      <SelectItem value="processing" className="text-blue-600">
+                        Processing
+                      </SelectItem>
+                      <SelectItem value="shipped" className="text-purple-600">
+                        Shipped
+                      </SelectItem>
+                      <SelectItem value="cancelled" className="text-red-600">
+                        Cancelled
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </TableCell>
+                <TableCell>
+                  <div className="flex justify-end gap-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 opacity-0 group-hover:opacity-100"
+                      onClick={() => setSelectedOrder(order)}
+                    >
+                      <Eye className="h-4 w-4" />
+                      <span className="sr-only">View order</span>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 opacity-0 group-hover:opacity-100"
+                      onClick={() => handleDeleteOrder(order.id)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      <span className="sr-only">Delete order</span>
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Card>
 
       {/* Order Details Modal */}
       {selectedOrder.id && (

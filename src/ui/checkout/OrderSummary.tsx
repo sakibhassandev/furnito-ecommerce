@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import { ApiError } from "@/utils/ApiError";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { AddressType } from "@/lib/definitions";
 
 interface OrderItem {
   id: string;
@@ -20,7 +21,11 @@ interface OrderItem {
   discountPrice?: number;
 }
 
-export default function CheckoutSummary() {
+export default function CheckoutSummary({
+  userAddress,
+}: {
+  userAddress: AddressType;
+}) {
   const router = useRouter();
 
   // Getting products from the Redux store from the cartItems slice
@@ -157,8 +162,8 @@ export default function CheckoutSummary() {
 
         {/* Place Order Button */}
         <button
-          disabled={orderItems.length === 0}
-          className={`rounded-lg w-full border-2 py-3 px-4 transition-colors duration-200 font-medium mt-6 ${
+          disabled={orderItems.length === 0 || !userAddress.email}
+          className={`disabled:bg-[#A77A1F] rounded-lg w-full border-2 py-3 px-4 transition-colors duration-200 font-medium mt-6 ${
             orderItems.length === 0
               ? "bg-gray-300 border-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-[#B88E2F] border-[#B88E2F] text-white hover:bg-[#A77A1F] hover:border-[#A77A1F]"
