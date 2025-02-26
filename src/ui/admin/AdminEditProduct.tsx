@@ -1,42 +1,64 @@
-import React, { useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
 import { Upload, ArrowLeft, X } from "lucide-react";
 import { uploadToCloudinary, deleteFromCloudinary } from "@/lib/cloudinary";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import { ProductType } from "@/lib/definitions";
+import axios from "axios";
 import Image from "next/image";
 
-interface ImageFile {
-  file?: File;
-  preview: string;
-  publicId?: string;
-}
-
 const AdminEditProduct = () => {
+  const params = useParams();
   const [isUploading, setIsUploading] = useState(false);
-  const [images, setImages] = useState<ImageFile[]>([
-    {
-      preview:
-        "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=300&q=80",
-      publicId: "existing-image-1",
-    },
-    {
-      preview:
-        "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&w=300&q=80",
-      publicId: "existing-image-2",
-    },
-    {
-      preview:
-        "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?auto=format&fit=crop&w=300&q=80",
-      publicId: "existing-image-3",
-    },
-    {
-      preview:
-        "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=300&q=80",
-      publicId: "existing-image-4",
-    },
-  ]);
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [colors, setColors] = useState<string[]>([]);
+  const [colorImages, setColorImages] = useState<{ [key: string]: string[] }>(
+    {}
+  );
   const [dragActive, setDragActive] = useState(false);
+  const [product, setProduct] = useState<ProductType>({} as ProductType);
 
-  const handleImageUpload = async (files: File[]) => {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await axios.get(
+        `/api/get-product?productId=${params.id}`
+      );
+      setProduct(response.data.data);
+      setColors(
+        response.data.data.colors.map(
+          (color: { name: string; image: string }) => color.name
+        )
+      );
+
+      const colorImagesObj: { [key: string]: string[] } = {};
+      response.data.data.colors.forEach(
+        (color: { name: string; image: string }, i: number) => {
+          colorImagesObj[color.name] = response.data.data.images[i].url;
+        }
+      );
+      setColorImages(colorImagesObj);
+    };
+
+    fetchProducts();
+  }, [params.id]);
+
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newColors = e.target.value.split(",").map((c) => c.trim());
+    setColors(newColors);
+
+    // Initialize image arrays for new colors
+    const newColorImages: Record<string, string[]> = {};
+    newColors.forEach((color) => {
+      newColorImages[color] = colorImages[color] || [];
+    });
+    setColorImages(newColorImages);
+  };
+
+  const handleImageUpload = async (files: File[], color: string) => {
+    if (!color) return;
+
     setIsUploading(true);
     try {
       const uploadPromises = files.map(async (file) => {
@@ -49,19 +71,25 @@ const AdminEditProduct = () => {
       });
 
       const uploadedImages = await Promise.all(uploadPromises);
-      setImages((prev) => [...prev, ...uploadedImages].slice(0, 4));
+      setColorImages((prev) => ({
+        ...prev,
+        [color]: [...(prev[color] || []), ...uploadedImages].slice(0, 4),
+      }));
     } catch (error) {
       console.error("Error uploading images:", error);
-      // Handle error (show notification, etc.)
     } finally {
       setIsUploading(false);
     }
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files).slice(0, 4 - images.length);
-      await handleImageUpload(filesArray);
+    if (e.target.files && selectedColor) {
+      const currentImages = colorImages[selectedColor] || [];
+      const filesArray = Array.from(e.target.files).slice(
+        0,
+        4 - currentImages.length
+      );
+      await handleImageUpload(filesArray, selectedColor);
     }
   };
 
@@ -80,35 +108,47 @@ const AdminEditProduct = () => {
     e.stopPropagation();
     setDragActive(false);
 
+    if (!selectedColor) return;
+
+    const currentImages = colorImages[selectedColor] || [];
     const files = Array.from(e.dataTransfer.files)
       .filter((file) => file.type.startsWith("image/"))
-      .slice(0, 4 - images.length);
+      .slice(0, 4 - currentImages.length);
 
     if (files.length > 0) {
-      await handleImageUpload(files);
+      await handleImageUpload(files, selectedColor);
     }
   };
 
-  const removeImage = async (index: number) => {
-    const image = images[index];
+  const removeImage = async (color: string, index: number) => {
+    const image = colorImages[color][index];
     if (image.publicId) {
       try {
         await deleteFromCloudinary(image.publicId);
       } catch (error) {
         console.error("Error deleting image:", error);
-        return; // Don't remove from UI if delete failed
+        return;
       }
     }
-    setImages((prev) => prev.filter((_, i) => i !== index));
+    setColorImages((prev) => ({
+      ...prev,
+      [color]: prev[color].filter((_, i) => i !== index),
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission with uploaded image URLs
-    const imageUrls = images.map((img) => ({
-      url: img.preview,
-      publicId: img.publicId,
-    }));
+    const imagesByColor = Object.entries(colorImages).reduce(
+      (acc, [color, images]) => {
+        acc[color] = images.map((img) => ({
+          url: img.preview,
+          publicId: img.publicId,
+        }));
+        return acc;
+      },
+      {} as Record<string, { url: string; publicId?: string }[]>
+    );
     // Submit to your API...
   };
 
@@ -132,7 +172,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="text"
-              defaultValue="Modern Chair"
+              defaultValue={product?.name}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
           </div>
@@ -143,7 +183,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="text"
-              defaultValue="CHR-001"
+              defaultValue={product?.sku}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
           </div>
@@ -154,7 +194,7 @@ const AdminEditProduct = () => {
             </label>
             <textarea
               rows={4}
-              defaultValue="A modern chair with a sleek design and comfortable seating."
+              defaultValue={product?.description}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             ></textarea>
           </div>
@@ -166,7 +206,7 @@ const AdminEditProduct = () => {
             <input
               type="number"
               step="0.01"
-              defaultValue="299.00"
+              defaultValue={product?.price}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
           </div>
@@ -177,7 +217,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="number"
-              defaultValue="0"
+              defaultValue={product?.hasDiscount}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
           </div>
@@ -188,7 +228,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="text"
-              defaultValue="Furniture, Chairs, Living Room"
+              defaultValue={product?.categories?.join(", ")}
               placeholder="Separate with commas"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
@@ -200,7 +240,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="text"
-              defaultValue="modern, comfortable, stylish"
+              defaultValue={product?.tags?.join(", ")}
               placeholder="Separate with commas"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
@@ -212,7 +252,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="text"
-              defaultValue="Small, Medium, Large"
+              defaultValue={product?.sizes?.join(", ")}
               placeholder="Separate with commas"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
@@ -224,7 +264,8 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="text"
-              defaultValue="Black, White, Brown"
+              value={colors.join(", ")}
+              onChange={handleColorChange}
               placeholder="Separate with commas"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
@@ -232,78 +273,107 @@ const AdminEditProduct = () => {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Product Images (Maximum 4)
+              Product Images by Color (Maximum 4 per color)
             </label>
-            <div
-              className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-lg transition-colors duration-200 ${
-                dragActive
-                  ? "border-[#B88E2F] bg-[#B88E2F] bg-opacity-5"
-                  : "border-gray-300"
-              } ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-            >
-              <div className="space-y-2 text-center">
-                <Upload
-                  className={`mx-auto h-12 w-12 ${
-                    dragActive ? "text-[#B88E2F]" : "text-gray-400"
-                  }`}
-                />
-                <div className="flex text-sm text-gray-600">
-                  <label
-                    htmlFor="images"
-                    className={`relative cursor-pointer bg-white rounded-md font-medium text-[#B88E2F] hover:text-[#96732B] focus-within:outline-none ${
-                      isUploading ? "pointer-events-none" : ""
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Select Color for Upload
+              </label>
+              <select
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
+              >
+                <option value="">Select a color</option>
+                {colors.map((color) => (
+                  <option key={color} value={color}>
+                    {color}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {selectedColor && (
+              <div
+                className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-lg transition-colors duration-200 ${
+                  dragActive
+                    ? "border-[#B88E2F] bg-[#B88E2F] bg-opacity-5"
+                    : "border-gray-300"
+                } ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+              >
+                <div className="space-y-2 text-center">
+                  <Upload
+                    className={`mx-auto h-12 w-12 ${
+                      dragActive ? "text-[#B88E2F]" : "text-gray-400"
                     }`}
-                  >
-                    <span>Upload images</span>
-                    <input
-                      id="images"
-                      name="images"
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      className="sr-only"
-                      onChange={handleImageChange}
-                      disabled={isUploading}
-                    />
-                  </label>
-                  <p className="pl-1">or drag and drop</p>
-                </div>
-                <p className="text-xs text-gray-500">
-                  PNG, JPG, GIF up to 10MB each
-                </p>
-                <p className="text-xs text-gray-500">
-                  {4 - images.length} slots remaining
-                </p>
-                {isUploading && (
-                  <p className="text-sm text-[#B88E2F]">Uploading...</p>
-                )}
-              </div>
-            </div>
-            <div className="mt-4 grid grid-cols-4 gap-4">
-              {images.map((image, index) => (
-                <div key={index} className="relative group aspect-square">
-                  <Image
-                    src={image.preview}
-                    alt={`Preview ${index + 1}`}
-                    className="w-full h-full object-cover rounded-lg"
-                    width={300}
-                    height={300}
                   />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    disabled={isUploading}
-                    className="absolute -top-2 -right-2 p-1.5 bg-red-100 text-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
+                  <div className="flex text-sm text-gray-600">
+                    <label
+                      htmlFor="images"
+                      className={`relative cursor-pointer bg-white rounded-md font-medium text-[#B88E2F] hover:text-[#96732B] focus-within:outline-none ${
+                        isUploading ? "pointer-events-none" : ""
+                      }`}
+                    >
+                      <span>Upload images for {selectedColor}</span>
+                      <input
+                        id="images"
+                        name="images"
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        className="sr-only"
+                        onChange={handleImageChange}
+                        disabled={isUploading}
+                      />
+                    </label>
+                    <p className="pl-1">or drag and drop</p>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    PNG, JPG, GIF up to 10MB each
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {4 - (colorImages[selectedColor]?.length || 0)} slots
+                    remaining for {selectedColor}
+                  </p>
+                  {isUploading && (
+                    <p className="text-sm text-[#B88E2F]">Uploading...</p>
+                  )}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
+
+            {/* Images by color */}
+            {colors.map((color) => (
+              <div key={color} className="mt-6">
+                <h3 className="text-lg font-medium mb-3">{color}</h3>
+                <div className="grid grid-cols-4 gap-4">
+                  {colorImages?.[color]?.map((image, index) => (
+                    <div key={index} className="relative group">
+                      <Image
+                        src={image}
+                        alt={`${color} Preview ${index + 1}`}
+                        className="w-full h-full object-cover rounded-lg"
+                        width={1920}
+                        height={1080}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(color, index)}
+                        disabled={isUploading}
+                        className="absolute -top-2 -right-2 p-1.5 bg-red-100 text-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
