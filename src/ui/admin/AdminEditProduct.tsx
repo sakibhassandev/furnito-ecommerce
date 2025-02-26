@@ -14,11 +14,13 @@ const AdminEditProduct = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [colors, setColors] = useState<string[]>([]);
-  const [colorImages, setColorImages] = useState<{ [key: string]: string[] }>(
-    {}
-  );
+  const [colorImages, setColorImages] = useState<{
+    [key: string]: Array<{ preview: string[]; publicId: string }>;
+  }>({});
   const [dragActive, setDragActive] = useState(false);
   const [product, setProduct] = useState<ProductType>({} as ProductType);
+
+  console.log(colorImages);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,10 +34,14 @@ const AdminEditProduct = () => {
         )
       );
 
-      const colorImagesObj: { [key: string]: string[] } = {};
+      const colorImagesObj: {
+        [key: string]: Array<{ preview: string; publicId: string }>;
+      } = {};
       response.data.data.colors.forEach(
         (color: { name: string; image: string }, i: number) => {
-          colorImagesObj[color.name] = response.data.data.images[i].url;
+          colorImagesObj[color.name] = [
+            { preview: response.data.data.images[i].url, publicId: "" },
+          ];
         }
       );
       setColorImages(colorImagesObj);
@@ -73,7 +79,13 @@ const AdminEditProduct = () => {
       const uploadedImages = await Promise.all(uploadPromises);
       setColorImages((prev) => ({
         ...prev,
-        [color]: [...(prev[color] || []), ...uploadedImages].slice(0, 4),
+        [color]: [
+          ...(prev[color] || []),
+          ...uploadedImages.map((img) => ({
+            preview: img.preview,
+            publicId: img.publicId,
+          })),
+        ].slice(0, 4),
       }));
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -122,6 +134,7 @@ const AdminEditProduct = () => {
 
   const removeImage = async (color: string, index: number) => {
     const image = colorImages[color][index];
+    console.log(image);
     if (image.publicId) {
       try {
         await deleteFromCloudinary(image.publicId);
@@ -352,25 +365,27 @@ const AdminEditProduct = () => {
               <div key={color} className="mt-6">
                 <h3 className="text-lg font-medium mb-3">{color}</h3>
                 <div className="grid grid-cols-4 gap-4">
-                  {colorImages?.[color]?.map((image, index) => (
-                    <div key={index} className="relative group">
-                      <Image
-                        src={image}
-                        alt={`${color} Preview ${index + 1}`}
-                        className="w-full h-full object-cover rounded-lg"
-                        width={1920}
-                        height={1080}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => removeImage(color, index)}
-                        disabled={isUploading}
-                        className="absolute -top-2 -right-2 p-1.5 bg-red-100 text-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
+                  {colorImages?.[color]?.map((image, index) =>
+                    image.preview.map((url, i) => (
+                      <div key={i} className="relative group">
+                        <Image
+                          src={url}
+                          alt={`${color} Preview ${i + 1}`}
+                          className="w-full h-full object-cover rounded-lg"
+                          width={1920}
+                          height={1080}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeImage(color, i)}
+                          disabled={isUploading}
+                          className="absolute -top-2 -right-2 p-1.5 bg-red-100 text-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             ))}
