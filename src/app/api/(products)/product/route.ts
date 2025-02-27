@@ -95,6 +95,7 @@ export async function POST(request: Request) {
             data: productData.colors.map((color) => ({
               name: color.name,
               image: color.colorImage.url,
+              publicId: color.colorImage.publicId,
             })),
           },
         },
@@ -102,6 +103,7 @@ export async function POST(request: Request) {
           createMany: {
             data: productData.colors.map((color) => ({
               url: color.images.map((image) => image.url),
+              publicId: color.images.map((image) => image.publicId),
               color: color.name,
             })),
           },
@@ -152,6 +154,18 @@ export async function DELETE(request: Request) {
     }
 
     // Delete associated images, colors, orderItem and reviews
+    const deletedImagesData = await prisma.productImages.findMany({
+      where: {
+        productId: productId,
+      },
+    });
+
+    const deletedColorsData = await prisma.colors.findMany({
+      where: {
+        productId: productId,
+      },
+    });
+
     await prisma.productImages.deleteMany({
       where: {
         productId: productId,
@@ -188,6 +202,10 @@ export async function DELETE(request: Request) {
       where: {
         id: productId,
       },
+      include: {
+        images: true,
+        colors: true,
+      },
     });
 
     if (!deletedProduct) {
@@ -200,7 +218,7 @@ export async function DELETE(request: Request) {
       new ApiResponse(
         200,
         true,
-        deletedProduct,
+        { deletedProduct, deletedImagesData, deletedColorsData },
         "Product deleted successfully."
       ),
       {

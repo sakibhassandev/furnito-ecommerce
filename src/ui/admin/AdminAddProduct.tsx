@@ -233,6 +233,8 @@ const AdminAddProduct = () => {
       })),
     };
 
+    console.log(productData);
+
     // Send product data to the server
     const { data } = await axios.post("/api/product", { productData });
     if (data.success) {

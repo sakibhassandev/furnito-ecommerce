@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { deleteProduct, fetchProducts } from "@/actions";
 import { toast } from "react-toastify";
+import { deleteFromCloudinary } from "@/lib/cloudinary";
 
 const AdminProducts = () => {
   const [selectedProduct, setSelectedProduct] = useState<ProductType>(
@@ -47,17 +48,28 @@ const AdminProducts = () => {
 
   const handleDeleteProduct = async (productId: string) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
-      setProducts(products.filter((product) => product.id !== productId));
+      setProducts(products?.filter((product) => product.id !== productId));
       const deletedProduct = await deleteProduct(productId);
+      console.log(deletedProduct);
       if (!deletedProduct.success) {
         toast.error("Failed to delete product");
       } else {
+        deletedProduct?.data?.deletedImagesData?.forEach(
+          (image: { publicId: string[] }) => {
+            image.publicId.forEach((id) => deleteFromCloudinary(id));
+          }
+        );
+        deletedProduct?.data?.deletedColorsData?.forEach(
+          (color: { publicId: string }) => {
+            deleteFromCloudinary(color.publicId);
+          }
+        );
         toast.success("Product deleted");
       }
     }
   };
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = products?.filter((product) => {
     const searchLower = searchQuery.toLowerCase();
     return (
       product?.name?.toLowerCase().includes(searchLower) ||
@@ -110,9 +122,9 @@ const AdminProducts = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Price
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Quantity
-                </th>
+                </th> */}
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
                 </th>

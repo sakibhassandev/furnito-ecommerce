@@ -95,6 +95,7 @@ model Colors {
     id        String  @id @default(auto()) @map("_id") @db.ObjectId
     name      String
     image     String
+    publicId  String
     productId String  @db.ObjectId
     product   Product @relation(fields: [productId], references: [id])
 }
@@ -103,6 +104,7 @@ model ProductImages {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     color     String
     url       String[]
+    publicId  String[]
     productId String   @db.ObjectId
     product   Product  @relation(fields: [productId], references: [id])
 }
