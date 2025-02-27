@@ -78,7 +78,7 @@ const MyOrders = () => {
       <h1 className="text-3xl font-bold mb-8">My Orders</h1>
       <div className="space-y-6">
         {orders.length > 0 ? (
-          orders.map((order) => (
+          [...orders].reverse().map((order) => (
             <div
               key={order.id}
               className="bg-white rounded-lg shadow-md overflow-hidden"

@@ -25,8 +25,6 @@ const AdminProducts = () => {
     fetchProducts();
   }, []);
 
-  console.log(products);
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -46,9 +44,11 @@ const AdminProducts = () => {
     };
   }, [selectedProduct]);
 
-  const handleDeleteProduct = (productId: string) => {
+  const handleDeleteProduct = async (productId: string) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       setProducts(products.filter((product) => product.id !== productId));
+      const res = await axios.delete(`/api/product/?productId=${productId}`);
+      console.log(res);
     }
   };
 
@@ -114,7 +114,7 @@ const AdminProducts = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredProducts.map((product) => (
+              {filteredProducts.reverse().map((product) => (
                 <tr key={product.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">

@@ -39,7 +39,6 @@ export const uploadToCloudinary = async (
             return;
           }
 
-          console.log("Cloudinary upload successful:", result.public_id);
           resolve({
             public_id: result.public_id,
             secure_url: result.secure_url,
@@ -59,15 +58,15 @@ export const uploadToCloudinary = async (
   }
 };
 
-export const deleteFromCloudinary = async (publicId: string): Promise<void> => {
+export const deleteFromCloudinary = async (publicId: string) => {
   try {
-    cloudinary.uploader.destroy(publicId, (error, result) => {
+    const res = cloudinary.uploader.destroy(publicId, (error, result) => {
       if (error) {
-        console.error("Cloudinary delete failed:", error);
         throw error;
       }
-      console.log("Cloudinary delete successful:", result);
+      return result;
     });
+    return res;
   } catch (error) {
     console.error("Error deleting from Cloudinary:", error);
     throw error;

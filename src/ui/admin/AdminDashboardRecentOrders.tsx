@@ -87,7 +87,7 @@ export default function AdminDashboardRecentOrders({
                           : "destructive"
                       }
                     >
-                      {order.status}
+                      {order.status?.toUpperCase()}
                     </Badge>
                   </TableCell>
                   <TableCell>

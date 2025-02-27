@@ -321,6 +321,12 @@ const AdminOrders = () => {
                       <p className="font-medium">{selectedOrder.id}</p>
                     </div>
                     <div>
+                      <p className="text-sm text-gray-500">Delivery Charge</p>
+                      <p className="font-medium">
+                        ${selectedOrder?.deliveryCharge}
+                      </p>
+                    </div>
+                    <div>
                       <p className="text-sm text-gray-500">Date</p>
                       <p className="font-medium">
                         {new Date(selectedOrder.orderDate).toLocaleDateString(

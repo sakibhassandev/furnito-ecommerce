@@ -33,9 +33,7 @@ const ProductDetailsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `/api/get-product?productId=${productId}`
-        );
+        const response = await axios.get(`/api/product?productId=${productId}`);
         setProduct(response.data.data);
       } catch (error) {
         const axiosError = error as AxiosError<ApiError>;

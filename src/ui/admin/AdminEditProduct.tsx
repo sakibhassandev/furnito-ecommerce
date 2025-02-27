@@ -20,13 +20,9 @@ const AdminEditProduct = () => {
   const [dragActive, setDragActive] = useState(false);
   const [product, setProduct] = useState<ProductType>({} as ProductType);
 
-  console.log(colorImages);
-
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await axios.get(
-        `/api/get-product?productId=${params.id}`
-      );
+      const response = await axios.get(`/api/product?productId=${params.id}`);
       setProduct(response.data.data);
       setColors(
         response.data.data.colors.map(
@@ -134,7 +130,6 @@ const AdminEditProduct = () => {
 
   const removeImage = async (color: string, index: number) => {
     const image = colorImages[color][index];
-    console.log(image);
     if (image.publicId) {
       try {
         await deleteFromCloudinary(image.publicId);
