@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { X, Eye, Search, ChevronDown, Trash2 } from "lucide-react";
-import axios from "axios";
 import { OrderStatus, OrderType } from "@/lib/definitions";
 import { toast } from "react-toastify";
 import {
@@ -29,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { changeOrderStatus, deleteOrder, fetchOrders } from "@/actions";
 
 const AdminOrders = () => {
   const [selectedOrder, setSelectedOrder] = useState<OrderType>(
@@ -55,40 +55,39 @@ const AdminOrders = () => {
   }, [orders, selectedOrderId]);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      const response = await axios.get("/api/get-all-orders");
-      setOrders(response.data.data);
+    const getOrders = async () => {
+      const orders = await fetchOrders();
+      setOrders(orders);
     };
-    fetchOrders();
+    getOrders();
   }, []);
 
-  const handleStatusChange = (orderId: string, newStatus: OrderStatus) => {
+  const handleStatusChange = async (
+    orderId: string,
+    newStatus: OrderStatus
+  ) => {
     setOrders(
       orders.map((order) =>
         order.id === orderId ? { ...order, status: newStatus } : order
       )
     );
-    axios
-      .put("/api/get-order", { orderId, status: newStatus })
-      .then(({ data }) => {
-        if (data.success) {
-          toast.success("Order status updated successfully!");
-        } else {
-          toast.error("Failed to update order status!");
-        }
-      });
+    const orderStatus = await changeOrderStatus({ orderId, newStatus });
+    if (orderStatus.success) {
+      toast.success("Order status updated successfully!");
+    } else {
+      toast.error("Failed to update order status!");
+    }
   };
 
-  const handleDeleteOrder = (orderId: string) => {
+  const handleDeleteOrder = async (orderId: string) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
       setOrders(orders.filter((order) => order.id !== orderId));
-      axios.delete("/api/get-order", { data: { orderId } }).then(({ data }) => {
-        if (data.success) {
-          toast.success("Order deleted successfully!");
-        } else {
-          toast.error("Failed to delete order!");
-        }
-      });
+      const deletedOrder = await deleteOrder(orderId);
+      if (deletedOrder.success) {
+        toast.success("Order deleted successfully!");
+      } else {
+        toast.error("Failed to delete order!");
+      }
     }
   };
 

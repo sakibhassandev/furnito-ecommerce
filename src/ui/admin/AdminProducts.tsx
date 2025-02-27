@@ -5,8 +5,9 @@ import { Plus, Edit, Trash2, Eye, Search, X } from "lucide-react";
 import Link from "next/link";
 import { ProductType } from "@/lib/definitions";
 import Image from "next/image";
-import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { deleteProduct, fetchProducts } from "@/actions";
+import { toast } from "react-toastify";
 
 const AdminProducts = () => {
   const [selectedProduct, setSelectedProduct] = useState<ProductType>(
@@ -17,12 +18,12 @@ const AdminProducts = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await axios.get("/api/get-products");
-      setProducts(response.data.data);
+    const getProducts = async () => {
+      const product = await fetchProducts();
+      setProducts(product);
     };
 
-    fetchProducts();
+    getProducts();
   }, []);
 
   useEffect(() => {
@@ -47,8 +48,12 @@ const AdminProducts = () => {
   const handleDeleteProduct = async (productId: string) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       setProducts(products.filter((product) => product.id !== productId));
-      const res = await axios.delete(`/api/product/?productId=${productId}`);
-      console.log(res);
+      const deletedProduct = await deleteProduct(productId);
+      if (!deletedProduct.success) {
+        toast.error("Failed to delete product");
+      } else {
+        toast.success("Product deleted");
+      }
     }
   };
 

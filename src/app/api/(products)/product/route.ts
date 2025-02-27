@@ -170,6 +170,14 @@ export async function DELETE(request: Request) {
       },
     });
 
+    await prisma.order.deleteMany({
+      where: {
+        orderItems: {
+          none: {},
+        },
+      },
+    });
+
     await prisma.review.deleteMany({
       where: {
         productId: productId,
