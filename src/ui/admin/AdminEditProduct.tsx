@@ -1,104 +1,304 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Upload, ArrowLeft, X } from "lucide-react";
+import { Upload, ArrowLeft, X, Plus } from "lucide-react";
 import { uploadToCloudinary, deleteFromCloudinary } from "@/lib/cloudinary";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { ProductType } from "@/lib/definitions";
+import { useParams, useRouter } from "next/navigation";
+import { ImageFile, ProductType } from "@/lib/definitions";
 import axios from "axios";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 const AdminEditProduct = () => {
   const params = useParams();
+  const [product, setProduct] = useState<ProductType>({} as ProductType);
+
   const [isUploading, setIsUploading] = useState(false);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [colors, setColors] = useState<string[]>([]);
+  const [newColorName, setNewColorName] = useState("");
+  const [colorSwatches, setColorSwatches] = useState<{
+    [key: string]: ImageFile;
+  }>({});
   const [colorImages, setColorImages] = useState<{
-    [key: string]: Array<{ preview: string[]; publicId: string }>;
+    [key: string]: ImageFile[];
   }>({});
   const [dragActive, setDragActive] = useState(false);
-  const [product, setProduct] = useState<ProductType>({} as ProductType);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {
       const response = await axios.get(`/api/product?productId=${params.id}`);
       setProduct(response.data.data);
-      setColors(
-        response.data.data.colors.map(
-          (color: { name: string; image: string }) => color.name
-        )
-      );
+      // Process color data
+      const colorNames = response.data.data.colors.map((color) => color.name);
+      setColors(colorNames);
 
-      const colorImagesObj: {
-        [key: string]: Array<{ preview: string; publicId: string }>;
-      } = {};
-      response.data.data.colors.forEach(
-        (color: { name: string; image: string }, i: number) => {
-          colorImagesObj[color.name] = [
-            { preview: response.data.data.images[i].url, publicId: "" },
-          ];
-        }
-      );
-      setColorImages(colorImagesObj);
+      // Process color swatches
+      const swatches: { [key: string]: ImageFile } = {};
+      response.data.data.colors.forEach((color) => {
+        swatches[color.name] = {
+          preview: color.image,
+          publicId: color.publicId,
+        };
+      });
+      setColorSwatches(swatches);
+
+      // Process product images
+      const images: { [key: string]: ImageFile[] } = {};
+      response.data.data.images.forEach((imageData) => {
+        const colorImages = imageData.url.map((url, index) => ({
+          preview: url,
+          publicId: imageData.publicId[index],
+        }));
+        images[imageData.color] = colorImages;
+      });
+      setColorImages(images);
+
+      // Set first color as selected if available
+      if (colorNames.length > 0) {
+        setSelectedColor(colorNames[0]);
+      }
     };
 
     fetchProducts();
   }, [params.id]);
 
-  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newColors = e.target.value.split(",").map((c) => c.trim());
-    setColors(newColors);
+  const addNewColor = () => {
+    if (!newColorName.trim()) return;
 
-    // Initialize image arrays for new colors
-    const newColorImages: Record<string, string[]> = {};
-    newColors.forEach((color) => {
-      newColorImages[color] = colorImages[color] || [];
-    });
-    setColorImages(newColorImages);
+    // Check if color already exists
+    if (colors.includes(newColorName.trim())) {
+      toast.error("Color already exists");
+      return;
+    }
+
+    setColors((prev) => [...prev, newColorName.trim()]);
+    setColorImages((prev) => ({
+      ...prev,
+      [newColorName.trim()]: [],
+    }));
+    setNewColorName("");
   };
 
-  const handleImageUpload = async (files: File[], color: string) => {
-    if (!color) return;
+  const removeColor = async (colorName: string) => {
+    if (
+      window.confirm(
+        `Are you sure you want to remove ${colorName} and all its images?`
+      )
+    ) {
+      // Remove color from colors array
+      setColors((prev) => prev.filter((color) => color !== colorName));
+
+      // Remove color swatch if exists
+      if (colorSwatches[colorName]) {
+        const newSwatches = { ...colorSwatches };
+        await deleteFromCloudinary(colorSwatches[colorName].publicId as string);
+        delete newSwatches[colorName];
+        setColorSwatches(newSwatches);
+      }
+
+      // Remove color images if exist
+      if (colorImages[colorName]) {
+        const newImages = { ...colorImages };
+        colorImages[colorName].forEach(async (image) => {
+          await deleteFromCloudinary(image.publicId as string);
+        });
+        delete newImages[colorName];
+        setColorImages(newImages);
+      }
+
+      // Reset selected color if it was the one removed
+      if (selectedColor === colorName) {
+        setSelectedColor("");
+      }
+    }
+  };
+
+  const uploadSwatchImage = async (file: File, colorName: string) => {
+    setIsUploading(true);
+    try {
+      const result = await uploadToCloudinary(file);
+      setColorSwatches((prev) => ({
+        ...prev,
+        [colorName]: {
+          preview: result.secure_url,
+          publicId: result.public_id,
+        },
+      }));
+      if (result.secure_url) {
+        toast.success("Swatch image uploaded successfully");
+      } else {
+        toast.error("Error uploading swatch image");
+      }
+    } catch (error) {
+      console.error("Error uploading swatch image:", error);
+      toast.error("Error uploading swatch image");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleSwatchImageChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    colorName: string
+  ) => {
+    if (e.target.files && e.target.files[0]) {
+      await uploadSwatchImage(e.target.files[0], colorName);
+    }
+  };
+
+  const removeSwatchImage = async (colorName: string) => {
+    const swatchImage = colorSwatches[colorName];
+    if (swatchImage?.publicId) {
+      try {
+        const response = await deleteFromCloudinary(swatchImage.publicId);
+        if (response.result === "ok") {
+          toast.success("Swatch image deleted successfully");
+        } else {
+          toast.error("Error deleting swatch image");
+        }
+      } catch (error) {
+        toast.error("Error deleting swatch image");
+        console.error("Error deleting swatch image:", error);
+        return;
+      }
+    }
+
+    const newSwatches = { ...colorSwatches };
+    delete newSwatches[colorName];
+    setColorSwatches(newSwatches);
+  };
+
+  const handleProductImageUpload = async (files: File[], colorName: string) => {
+    if (!colorName) return;
 
     setIsUploading(true);
     try {
       const uploadPromises = files.map(async (file) => {
         const result = await uploadToCloudinary(file);
         return {
-          file,
           preview: result.secure_url,
           publicId: result.public_id,
         };
       });
 
       const uploadedImages = await Promise.all(uploadPromises);
+
       setColorImages((prev) => ({
         ...prev,
-        [color]: [
-          ...(prev[color] || []),
-          ...uploadedImages.map((img) => ({
-            preview: img.preview,
-            publicId: img.publicId,
-          })),
-        ].slice(0, 4),
+        [colorName]: [...(prev[colorName] || []), ...uploadedImages].slice(
+          0,
+          4
+        ),
       }));
     } catch (error) {
-      console.error("Error uploading images:", error);
+      console.error("Error uploading product images:", error);
     } finally {
       setIsUploading(false);
     }
   };
 
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProductImageChange = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (e.target.files && selectedColor) {
       const currentImages = colorImages[selectedColor] || [];
       const filesArray = Array.from(e.target.files).slice(
         0,
         4 - currentImages.length
       );
-      await handleImageUpload(filesArray, selectedColor);
+      await handleProductImageUpload(filesArray, selectedColor);
     }
+  };
+
+  const removeProductImage = async (colorName: string, index: number) => {
+    const images = colorImages[colorName];
+    if (!images || index >= images.length) return;
+
+    const image = images[index];
+    if (image.publicId) {
+      try {
+        await deleteFromCloudinary(image.publicId);
+      } catch (error) {
+        console.error("Error deleting product image:", error);
+        return;
+      }
+    }
+
+    setColorImages((prev) => ({
+      ...prev,
+      [colorName]: prev[colorName].filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    const productData = {
+      name: formData.get("name"),
+      sku: formData.get("sku"),
+      description: formData.get("description"),
+      price: parseFloat(formData.get("price") as string),
+      discount: parseInt(formData.get("discount") as string),
+      categories: formData
+        .get("categories")
+        ?.toString()
+        .split(",")
+        .map((c) => c.trim()),
+      tags: formData
+        .get("tags")
+        ?.toString()
+        .split(",")
+        .map((t) => t.trim()),
+      sizes: formData
+        .get("sizes")
+        ?.toString()
+        .split(",")
+        .map((s) => s.trim()),
+      colors: colors.map((colorName) => ({
+        name: colorName,
+        colorImage: colorSwatches[colorName]
+          ? {
+              url: colorSwatches[colorName].preview,
+              publicId: colorSwatches[colorName].publicId,
+            }
+          : null,
+        images: (colorImages[colorName] || []).map((img) => ({
+          url: img.preview,
+          publicId: img.publicId,
+        })),
+      })),
+    };
+
+    // Send product data to the server
+    const { data } = await axios.put(`/api/product?productId=${params.id}`, {
+      productData,
+    });
+    if (data.success) {
+      toast.success("Product edited successfully");
+      router.push("/admin/products");
+    } else {
+      toast.error("Error creating product");
+    }
+  };
+
+  const getRemainingSlots = (colorName: string) => {
+    const images = colorImages[colorName] || [];
+    return 4 - images.length;
+  };
+
+  const handleAddImageClick = (colorName: string) => {
+    setSelectedColor(colorName);
+    // Focus on the file input after a short delay to allow state update
+    setTimeout(() => {
+      const fileInput = document.getElementById("product-images");
+      if (fileInput) {
+        fileInput.click();
+      }
+    }, 100);
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -124,40 +324,8 @@ const AdminEditProduct = () => {
       .slice(0, 4 - currentImages.length);
 
     if (files.length > 0) {
-      await handleImageUpload(files, selectedColor);
+      await handleProductImageUpload(files, selectedColor);
     }
-  };
-
-  const removeImage = async (color: string, index: number) => {
-    const image = colorImages[color][index];
-    if (image.publicId) {
-      try {
-        await deleteFromCloudinary(image.publicId);
-      } catch (error) {
-        console.error("Error deleting image:", error);
-        return;
-      }
-    }
-    setColorImages((prev) => ({
-      ...prev,
-      [color]: prev[color].filter((_, i) => i !== index),
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission with uploaded image URLs
-    const imagesByColor = Object.entries(colorImages).reduce(
-      (acc, [color, images]) => {
-        acc[color] = images.map((img) => ({
-          url: img.preview,
-          publicId: img.publicId,
-        }));
-        return acc;
-      },
-      {} as Record<string, { url: string; publicId?: string }[]>
-    );
-    // Submit to your API...
   };
 
   return (
@@ -180,6 +348,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="text"
+              name="name"
               defaultValue={product?.name}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
@@ -190,6 +359,7 @@ const AdminEditProduct = () => {
               SKU
             </label>
             <input
+              name="sku"
               type="text"
               defaultValue={product?.sku}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
@@ -202,6 +372,7 @@ const AdminEditProduct = () => {
             </label>
             <textarea
               rows={4}
+              name="description"
               defaultValue={product?.description}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             ></textarea>
@@ -213,6 +384,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="number"
+              name="price"
               step="0.01"
               defaultValue={product?.price}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
@@ -225,6 +397,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="number"
+              name="discount"
               defaultValue={product?.hasDiscount}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
@@ -236,6 +409,7 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="text"
+              name="categories"
               defaultValue={product?.categories?.join(", ")}
               placeholder="Separate with commas"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
@@ -248,32 +422,8 @@ const AdminEditProduct = () => {
             </label>
             <input
               type="text"
+              name="tags"
               defaultValue={product?.tags?.join(", ")}
-              placeholder="Separate with commas"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Sizes
-            </label>
-            <input
-              type="text"
-              defaultValue={product?.sizes?.join(", ")}
-              placeholder="Separate with commas"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Colors
-            </label>
-            <input
-              type="text"
-              value={colors.join(", ")}
-              onChange={handleColorChange}
               placeholder="Separate with commas"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
             />
@@ -281,12 +431,49 @@ const AdminEditProduct = () => {
 
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Product Images by Color (Maximum 4 per color)
+              Sizes
+            </label>
+            <input
+              type="text"
+              placeholder="Separate with commas"
+              defaultValue={product?.sizes?.join(", ")}
+              name="sizes"
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-lg font-medium text-gray-700 mb-4">
+              Product Colors and Images
             </label>
 
+            {/* Add new color */}
+            <div className="mb-6 p-4 border border-dashed border-gray-300 rounded-lg">
+              <h3 className="text-md font-medium mb-3">Add New Color</h3>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newColorName}
+                  onChange={(e) => setNewColorName(e.target.value)}
+                  placeholder="Enter color name"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
+                />
+                <button
+                  type="button"
+                  onClick={addNewColor}
+                  className="bg-[#B88E2F] text-white px-4 py-2 rounded-lg hover:bg-[#96732B] flex items-center"
+                >
+                  <Plus className="w-4 h-4 mr-1" />
+                  Add
+                </button>
+              </div>
+            </div>
+
+            {/* Color selection for product images */}
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Select Color for Upload
+              <label className="block text-md font-medium text-gray-700 mb-2">
+                Select Color for Product Images
               </label>
               <select
                 value={selectedColor}
@@ -302,6 +489,7 @@ const AdminEditProduct = () => {
               </select>
             </div>
 
+            {/* Product image upload area */}
             {selectedColor && (
               <div
                 className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-lg transition-colors duration-200 ${
@@ -322,20 +510,20 @@ const AdminEditProduct = () => {
                   />
                   <div className="flex text-sm text-gray-600">
                     <label
-                      htmlFor="images"
+                      htmlFor="product-images"
                       className={`relative cursor-pointer bg-white rounded-md font-medium text-[#B88E2F] hover:text-[#96732B] focus-within:outline-none ${
                         isUploading ? "pointer-events-none" : ""
                       }`}
                     >
-                      <span>Upload images for {selectedColor}</span>
+                      <span>Upload product images for {selectedColor}</span>
                       <input
-                        id="images"
-                        name="images"
+                        id="product-images"
+                        name="product-images"
                         type="file"
                         multiple
                         accept="image/*"
                         className="sr-only"
-                        onChange={handleImageChange}
+                        onChange={handleProductImageChange}
                         disabled={isUploading}
                       />
                     </label>
@@ -345,8 +533,8 @@ const AdminEditProduct = () => {
                     PNG, JPG, GIF up to 10MB each
                   </p>
                   <p className="text-xs text-gray-500">
-                    {4 - (colorImages[selectedColor]?.length || 0)} slots
-                    remaining for {selectedColor}
+                    {getRemainingSlots(selectedColor)} slots remaining for{" "}
+                    {selectedColor}
                   </p>
                   {isUploading && (
                     <p className="text-sm text-[#B88E2F]">Uploading...</p>
@@ -355,35 +543,122 @@ const AdminEditProduct = () => {
               </div>
             )}
 
-            {/* Images by color */}
-            {colors.map((color) => (
-              <div key={color} className="mt-6">
-                <h3 className="text-lg font-medium mb-3">{color}</h3>
-                <div className="grid grid-cols-4 gap-4">
-                  {colorImages?.[color]?.map((image, index) =>
-                    image.preview.map((url, i) => (
-                      <div key={i} className="relative group">
-                        <Image
-                          src={url}
-                          alt={`${color} Preview ${i + 1}`}
-                          className="w-full h-full object-cover rounded-lg"
-                          width={1920}
-                          height={1080}
-                        />
+            {/* Color swatches and product images */}
+            <div className="mt-8 space-y-8">
+              {colors.map((colorName) => (
+                <div
+                  key={colorName}
+                  className="p-4 border border-gray-200 rounded-lg"
+                >
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg font-medium">{colorName}</h3>
+                    <button
+                      type="button"
+                      onClick={() => removeColor(colorName)}
+                      className="text-red-600 hover:text-red-800 p-1 hover:bg-red-50 rounded-full"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  {/* Color swatch image */}
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Color Swatch Image
+                    </label>
+                    <div className="flex items-center gap-4">
+                      {colorSwatches[colorName] ? (
+                        <div className="relative group">
+                          <Image
+                            src={colorSwatches[colorName].preview.toString()}
+                            alt={`${colorName} swatch`}
+                            className="w-16 h-16 object-cover rounded-lg border border-gray-200"
+                            width={1920}
+                            height={1080}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeSwatchImage(colorName)}
+                            disabled={isUploading}
+                            className="absolute -top-2 -right-2 p-1.5 bg-red-100 text-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="w-16 h-16 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                          <label
+                            htmlFor={`swatch-${colorName}`}
+                            className="cursor-pointer text-gray-500 hover:text-[#B88E2F] flex flex-col items-center"
+                          >
+                            <Plus className="w-6 h-6" />
+                            <span className="text-xs mt-1">Add</span>
+                            <input
+                              id={`swatch-${colorName}`}
+                              type="file"
+                              accept="image/*"
+                              className="sr-only"
+                              onChange={(e) =>
+                                handleSwatchImageChange(e, colorName)
+                              }
+                              disabled={isUploading}
+                            />
+                          </label>
+                        </div>
+                      )}
+                      <div className="text-sm text-gray-600">
+                        {colorSwatches[colorName] ? (
+                          <p>Swatch image uploaded</p>
+                        ) : (
+                          <p>Upload a swatch image for this color</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Product images */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Product Images ({(colorImages[colorName] || []).length}/4)
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                      {(colorImages[colorName] || []).map((image, index) => (
+                        <div
+                          key={index}
+                          className="relative group aspect-square"
+                        >
+                          <Image
+                            src={image.preview.toString()}
+                            alt={`${colorName} product ${index + 1}`}
+                            className="w-full h-full object-cover rounded-lg"
+                            width={1920}
+                            height={1080}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeProductImage(colorName, index)}
+                            disabled={isUploading}
+                            className="absolute -top-2 -right-2 p-1.5 bg-red-100 text-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ))}
+                      {(colorImages[colorName] || []).length < 4 && (
                         <button
                           type="button"
-                          onClick={() => removeImage(color, i)}
-                          disabled={isUploading}
-                          className="absolute -top-2 -right-2 p-1.5 bg-red-100 text-red-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                          onClick={() => handleAddImageClick(colorName)}
+                          className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-500 hover:text-[#B88E2F] hover:border-[#B88E2F]"
                         >
-                          <X className="w-4 h-4" />
+                          <Plus className="w-8 h-8" />
+                          <span className="text-sm mt-1">Add Image</span>
                         </button>
-                      </div>
-                    ))
-                  )}
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 

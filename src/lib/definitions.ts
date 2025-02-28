@@ -18,6 +18,12 @@ export type WishListState = {
   discountPrice?: number;
 };
 
+export interface ImageFile {
+  name?: string;
+  preview: string | string[];
+  publicId?: string;
+}
+
 export type ProductType = {
   id: string;
   name: string;

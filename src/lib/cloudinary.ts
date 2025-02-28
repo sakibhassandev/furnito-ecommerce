@@ -60,9 +60,13 @@ export const uploadToCloudinary = async (
 
 export const deleteFromCloudinary = async (publicId: string) => {
   try {
-    const res = cloudinary.uploader.destroy(publicId, (error, result) => {
+    const res = cloudinary.uploader.destroy(publicId, async (error, result) => {
       if (error) {
         throw error;
+      }
+      if (result.result === "ok") {
+        removePublicIdAndUrlFromProductImages(publicId);
+        removePublicIdAndUrlFromProductColors(publicId);
       }
       return result;
     });
@@ -70,5 +74,60 @@ export const deleteFromCloudinary = async (publicId: string) => {
   } catch (error) {
     console.error("Error deleting from Cloudinary:", error);
     throw error;
+  }
+};
+
+const removePublicIdAndUrlFromProductImages = async (publicId: string) => {
+  try {
+    const productImage = await prisma.productImages.findFirst({
+      where: { publicId: { has: publicId } },
+      select: { id: true, publicId: true, url: true }, // Select the document ID url and publicId array
+    });
+
+    if (!productImage) {
+      console.log("No matching document found.");
+      return;
+    }
+
+    const updatedPublicIds = productImage.publicId.filter(
+      (id) => id !== publicId
+    );
+
+    const updatedUrls = productImage.url.filter(
+      (imageUrl) => !imageUrl.includes(publicId)
+    );
+
+    const updatedProductImage = await prisma.productImages.update({
+      where: { id: productImage.id }, // Use found document's ID
+      data: {
+        publicId: { set: updatedPublicIds },
+        url: { set: updatedUrls },
+      },
+    });
+
+    console.log("Updated product:", updatedProductImage);
+  } catch (error) {
+    console.error("Error updating product:", error);
+  }
+};
+
+const removePublicIdAndUrlFromProductColors = async (publicId: string) => {
+  try {
+    const productColor = await prisma.colors.findFirst({
+      where: { publicId },
+    });
+
+    if (!productColor) {
+      console.log("No matching document found.");
+      return;
+    }
+
+    await prisma.colors.delete({
+      where: { id: productColor.id },
+    });
+
+    console.log("Updated product:", productColor);
+  } catch (error) {
+    console.error("Error updating product:", error);
   }
 };

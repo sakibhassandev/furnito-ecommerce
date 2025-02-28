@@ -21,7 +21,7 @@ const AdminProducts = () => {
   useEffect(() => {
     const getProducts = async () => {
       const product = await fetchProducts();
-      setProducts(product);
+      setProducts(Array.isArray(product) ? product : []);
     };
 
     getProducts();
@@ -69,7 +69,7 @@ const AdminProducts = () => {
     }
   };
 
-  const filteredProducts = products?.filter((product) => {
+  const filteredProducts = (products || []).filter((product) => {
     const searchLower = searchQuery.toLowerCase();
     return (
       product?.name?.toLowerCase().includes(searchLower) ||

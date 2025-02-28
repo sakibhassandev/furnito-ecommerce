@@ -8,11 +8,7 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
-interface ImageFile {
-  preview: string;
-  publicId?: string;
-}
+import { ImageFile } from "@/lib/definitions";
 
 const AdminAddProduct = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -45,7 +41,7 @@ const AdminAddProduct = () => {
     setNewColorName("");
   };
 
-  const removeColor = (colorName: string) => {
+  const removeColor = async (colorName: string) => {
     if (
       window.confirm(
         `Are you sure you want to remove ${colorName} and all its images?`
@@ -57,6 +53,7 @@ const AdminAddProduct = () => {
       // Remove color swatch if exists
       if (colorSwatches[colorName]) {
         const newSwatches = { ...colorSwatches };
+        await deleteFromCloudinary(colorSwatches[colorName].publicId as string);
         delete newSwatches[colorName];
         setColorSwatches(newSwatches);
       }
@@ -64,6 +61,9 @@ const AdminAddProduct = () => {
       // Remove color images if exist
       if (colorImages[colorName]) {
         const newImages = { ...colorImages };
+        colorImages[colorName].forEach(async (image) => {
+          await deleteFromCloudinary(image.publicId as string);
+        });
         delete newImages[colorName];
         setColorImages(newImages);
       }
@@ -135,7 +135,6 @@ const AdminAddProduct = () => {
 
     setIsUploading(true);
     try {
-      const currentImages = colorImages[colorName] || [];
       const uploadPromises = files.map(async (file) => {
         const result = await uploadToCloudinary(file);
         return {
@@ -233,8 +232,6 @@ const AdminAddProduct = () => {
       })),
     };
 
-    console.log(productData);
-
     // Send product data to the server
     const { data } = await axios.post("/api/product", { productData });
     if (data.success) {
@@ -284,7 +281,7 @@ const AdminAddProduct = () => {
       .slice(0, 4 - currentImages.length);
 
     if (files.length > 0) {
-      await handleImageUpload(files, selectedColor);
+      await handleProductImageUpload(files, selectedColor);
     }
   };
 
@@ -531,7 +528,7 @@ const AdminAddProduct = () => {
                       {colorSwatches[colorName] ? (
                         <div className="relative group">
                           <Image
-                            src={colorSwatches[colorName].preview}
+                            src={colorSwatches[colorName].preview.toString()}
                             alt={`${colorName} swatch`}
                             width={1920}
                             height={1080}
@@ -589,7 +586,7 @@ const AdminAddProduct = () => {
                           className="relative group aspect-square"
                         >
                           <Image
-                            src={image.preview}
+                            src={image.preview.toString()}
                             alt={`${colorName} product ${index + 1}`}
                             width={1920}
                             height={1080}

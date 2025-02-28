@@ -2,6 +2,12 @@ import { prisma } from "@/lib/prisma";
 import { ApiError } from "@/utils/ApiError";
 import { ApiResponse } from "@/utils/ApiResponse";
 
+type colorType = {
+  name: string;
+  images?: { url: string; publicId: string }[];
+  colorImage?: { url: string; publicId: string };
+};
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const productId = searchParams.get("productId");
@@ -22,12 +28,14 @@ export async function GET(request: Request) {
           select: {
             url: true,
             color: true,
+            publicId: true,
           },
         },
         colors: {
           select: {
             name: true,
             image: true,
+            publicId: true,
           },
         },
         reviews: {
@@ -92,18 +100,18 @@ export async function POST(request: Request) {
         },
         colors: {
           createMany: {
-            data: productData.colors.map((color) => ({
+            data: productData.colors.map((color: colorType) => ({
               name: color.name,
-              image: color.colorImage.url,
-              publicId: color.colorImage.publicId,
+              image: color.colorImage?.url,
+              publicId: color.colorImage?.publicId,
             })),
           },
         },
         images: {
           createMany: {
-            data: productData.colors.map((color) => ({
-              url: color.images.map((image) => image.url),
-              publicId: color.images.map((image) => image.publicId),
+            data: productData.colors.map((color: colorType) => ({
+              url: color.images?.map((image) => image.url),
+              publicId: color.images?.map((image) => image.publicId),
               color: color.name,
             })),
           },
@@ -114,8 +122,6 @@ export async function POST(request: Request) {
         colors: true,
       },
     });
-
-    console.log(createdProduct);
 
     if (!createdProduct) {
       return Response.json(new ApiError(404, false, "Product not created"), {
@@ -137,6 +143,92 @@ export async function POST(request: Request) {
   } catch (error) {
     console.log("Error creating products.", error);
     return Response.json(new ApiError(500, false, "Error creating products."), {
+      status: 500,
+    });
+  }
+}
+
+export async function PUT(request: Request) {
+  const { productData } = await request.json();
+  const { searchParams } = new URL(request.url);
+  const productId = searchParams.get("productId");
+
+  try {
+    if (!productData || !productId) {
+      return Response.json(
+        new ApiError(400, false, "Product Data or ID not found!."),
+        {
+          status: 400,
+        }
+      );
+    }
+
+    const updatedProduct = await prisma.product.update({
+      where: {
+        id: productId,
+      },
+      data: {
+        name: productData.name,
+        sku: productData.sku,
+        description: productData.description,
+        price: productData.price,
+        hasDiscount: productData.discount,
+        categories: {
+          set: productData.categories,
+        },
+        tags: {
+          set: productData.tags,
+        },
+        sizes: {
+          set: productData.sizes,
+        },
+        colors: {
+          deleteMany: {},
+          createMany: {
+            data: productData.colors.map((color: colorType) => ({
+              name: color.name,
+              image: color.colorImage?.url,
+              publicId: color.colorImage?.publicId,
+            })),
+          },
+        },
+        images: {
+          deleteMany: {},
+          createMany: {
+            data: productData.colors.map((color: colorType) => ({
+              url: color.images?.map((image) => image.url),
+              publicId: color.images?.map((image) => image.publicId),
+              color: color.name,
+            })),
+          },
+        },
+      },
+      include: {
+        images: true,
+        colors: true,
+      },
+    });
+
+    if (!updatedProduct) {
+      return Response.json(new ApiError(404, false, "Product not created"), {
+        status: 404,
+      });
+    }
+
+    return Response.json(
+      new ApiResponse(
+        200,
+        true,
+        updatedProduct,
+        "Products updated successfully."
+      ),
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    console.log("Error updating products.", error);
+    return Response.json(new ApiError(500, false, "Error updating products."), {
       status: 500,
     });
   }
