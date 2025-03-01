@@ -50,8 +50,6 @@ export const Login = () => {
         password: data.password,
       });
 
-      console.log(result);
-
       if (!result?.error) {
         toast.success("Welcome back!", {
           position: "top-center",

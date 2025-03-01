@@ -12,28 +12,21 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import axios, { AxiosError } from "axios";
-import { ApiError } from "@/utils/ApiError";
 import { OrderType } from "@/lib/definitions";
+import { fetchOrder } from "@/actions";
 
 export default function OrderDetails({ orderId }: { orderId: string }) {
   const [order, setOrder] = useState<OrderType>({} as OrderType);
   const orderDetailsRef = useRef(null);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.post("/api/get-order", {
-          orderId,
-        });
-        setOrder(response.data.data);
-      } catch (error) {
-        const err = error as AxiosError<ApiError>;
-        console.log(err);
-      }
+    const getOrder = async () => {
+      const order = await fetchOrder(orderId);
+      setOrder(order.data);
+      console.log(order);
     };
 
-    fetchOrders();
+    getOrder();
   }, [orderId]);
 
   const getStatusIcon = (status: OrderType["status"]) => {

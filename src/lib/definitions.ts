@@ -18,6 +18,12 @@ export type WishListState = {
   discountPrice?: number;
 };
 
+export interface ImageFile {
+  name?: string;
+  preview: string | string[];
+  publicId?: string;
+}
+
 export type ProductType = {
   id: string;
   name: string;
@@ -65,7 +71,7 @@ export interface OrderType {
   orderDate: string;
   orderItems: OrderItem[];
   paymentMethod: string;
-  status: "pending" | "processing" | "shipped" | "delivered";
+  status: "pending" | "processing" | "shipped" | "delivered" | "cancelled";
   trackingNumber: string;
   total: number;
   deliveryCharge: number;
@@ -81,6 +87,13 @@ export interface OrderType {
     }[];
   };
 }
+
+export type OrderStatus =
+  | "delivered"
+  | "pending"
+  | "processing"
+  | "shipped"
+  | "cancelled";
 
 export interface ProfileData {
   name: string;

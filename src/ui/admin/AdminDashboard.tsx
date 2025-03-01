@@ -1,24 +1,25 @@
-import axios from "axios";
 import { Package, ShoppingCart } from "lucide-react";
 import { useEffect, useState } from "react";
 import AdminDashboardRecentOrders from "./AdminDashboardRecentOrders";
+import { fetchOrders, fetchProducts } from "@/actions";
 
 const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const response = await axios.get("/api/get-products");
-      setProducts(response.data.data);
+    const getProducts = async () => {
+      const products = await fetchProducts();
+      setProducts(products);
     };
-    fetchProducts();
 
-    const fetchOrders = async () => {
-      const response = await axios.get("/api/get-all-orders");
-      setOrders(response.data.data);
+    const getOrders = async () => {
+      const orders = await fetchOrders();
+      setOrders(orders);
     };
-    fetchOrders();
+
+    getProducts();
+    getOrders();
   }, []);
 
   return (

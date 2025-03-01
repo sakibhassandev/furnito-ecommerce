@@ -59,6 +59,7 @@ export async function POST(request: Request) {
         status: true,
         trackingNumber: true,
         orderDate: true,
+        deliveryCharge: true,
       },
     });
 
@@ -118,6 +119,7 @@ export async function GET() {
         status: true,
         trackingNumber: true,
         orderDate: true,
+        deliveryCharge: true,
       },
     });
 

@@ -1,187 +1,131 @@
 "use client";
 
-import React, { useState } from "react";
-import { Upload } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { ImageFile, ProductType } from "@/lib/definitions";
+import AdminAddEditProductDetail from "./AdminProductColorImage";
+import { handleSubmitProductData } from "@/utils/productUtils";
+import { fetchProduct } from "@/actions";
 
 const AdminEditProduct = () => {
-  //   const [images, setImages] = useState<File[]>([]);
-  const [previews, setPreviews] = useState<string[]>([
-    "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=100&q=80",
-  ]);
+  const params = useParams();
+  const [product, setProduct] = useState<ProductType>({} as ProductType);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files).slice(0, 4);
-      //   setImages(filesArray);
+  const [isUploading, setIsUploading] = useState(false);
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [colors, setColors] = useState<string[]>([]);
+  const [colorSwatches, setColorSwatches] = useState<{
+    [key: string]: ImageFile;
+  }>({});
+  const [colorImages, setColorImages] = useState<{
+    [key: string]: ImageFile[];
+  }>({});
 
-      const previewsArray = filesArray.map((file) => URL.createObjectURL(file));
-      setPreviews((prev) => [...prev, ...previewsArray]);
-    }
-  };
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const fetchedProduct = await fetchProduct(params.id as string);
+      setProduct(fetchedProduct);
+
+      // Process color data
+      const colorNames = fetchedProduct.colors.map(
+        (color: { name: string; publicId: string; image: string }) => color.name
+      );
+      setColors(colorNames);
+
+      // Process color swatches
+      const swatches: { [key: string]: ImageFile } = {};
+      fetchedProduct.colors.forEach(
+        (color: { name: string; publicId: string; image: string }) => {
+          swatches[color.name] = {
+            preview: color.image,
+            publicId: color.publicId,
+          };
+        }
+      );
+      setColorSwatches(swatches);
+
+      // Process product images
+      const images: { [key: string]: ImageFile[] } = {};
+      fetchedProduct.images.forEach(
+        (imageData: {
+          name: string;
+          publicId: string;
+          url: string[];
+          color: string;
+        }) => {
+          const colorImages = imageData.url.map((url, index) => ({
+            preview: url,
+            publicId: imageData.publicId[index],
+          }));
+          images[imageData.color] = colorImages;
+        }
+      );
+      setColorImages(images);
+
+      // Set first color as selected if available
+      if (colorNames.length > 0) {
+        setSelectedColor(colorNames[0]);
+      }
+    };
+
+    fetchProducts();
+  }, [params.id]);
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8">Edit Product</h1>
+      <div className="flex items-center gap-4 mb-8">
+        <Link
+          href="/admin/products"
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+        >
+          <ArrowLeft className="w-6 h-6 text-gray-600" />
+        </Link>
+        <h1 className="text-3xl font-bold">Edit Product</h1>
+      </div>
 
-      <form className="bg-white rounded-lg shadow p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Product Name
-            </label>
-            <input
-              type="text"
-              defaultValue="Modern Chair"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              SKU
-            </label>
-            <input
-              type="text"
-              defaultValue="CHR-001"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Description
-            </label>
-            <textarea
-              rows={4}
-              defaultValue="A modern chair with a sleek design and comfortable seating."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            ></textarea>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Price
-            </label>
-            <input
-              type="number"
-              step="0.01"
-              defaultValue="299.00"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Discount (%)
-            </label>
-            <input
-              type="number"
-              defaultValue="0"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Categories
-            </label>
-            <input
-              type="text"
-              defaultValue="Furniture, Chairs, Living Room"
-              placeholder="Separate with commas"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Tags
-            </label>
-            <input
-              type="text"
-              defaultValue="modern, comfortable, stylish"
-              placeholder="Separate with commas"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Sizes
-            </label>
-            <input
-              type="text"
-              defaultValue="Small, Medium, Large"
-              placeholder="Separate with commas"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Colors
-            </label>
-            <input
-              type="text"
-              defaultValue="Black, White, Brown"
-              placeholder="Separate with commas"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-            />
-          </div>
-
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Product Images (Minimum 4 required)
-            </label>
-            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
-              <div className="space-y-1 text-center">
-                <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                <div className="flex text-sm text-gray-600">
-                  <label
-                    htmlFor="images"
-                    className="relative cursor-pointer bg-white rounded-md font-medium text-[#B88E2F] hover:text-[#96732B]"
-                  >
-                    <span>Upload images</span>
-                    <input
-                      id="images"
-                      name="images"
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      className="sr-only"
-                      onChange={handleImageChange}
-                    />
-                  </label>
-                </div>
-                <p className="text-xs text-gray-500">
-                  PNG, JPG, GIF up to 10MB each
-                </p>
-              </div>
-            </div>
-            <div className="mt-4 grid grid-cols-4 gap-4">
-              {previews.map((preview, index) => (
-                <div key={index} className="relative">
-                  <img
-                    src={preview}
-                    alt={`Preview ${index + 1}`}
-                    className="h-24 w-24 object-cover rounded-lg"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <form
+        className="bg-white rounded-lg shadow p-6"
+        onSubmit={(e) =>
+          handleSubmitProductData({
+            type: "edit",
+            e,
+            router,
+            colors,
+            colorSwatches,
+            colorImages,
+            params: { id: params.id as string },
+          })
+        }
+      >
+        <AdminAddEditProductDetail
+          colorImages={colorImages}
+          colorSwatches={colorSwatches}
+          isUploading={isUploading}
+          setColorImages={setColorImages}
+          setColorSwatches={setColorSwatches}
+          colors={colors}
+          selectedColor={selectedColor}
+          setSelectedColor={setSelectedColor}
+          setIsUploading={setIsUploading}
+          product={product}
+          setColors={setColors}
+        />
 
         <div className="mt-6 flex justify-end space-x-4">
-          <button
-            type="button"
+          <Link
+            href="/admin/products"
             className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
           >
             Cancel
-          </button>
+          </Link>
           <button
             type="submit"
-            className="bg-[#B88E2F] text-white px-6 py-2 rounded-lg hover:bg-[#96732B]"
+            className="bg-[#B88E2F] text-white px-6 py-2 rounded-lg hover:bg-[#96732B] disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isUploading}
           >
             Save Changes
           </button>

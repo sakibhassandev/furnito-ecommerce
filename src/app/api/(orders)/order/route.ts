@@ -112,8 +112,6 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   const { orderId } = await request.json();
 
-  console.log(orderId);
-
   if (!orderId) {
     return Response.json(new ApiError(404, false, "Order Id Not Found."), {
       status: 404,

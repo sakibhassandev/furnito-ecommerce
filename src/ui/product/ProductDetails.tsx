@@ -97,7 +97,7 @@ const ProductDetails = ({
                 <div className="flex flex-col gap-10 lg:flex-row product-details border-b border-[#dadce0] pb-4">
                   <div className="self-center max-lg:self-center lg:mr-10 left">
                     <div className="product-img">
-                      <div className="lg:h-[550px] lg:w-[550px]">
+                      <div className="lg:w-[550px]">
                         {bigImage && (
                           <Image
                             src={bigImage}
@@ -196,7 +196,7 @@ const ProductDetails = ({
                                 key={i}
                                 className="bg-[#F9F1E7] py-1 px-2 sm:py-3 sm:px-4 flex justify-center text-sm items-center text-black rounded-md cursor-pointer"
                               >
-                                {size}
+                                {size?.toUpperCase()}
                               </span>
                             );
                           })}
@@ -441,7 +441,8 @@ const ProductDetails = ({
                                 href="#"
                                 className="hover:text-[#f50963] ease-out duration-300"
                               >
-                                {el},
+                                {" "}
+                                {el?.toUpperCase()},
                               </a>
                             </span>
                           );
@@ -458,7 +459,7 @@ const ProductDetails = ({
                               href="#"
                               className="text-sm leading-none text-[#525258] p-[2px_8px] xsm:p-[4px_12px] mb-2 inline-block border border-[#dadce0] hover:bg-[#f50963] hover:border-[#f50963] hover:text-white ease-out duration-300"
                             >
-                              {el}
+                              {el?.toUpperCase()}
                             </a>
                           );
                         })}

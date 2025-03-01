@@ -419,7 +419,7 @@ export default function Checkout() {
           {/* Order Summary Section */}
           <StoreProvider>
             <SessionProvider>
-              <CheckoutSummary />
+              <CheckoutSummary userAddress={savedAddress} />
             </SessionProvider>
           </StoreProvider>
         </div>

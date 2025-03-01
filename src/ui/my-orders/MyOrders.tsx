@@ -1,8 +1,8 @@
 "use client";
 
+import { fetchUserOrder } from "@/actions";
 import { ProductType } from "@/lib/definitions";
-import { ApiError } from "@/utils/ApiError";
-import axios, { AxiosError } from "axios";
+
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -39,19 +39,13 @@ const MyOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.post("/api/get-all-orders", {
-          userId,
-        });
-        setOrders(response.data.data);
-      } catch (error) {
-        const err = error as AxiosError<ApiError>;
-        console.error(err);
-      }
+    const getOrders = async () => {
+      if (!userId) return;
+      const order = await fetchUserOrder(userId);
+      setOrders(order.data);
     };
 
-    fetchOrders();
+    getOrders();
   }, [userId]);
 
   const toggleOrderExpansion = (orderId: string) => {
@@ -78,7 +72,7 @@ const MyOrders = () => {
       <h1 className="text-3xl font-bold mb-8">My Orders</h1>
       <div className="space-y-6">
         {orders.length > 0 ? (
-          orders.map((order) => (
+          [...orders].reverse().map((order) => (
             <div
               key={order.id}
               className="bg-white rounded-lg shadow-md overflow-hidden"
