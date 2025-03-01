@@ -7,6 +7,8 @@ export type CartState = {
   price: number;
   quantity: number;
   discountPrice?: number;
+  size?: string;
+  color?: string;
 };
 
 export type WishListState = {
@@ -64,6 +66,8 @@ export type AddressType = {
 interface OrderItem {
   product: ProductType;
   quantity: number;
+  color: string;
+  size: string;
 }
 
 export interface OrderType {

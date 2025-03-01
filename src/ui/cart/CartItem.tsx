@@ -9,6 +9,8 @@ export const CartItem = ({
   id,
   img,
   name,
+  color,
+  size,
   price,
   discountPrice,
   quantity,
@@ -37,7 +39,9 @@ export const CartItem = ({
           href={`/product-details/${id}`}
           className="hover:text-[#f50963] ease-out duration-300"
         >
-          {name}
+          <span className="capitalize">Name: {name}</span> <br />
+          <span className="capitalize">Color: {color}</span> <br />
+          <span className="capitalize">Size: {size}</span>
         </Link>
       </td>
       <td className="px-6 py-4 text-center border-r border-[#eaedff]">

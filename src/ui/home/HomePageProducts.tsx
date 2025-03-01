@@ -44,6 +44,8 @@ export const HomePageProducts = () => {
                   img={product.images[0]?.url[0]}
                   price={product.price}
                   hasDiscount={product.hasDiscount || 0}
+                  sizes={product.sizes}
+                  colors={product.colors}
                 />
               );
             }

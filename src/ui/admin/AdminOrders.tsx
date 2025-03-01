@@ -58,6 +58,7 @@ const AdminOrders = () => {
     const getOrders = async () => {
       const orders = await fetchOrders();
       setOrders(orders);
+      console.log(orders);
     };
     getOrders();
   }, []);
@@ -213,8 +214,13 @@ const AdminOrders = () => {
                 <TableCell>
                   <div className="space-y-0.5">
                     {order.orderItems.map((item, index) => (
-                      <div key={index} className="text-sm">
-                        {item.product.name}
+                      <div
+                        key={index}
+                        className="capitalize flex items-center gap-2 text-sm"
+                      >
+                        <span className="font-medium">{item.product.name}</span>
+                        <span className="text-muted-foreground">×</span>
+                        <span className="font-medium">{item.quantity}</span>
                       </div>
                     ))}
                   </div>
@@ -387,7 +393,15 @@ const AdminOrders = () => {
                       <tbody className="divide-y divide-gray-200">
                         {selectedOrder?.orderItems?.map((item, index) => (
                           <tr key={index}>
-                            <td className="px-4 py-2">{item.product.name}</td>
+                            <td className="px-4 py-2 capitalize">
+                              {item.product.name}{" "}
+                              <span className="px-2 py-0.5 bg-gray-100 rounded-full text-xs">
+                                Size: {item.size}
+                              </span>
+                              <span className="capitalize px-2 py-0.5 bg-gray-100 rounded-full text-xs">
+                                Color: {item.color}
+                              </span>
+                            </td>
                             <td className="px-4 py-2">{item.quantity}</td>
                             <td className="px-4 py-2">${item.product.price}</td>
                             <td className="px-4 py-2">

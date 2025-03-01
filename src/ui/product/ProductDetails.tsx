@@ -326,13 +326,14 @@ const ProductDetails = ({
                               addCartItem({
                                 id,
                                 img: singleProduct?.images
-                                  ? singleProduct.images[0].url[0]
+                                  ? singleProduct.images[colorIndex].url[0]
                                   : "",
                                 name,
                                 price,
                                 discountPrice,
                                 quantity,
                                 size: singleProduct?.sizes?.[sizesIndex],
+                                color: singleProduct?.colors?.[colorIndex].name,
                               })
                             );
                             toast.success(`${name} added to cart`, {
