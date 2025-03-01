@@ -46,6 +46,7 @@ model Order {
     status         String
     trackingNumber String
     deliveryCharge Float
+    isReviewed     Boolean     @default(false)
     createdAt      DateTime    @default(now())
     updatedAt      DateTime    @updatedAt
 }
@@ -63,7 +64,6 @@ model OrderItem {
 
 model Review {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    name      String
     message   String
     rating    String
     authorId  String   @db.ObjectId

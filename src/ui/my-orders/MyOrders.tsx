@@ -4,6 +4,7 @@ import { fetchUserOrder } from "@/actions";
 import { ProductType } from "@/lib/definitions";
 
 import {
+  CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   PackageIcon,
@@ -30,6 +31,7 @@ interface Order {
   paymentMethod: string;
   status: "pending" | "processing" | "shipped" | "delivered";
   total: number;
+  isReviewed: boolean;
 }
 
 const MyOrders = () => {
@@ -38,13 +40,14 @@ const MyOrders = () => {
   const userId = session?.user?.id;
 
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [order, setOrder] = useState<Order[]>([]);
 
   useEffect(() => {
     const getOrders = async () => {
       if (!userId) return;
       const order = await fetchUserOrder(userId);
-      setOrders(order.data);
+      console.log(order);
+      setOrder(order.data);
     };
 
     getOrders();
@@ -73,8 +76,8 @@ const MyOrders = () => {
     <div className="max-w-screen-2xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">My Orders</h1>
       <div className="space-y-6">
-        {orders.length > 0 ? (
-          [...orders].reverse().map((order) => (
+        {order.length > 0 ? (
+          [...order].reverse().map((order) => (
             <div
               key={crypto.randomUUID()}
               className="bg-white rounded-lg shadow-md overflow-hidden"
@@ -159,13 +162,27 @@ const MyOrders = () => {
                       );
                     })}
                   </div>
-                  <div className="mt-6 flex justify-end">
+                  <div className="mt-6 flex items-center justify-end space-x-4">
                     <Link
                       href={`/order-details/${order.id}`}
-                      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                      className="px-4 py-2 text-white rounded bg-[#B88E2F] hover:bg-[#96732B] transition-colors text-sm font-medium"
                     >
                       View Order Details
                     </Link>
+                    {order.status.toLowerCase() === "delivered" &&
+                      (order.isReviewed ? (
+                        <span className="inline-flex items-center px-3 py-1 text-sm font-medium text-green-600">
+                          <span className="mr-1">Reviewed</span>
+                          <CheckIcon className="w-4 h-4" />
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => openReviewModal(order.id)}
+                          className="px-4 py-2 bg-[#B88E2F] text-white rounded hover:bg-[#96732B] transition-colors text-sm font-medium inline-flex items-center"
+                        >
+                          Add Review
+                        </button>
+                      ))}
                   </div>
                 </div>
               )}
