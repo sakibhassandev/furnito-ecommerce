@@ -19,6 +19,8 @@ import { useEffect, useState } from "react";
 interface OrderItem {
   product: ProductType;
   quantity: number;
+  color: string;
+  size: string;
 }
 
 interface Order {
@@ -74,7 +76,7 @@ const MyOrders = () => {
         {orders.length > 0 ? (
           [...orders].reverse().map((order) => (
             <div
-              key={order.id}
+              key={crypto.randomUUID()}
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
               <div
@@ -126,11 +128,15 @@ const MyOrders = () => {
                       );
                       return (
                         <div
-                          key={item.product.id}
+                          key={crypto.randomUUID()}
                           className="py-4 flex items-center space-x-4"
                         >
                           <Image
-                            src={item.product.images[0].url[0]}
+                            src={
+                              item?.product?.images?.find(
+                                (img) => img.color === item?.color
+                              )?.url[0] || item?.product?.images[0]?.url[0]
+                            }
                             alt={item.product.name}
                             width={64}
                             height={64}
@@ -138,8 +144,9 @@ const MyOrders = () => {
                           />
                           <div className="flex-1">
                             <h3 className="font-medium">{item.product.name}</h3>
-                            <p className="text-sm text-gray-600">
-                              Quantity: {item.quantity}
+                            <p className="text-sm text-gray-600 capitalize">
+                              Quantity: {item.quantity} | Color: {item.color} |
+                              Size: {item.size}
                             </p>
                           </div>
                           <p className="font-medium">

@@ -50,12 +50,23 @@ export const CommonCartSection = ({
             </thead>
             <tbody>
               {productList?.map(
-                ({ id, img, name, price, discountPrice, quantity }) => (
+                ({
+                  id,
+                  img,
+                  name,
+                  price,
+                  discountPrice,
+                  quantity,
+                  color,
+                  size,
+                }) => (
                   <CartItem
-                    key={id}
+                    key={crypto.randomUUID()}
                     id={id}
                     img={img}
                     name={name}
+                    color={color}
+                    size={size}
                     price={price}
                     discountPrice={discountPrice}
                     quantity={quantity}

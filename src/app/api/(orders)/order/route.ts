@@ -26,6 +26,8 @@ export async function POST(request: Request) {
               },
             },
             quantity: true,
+            size: true,
+            color: true,
           },
         },
         user: {

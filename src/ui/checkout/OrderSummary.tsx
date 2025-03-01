@@ -19,6 +19,8 @@ interface OrderItem {
   quantity: number;
   price: number;
   discountPrice?: number;
+  size: string;
+  color: string;
 }
 
 export default function CheckoutSummary({
@@ -32,6 +34,8 @@ export default function CheckoutSummary({
   const orderItems: OrderItem[] = useSelector(
     (state: RootState) => state.cartItems
   );
+
+  console.log(orderItems);
 
   //   Getting the user id from next-auth
   const { data } = useSession();
@@ -69,10 +73,12 @@ export default function CheckoutSummary({
           ) : (
             orderItems.map((item: OrderItem) => (
               <CheckoutProduct
-                key={item.id}
+                key={crypto.randomUUID()}
                 productName={item.name}
                 quantity={item.quantity}
                 price={item.discountPrice ? item.discountPrice : item.price}
+                size={item.size}
+                color={item.color}
               />
             ))
           )}

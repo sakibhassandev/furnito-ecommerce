@@ -7,6 +7,8 @@ interface OrderItem {
   paymentMethod: string;
   total: number;
   quantity: number;
+  color: string;
+  size: string;
 }
 
 export async function POST(request: Request) {
@@ -40,6 +42,8 @@ export async function POST(request: Request) {
           create: orderItems.map((item: OrderItem) => ({
             productId: item.id,
             quantity: item.quantity,
+            color: item.color,
+            size: item.size,
           })),
         },
         trackingNumber,

@@ -69,6 +69,8 @@ export const ProductList = () => {
                 img={product.images[0]?.url[0]}
                 price={product.price}
                 hasDiscount={product.hasDiscount}
+                colors={product.colors}
+                sizes={product.sizes}
               />
             );
           })}

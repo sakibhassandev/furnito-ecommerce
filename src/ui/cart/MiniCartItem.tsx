@@ -6,7 +6,15 @@ import { CartState } from "@/lib/definitions";
 import { X } from "lucide-react";
 import Link from "next/link";
 
-export const MiniCartItem = ({ name, price, quantity, img, id }: CartState) => {
+export const MiniCartItem = ({
+  name,
+  price,
+  quantity,
+  img,
+  id,
+  size,
+  color,
+}: CartState) => {
   const dispatch = useDispatch();
   return (
     <div className="item items-center relative flex p-[20px_35px_20px_20px] border-b border-[1px_solid_hsla(0,0%,51%,.2)] ease duration-300">
@@ -28,11 +36,15 @@ export const MiniCartItem = ({ name, price, quantity, img, id }: CartState) => {
         >
           {name}
         </a>
-        <div className="price-wrapper">
+        <div className="price-wrapper mb-2">
           <span className="text-sm font-medium text-[#B88E2F]">${price}</span>
           <span className="text-xs text-[#525258] font-medium">
             x{quantity}
           </span>
+        </div>
+        <div className="details text-xs text-[#525258]">
+          <span className="mr-2 capitalize">Size: {size}</span>
+          <span className="capitalize">Color: {color}</span>
         </div>
       </div>
       <button

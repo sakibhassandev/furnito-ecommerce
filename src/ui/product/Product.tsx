@@ -14,6 +14,11 @@ type ProductProps = {
   price: number;
   hasDiscount?: number;
   id: string;
+  sizes: string[];
+  colors: {
+    name: string;
+    image: string;
+  }[];
   setQuickViewProduct?: (product: ProductType) => void;
 };
 
@@ -24,6 +29,8 @@ export const Product = ({
   price,
   hasDiscount,
   id,
+  sizes,
+  colors,
   setQuickViewProduct,
 }: ProductProps) => {
   const dispatch = useDispatch();
@@ -126,7 +133,17 @@ export const Product = ({
           <div className="absolute left-0 right-0 transition-all duration-300 ease-out group-hover:bottom-0 -bottom-10 addToCart">
             <button
               onClick={() => {
-                dispatch(addCartItem({ img, name, price, id, discountPrice }));
+                dispatch(
+                  addCartItem({
+                    img,
+                    name,
+                    price,
+                    id,
+                    discountPrice,
+                    size: sizes[0],
+                    color: colors[0].name,
+                  })
+                );
                 toast.success(`${name} added to cart`, {
                   position: "top-center",
                   autoClose: 2000,

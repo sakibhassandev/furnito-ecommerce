@@ -57,15 +57,19 @@ export const MiniCart = () => {
                     discountPrice,
                     quantity,
                     id,
+                    size,
+                    color,
                   }: CartState) => {
                     return (
                       <MiniCartItem
-                        key={id}
+                        key={crypto.randomUUID()}
                         id={id}
                         name={name}
                         img={img}
                         price={discountPrice ? discountPrice : price}
                         quantity={quantity}
+                        size={size}
+                        color={color}
                       />
                     );
                   }

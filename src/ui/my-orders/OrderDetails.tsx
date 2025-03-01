@@ -145,20 +145,32 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                       );
                       return (
                         <tr
-                          key={item.product.id}
+                          key={crypto.randomUUID()}
                           className="border-t border-gray-200"
                         >
                           <td className="py-4 px-4">
                             <div className="flex items-center">
                               <Image
-                                src={item.product?.images[0]?.url[0]}
+                                src={
+                                  item?.product?.images?.find(
+                                    (img) => img.color === item?.color
+                                  )?.url[0] || item?.product?.images[0]?.url[0]
+                                }
                                 alt={item.product?.name}
                                 width={64}
                                 height={64}
                                 className="object-cover rounded-md mr-4"
                               />
                               <span className="font-medium">
-                                {item.product?.name}
+                                Name: {item.product?.name} <br />
+                                <span className="text-sm capitalize">
+                                  Size: {item.size}
+                                </span>{" "}
+                                <br />
+                                <span className="text-sm capitalize">
+                                  Color: {item.color}
+                                </span>{" "}
+                                <br />
                               </span>
                             </div>
                           </td>
