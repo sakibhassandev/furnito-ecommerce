@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { RootState } from "@/store";
 import { ProductType } from "@/lib/definitions";
 import Link from "next/link";
+import ImageGallery from "./ImageGallery";
 
 // Icons
 import { Facebook, Linkedin, Twitter, Youtube, LinkIcon } from "lucide-react";
@@ -37,11 +38,6 @@ export const QuickView = ({
       : 0
     ).toFixed(2)
   );
-
-  let bigImage: string = "";
-  if (quickViewProduct && quickViewProduct.images) {
-    bigImage = quickViewProduct.images[colorIndex].url[imgIndex];
-  }
 
   // product details variables
   const { name, price, id } = quickViewProduct || {};
@@ -102,8 +98,8 @@ export const QuickView = ({
           : "opacity-0 invisible -top-12"
       } fixed left-0 z-50 flex w-full ease-out duration-300 h-full overflow-x-hidden overflow-y-auto lg:items-center`}
     >
-      <div className="relative max-w-[1200px] mx-auto product_modal z-50">
-        <div className="relative py-16 px-10 mx-3 overflow-y-auto bg-white shadow-md modal-content">
+      <div className="relative h-full max-w-[1300px] mx-auto product_modal z-50">
+        <div className="relative py-6 px-10 mx-3 overflow-y-auto bg-white shadow-md modal-content">
           <div className="modal-wrapper">
             <button
               onClick={() => dispatch(isQuickViewOpen("closeQuickView"))}
@@ -124,57 +120,14 @@ export const QuickView = ({
             </button>
             <div className="flex flex-col lg:flex-row product-details">
               <div className="self-center max-lg:self-center lg:mr-10 left">
-                <div className="product-img">
-                  <div className="lg:h-[400px] lg:w-[433px]">
-                    {bigImage && (
-                      <Image
-                        src={bigImage}
-                        alt="cover-image"
-                        width={1200}
-                        height={900}
-                        className="object-fill w-full h-full shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]"
-                      />
-                    )}
-                  </div>
-                </div>
-                <div
-                  className="flex flex-wrap gap-3 product-options"
-                  ref={imagesRef as unknown as React.RefObject<HTMLDivElement>}
-                >
-                  {quickViewProduct?.images &&
-                    quickViewProduct.images[colorIndex].url.map((url, i) => {
-                      return (
-                        <button
-                          onClick={() => {
-                            setImgIndex(i);
-                            const imageChildren = imagesRef.current?.children;
-                            if (imageChildren) {
-                              for (let i = 0; i < imageChildren.length; i++) {
-                                imageChildren[i].classList.add(
-                                  "after:invisible",
-                                  "after:opacity-0"
-                                );
-                              }
-                              imageChildren[i].classList.remove(
-                                "after:opacity-0",
-                                "after:invisible"
-                              );
-                            }
-                          }}
-                          className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#B88E2F] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-24 lg:h-24`}
-                          key={i}
-                        >
-                          <Image
-                            src={url}
-                            alt={`${name} image`}
-                            width={1200}
-                            height={900}
-                            className="w-full h-full object-contain shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] p-2"
-                          />
-                        </button>
-                      );
-                    })}
-                </div>
+                <ImageGallery
+                  imageContainerClass="lg:h-[400px] lg:w-[433px]"
+                  images={quickViewProduct?.images}
+                  colorIndex={colorIndex}
+                  imgIndex={imgIndex}
+                  setImgIndex={setImgIndex}
+                  imagesRef={imagesRef}
+                />
               </div>
               <div className="right">
                 <div className="product-information">
@@ -206,7 +159,7 @@ export const QuickView = ({
                               }
                             }}
                             key={i}
-                            className="bg-[#F9F1E7] py-2 px-3 flex justify-center text-sm items-center text-black rounded-md cursor-pointer"
+                            className="capitalize bg-[#F9F1E7] py-2 px-3 flex justify-center text-sm items-center text-black rounded-md cursor-pointer"
                           >
                             {size}
                           </span>

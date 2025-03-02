@@ -5,6 +5,7 @@ import { addWishListItem } from "@/store/slices/wishListSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { ProductType } from "@/lib/definitions";
+import ImageGallery from "./ImageGallery";
 
 // Icons
 import { Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
@@ -34,11 +35,6 @@ const ProductDetails = ({
       : 0
     ).toFixed(2)
   );
-
-  let bigImage: string = "";
-  if (singleProduct && singleProduct.images) {
-    bigImage = singleProduct.images[colorIndex]?.url[imgIndex];
-  }
 
   // product details variables
   const { name, price, id } = singleProduct || {};
@@ -96,64 +92,14 @@ const ProductDetails = ({
               <div className="modal-wrapper">
                 <div className="flex flex-col gap-10 lg:flex-row product-details border-b border-[#dadce0] pb-4">
                   <div className="self-center max-lg:self-center lg:mr-10 left">
-                    <div className="product-img">
-                      <div className="lg:w-[550px]">
-                        {bigImage && (
-                          <Image
-                            src={bigImage}
-                            alt="cover-image"
-                            width={1200}
-                            height={900}
-                            className="object-fill w-full min-h-full shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)]"
-                          />
-                        )}
-                      </div>
-                    </div>
-                    <div
-                      className="flex flex-wrap justify-between gap-3 product-options"
-                      ref={
-                        imagesRef as unknown as React.RefObject<HTMLDivElement>
-                      }
-                    >
-                      {singleProduct?.images &&
-                        singleProduct.images[colorIndex]?.url.map((url, i) => {
-                          return (
-                            <button
-                              onClick={() => {
-                                setImgIndex(i);
-                                const imageChildren =
-                                  imagesRef.current?.children;
-                                if (imageChildren) {
-                                  for (
-                                    let i = 0;
-                                    i < imageChildren.length;
-                                    i++
-                                  ) {
-                                    imageChildren[i].classList.add(
-                                      "after:invisible",
-                                      "after:opacity-0"
-                                    );
-                                  }
-                                  imageChildren[i].classList.remove(
-                                    "after:opacity-0",
-                                    "after:invisible"
-                                  );
-                                }
-                              }}
-                              className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#B88E2F] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-28 lg:h-28`}
-                              key={i}
-                            >
-                              <Image
-                                src={url}
-                                alt={`${name} image`}
-                                width={1200}
-                                height={900}
-                                className="w-full h-full object-contain shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] p-2"
-                              />
-                            </button>
-                          );
-                        })}
-                    </div>
+                    <ImageGallery
+                      imageContainerClass="lg:w-[550px]"
+                      images={singleProduct?.images}
+                      colorIndex={colorIndex}
+                      imgIndex={imgIndex}
+                      setImgIndex={setImgIndex}
+                      imagesRef={imagesRef}
+                    />
                   </div>
                   <div className="right">
                     <div className="product-information">
