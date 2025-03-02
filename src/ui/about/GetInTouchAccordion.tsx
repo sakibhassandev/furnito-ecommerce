@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { FaqItem } from "@/lib/definitions";
 
-const FaqAccordion = () => {
+const GetInTouchFaqAccordion = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqItems: FaqItem[] = [
@@ -70,4 +70,4 @@ const FaqAccordion = () => {
   );
 };
 
-export default FaqAccordion;
+export default GetInTouchFaqAccordion;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Share2, Linkedin, Twitter, Facebook } from "lucide-react";
 import Image from "next/image";
@@ -9,11 +9,7 @@ interface TeamMemberProps {
   image: string;
 }
 
-export const TeamMember: React.FC<TeamMemberProps> = ({
-  name,
-  role,
-  image,
-}) => {
+export const OurTeamMember = ({ name, role, image }: TeamMemberProps) => {
   const [showSocial, setShowSocial] = useState(false);
 
   return (

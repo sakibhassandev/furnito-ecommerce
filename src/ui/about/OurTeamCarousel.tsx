@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { TeamMember } from "@/ui/about/OurTeamMember";
+import { OurTeamMember } from "@/ui/about/OurTeamMember";
+import { useCallback } from "react";
 
 interface TeamMember {
   name: string;
@@ -50,11 +50,11 @@ export const OurTeamCarousel = () => {
     },
   });
 
-  const scrollPrev = React.useCallback(() => {
+  const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
 
-  const scrollNext = React.useCallback(() => {
+  const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
 
@@ -95,7 +95,7 @@ export const OurTeamCarousel = () => {
                   key={index}
                   className="flex-[0_0_100%] sm:flex-[0_0_50%] md:flex-[0_0_33.333%] lg:flex-[0_0_25%] min-w-0"
                 >
-                  <TeamMember {...member} />
+                  <OurTeamMember {...member} />
                 </div>
               ))}
             </div>
