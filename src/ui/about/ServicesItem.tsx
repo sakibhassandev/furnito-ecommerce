@@ -26,7 +26,7 @@ export const ServicesItem = ({ servicesItems }: ServicesItemsProps) => {
           height={50}
         />
         <a href="">
-          <ArrowUpRight className="text-3xl hover:text-[#f50963] ease-linear duration-200" />
+          <ArrowUpRight className="text-3xl hover:text-[#B88E2F] ease-linear duration-200" />
         </a>
       </div>
       <div className="bottom">

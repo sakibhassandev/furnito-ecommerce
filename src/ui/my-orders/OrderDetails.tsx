@@ -23,7 +23,6 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
     const getOrder = async () => {
       const order = await fetchOrder(orderId);
       setOrder(order.data);
-      console.log(order);
     };
 
     getOrder();
@@ -69,7 +68,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
     <div className="max-w-screen-2xl mx-auto px-4 py-8">
       <Link
         href="/my-orders"
-        className="inline-flex items-center text-blue-600 hover:underline mb-6 transition-colors duration-200"
+        className="inline-flex items-center text-[#B88E2F] hover:text-[#96732B] hover:underline mb-6 transition-colors duration-200"
       >
         <ArrowLeftIcon className="w-4 h-4 mr-2" />
         Back to My Orders
@@ -150,17 +149,23 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                         >
                           <td className="py-4 px-4">
                             <div className="flex items-center">
-                              <Image
-                                src={
-                                  item?.product?.images?.find(
-                                    (img) => img.color === item?.color
-                                  )?.url[0] || item?.product?.images[0]?.url[0]
-                                }
-                                alt={item.product?.name}
-                                width={64}
-                                height={64}
-                                className="object-cover rounded-md mr-4"
-                              />
+                              <Link
+                                href={`/product-details/${item.product?.id}`}
+                                target="_blank"
+                              >
+                                <Image
+                                  src={
+                                    item?.product?.images?.find(
+                                      (img) => img.color === item?.color
+                                    )?.url[0] ||
+                                    item?.product?.images[0]?.url[0]
+                                  }
+                                  alt={item.product?.name}
+                                  width={64}
+                                  height={64}
+                                  className="object-cover rounded-md mr-4"
+                                />
+                              </Link>
                               <span className="font-medium">
                                 Name: {item.product?.name} <br />
                                 <span className="text-sm capitalize">
@@ -222,7 +227,7 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
       <div className="mt-8 flex justify-end">
         <button
           onClick={handleInvoiceDownload}
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center"
+          className="px-6 py-3 text-white rounded-lg bg-[#B88E2F] hover:bg-[#96732B] transition-colors duration-200 flex items-center"
         >
           <CreditCardIcon className="w-5 h-5 mr-2" />
           Download Invoice

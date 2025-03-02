@@ -56,7 +56,7 @@ export const Product = ({
               hasDiscount ? "flex" : "hidden"
             } absolute left-0 flex flex-col flex-wrap text-white top-5`}
           >
-            <span className="bg-[#f50963] inline-block text-sm leading-none py-1 px-[10px] capitalize mb-[5px]">
+            <span className="bg-[#B88E2F] inline-block text-sm leading-none py-1 px-[10px] capitalize mb-[5px]">
               Sale
             </span>
             <span className="bg-[#03041c] inline-block text-sm leading-none py-1 px-[10px] capitalize mb-[5px]">
@@ -75,7 +75,7 @@ export const Product = ({
                   theme: "light",
                 });
               }}
-              className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-9 h-9"
+              className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#B88E2F] w-9 h-9"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +107,7 @@ export const Product = ({
                   }
                 }
               }}
-              className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-9 h-9"
+              className="relative group/tooltip flex items-center justify-center mb-2 leading-9 text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#B88E2F] w-9 h-9"
             >
               <svg
                 width={19}
@@ -151,7 +151,7 @@ export const Product = ({
                 });
               }}
               type="button"
-              className="flex w-full justify-center items-center gap-2 transition-all ease-out duration-300 hover:bg-[#f50963] text-white font-semibold py-2 bg-black"
+              className="flex w-full justify-center items-center gap-2 transition-all ease-out duration-300 bg-[#B88E2F] hover:bg-[#96732B] text-white font-semibold py-2"
             >
               <svg
                 width={18}
@@ -192,7 +192,10 @@ export const Product = ({
       </div>
       <div className="pt-4 ">
         <h3>
-          <Link href="/" className="hover:text-[#f50963] ease-out duration-300">
+          <Link
+            href={`/product-details/${id}`}
+            className="hover:text-[#B88E2F] ease-out duration-300"
+          >
             {name}
           </Link>
         </h3>

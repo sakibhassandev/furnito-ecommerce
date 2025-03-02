@@ -124,7 +124,7 @@ export const Login = () => {
                             id="email"
                             name="email"
                             placeholder="Enter your email"
-                            className="bg-white focus:border-[#f50963] rounded ease-out duration-300 outline-none border w-full text-sm border-[#eaeaef] pl-14 pr-12 h-14"
+                            className="bg-white focus:border-[#B88E2F] rounded ease-out duration-300 outline-none border w-full text-sm border-[#eaeaef] pl-14 pr-12 h-14"
                           />
                           <span className="absolute -translate-y-1/2 top-1/2 left-7">
                             <svg
@@ -163,7 +163,7 @@ export const Login = () => {
                             name="password"
                             id="password"
                             placeholder="Password"
-                            className="bg-white focus:border-[#f50963] rounded ease-out duration-300 outline-none border w-full text-sm border-[#eaeaef] pl-14 pr-12 h-14"
+                            className="bg-white focus:border-[#B88E2F] rounded ease-out duration-300 outline-none border w-full text-sm border-[#eaeaef] pl-14 pr-12 h-14"
                           />
                           <span className="absolute -translate-y-1/2 top-1/2 left-7">
                             <svg
@@ -305,7 +305,7 @@ export const Login = () => {
                       <div className="login__forgot ">
                         <Link
                           href="/forgot"
-                          className="capitalize hover:text-[#f50963] ease-out duration-300"
+                          className="capitalize hover:text-[#B88E2F] ease-out duration-300"
                         >
                           forgot password?
                         </Link>
@@ -315,7 +315,7 @@ export const Login = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="relative disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
+                        className="relative disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#96732B] font-semibold bg-[#B88E2F] text-center p-[17px_30px]  w-full"
                       >
                         {isSubmitting ? (
                           <>
@@ -333,7 +333,7 @@ export const Login = () => {
                       Don’t have an account? &nbsp;
                       <Link
                         href="/register"
-                        className="text-[#f50963] hover:text-[#03041c] ease-out duration-300 font-semibold"
+                        className="text-[#B88E2F] hover:text-[#96732B] ease-out duration-300 font-semibold"
                       >
                         Register Now
                       </Link>

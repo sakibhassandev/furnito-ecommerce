@@ -324,7 +324,7 @@ const AdminProducts = () => {
                       <h4 className="text-sm font-medium text-gray-500">
                         Sizes
                       </h4>
-                      <div className="flex flex-wrap gap-2 mt-1">
+                      <div className="capitalize flex flex-wrap gap-2 mt-1">
                         {selectedProduct?.sizes?.map(
                           (size: string, index: number) => (
                             <span
@@ -345,7 +345,7 @@ const AdminProducts = () => {
                         {selectedProduct?.colors?.map((color, index) => (
                           <span
                             key={index}
-                            className="px-2 py-1 border rounded text-sm"
+                            className="capitalize px-2 py-1 border rounded text-sm"
                           >
                             {color.name}
                           </span>

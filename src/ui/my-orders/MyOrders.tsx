@@ -4,6 +4,7 @@ import { fetchUserOrder } from "@/actions";
 import { ProductType } from "@/lib/definitions";
 
 import {
+  CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   PackageIcon,
@@ -14,7 +15,8 @@ import { useSession } from "next-auth/react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import ReviewModal from "./ReviewModal";
 
 interface OrderItem {
   product: ProductType;
@@ -30,6 +32,7 @@ interface Order {
   paymentMethod: string;
   status: "pending" | "processing" | "shipped" | "delivered";
   total: number;
+  isReviewed: boolean;
 }
 
 const MyOrders = () => {
@@ -38,20 +41,36 @@ const MyOrders = () => {
   const userId = session?.user?.id;
 
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [order, setOrder] = useState<Order[]>([]);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+
+  const fetchOrders = useCallback(async () => {
+    if (!userId) return;
+    const order = await fetchUserOrder(userId);
+    setOrder(order.data);
+  }, [userId]);
 
   useEffect(() => {
-    const getOrders = async () => {
-      if (!userId) return;
-      const order = await fetchUserOrder(userId);
-      setOrders(order.data);
-    };
+    fetchOrders();
+  }, [fetchOrders]);
 
-    getOrders();
-  }, [userId]);
+  const onReviewSubmitted = () => {
+    fetchOrders();
+  };
 
   const toggleOrderExpansion = (orderId: string) => {
     setExpandedOrder(expandedOrder === orderId ? null : orderId);
+  };
+
+  const openReviewModal = (orderId: string) => {
+    setSelectedOrderId(orderId);
+    setIsReviewModalOpen(true);
+  };
+
+  const closeReviewModal = () => {
+    setSelectedOrderId(null);
+    setIsReviewModalOpen(false);
   };
 
   const getStatusColor = (status: Order["status"]) => {
@@ -73,8 +92,8 @@ const MyOrders = () => {
     <div className="max-w-screen-2xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">My Orders</h1>
       <div className="space-y-6">
-        {orders.length > 0 ? (
-          [...orders].reverse().map((order) => (
+        {order.length > 0 ? (
+          [...order].reverse().map((order) => (
             <div
               key={crypto.randomUUID()}
               className="bg-white rounded-lg shadow-md overflow-hidden"
@@ -131,19 +150,30 @@ const MyOrders = () => {
                           key={crypto.randomUUID()}
                           className="py-4 flex items-center space-x-4"
                         >
-                          <Image
-                            src={
-                              item?.product?.images?.find(
-                                (img) => img.color === item?.color
-                              )?.url[0] || item?.product?.images[0]?.url[0]
-                            }
-                            alt={item.product.name}
-                            width={64}
-                            height={64}
-                            className="object-cover rounded"
-                          />
+                          <Link
+                            href={`/product-details/${item.product.id}`}
+                            target="_blank"
+                          >
+                            <Image
+                              src={
+                                item?.product?.images?.find(
+                                  (img) => img.color === item?.color
+                                )?.url[0] || item?.product?.images[0]?.url[0]
+                              }
+                              alt={item.product.name}
+                              width={64}
+                              height={64}
+                              className="object-cover rounded"
+                            />
+                          </Link>
                           <div className="flex-1">
-                            <h3 className="font-medium">{item.product.name}</h3>
+                            <Link
+                              className="w-max font-medium hover:text-[#96732B]"
+                              href={`/product-details/${item.product.id}`}
+                              target="_blank"
+                            >
+                              {item.product.name}
+                            </Link>
                             <p className="text-sm text-gray-600 capitalize">
                               Quantity: {item.quantity} | Color: {item.color} |
                               Size: {item.size}
@@ -159,13 +189,27 @@ const MyOrders = () => {
                       );
                     })}
                   </div>
-                  <div className="mt-6 flex justify-end">
+                  <div className="mt-6 flex items-center justify-end space-x-4">
                     <Link
                       href={`/order-details/${order.id}`}
-                      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                      className="px-4 py-2 text-white rounded bg-[#B88E2F] hover:bg-[#96732B] transition-colors text-sm font-medium"
                     >
                       View Order Details
                     </Link>
+                    {order.status.toLowerCase() === "delivered" &&
+                      (order.isReviewed ? (
+                        <span className="inline-flex items-center px-3 py-1 text-sm font-medium text-green-600">
+                          <span className="mr-1">Reviewed</span>
+                          <CheckIcon className="w-4 h-4" />
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => openReviewModal(order.id)}
+                          className="px-4 py-2 bg-[#B88E2F] text-white rounded hover:bg-[#96732B] transition-colors text-sm font-medium inline-flex items-center"
+                        >
+                          Add Review
+                        </button>
+                      ))}
                   </div>
                 </div>
               )}
@@ -183,7 +227,7 @@ const MyOrders = () => {
             <div className="mt-6">
               <Link
                 href="/shop"
-                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#B88E2F] hover:bg-[#96732B] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B88E2F]"
               >
                 Start Shopping
               </Link>
@@ -191,6 +235,12 @@ const MyOrders = () => {
           </div>
         )}
       </div>
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={closeReviewModal}
+        orderId={selectedOrderId!}
+        onReviewSubmitted={onReviewSubmitted}
+      />
     </div>
   );
 };

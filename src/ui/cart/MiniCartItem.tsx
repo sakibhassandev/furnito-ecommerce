@@ -32,7 +32,7 @@ export const MiniCartItem = ({
       <div className="content">
         <a
           href="/item/11232"
-          className="mb-3 hover:text-[#f50963] ease-out duration-300 text-sm font-medium"
+          className="mb-3 hover:text-[#B88E2F] ease-out duration-300 text-sm font-medium"
         >
           {name}
         </a>

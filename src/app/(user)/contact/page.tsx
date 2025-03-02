@@ -46,10 +46,10 @@ const Contact = () => {
                     <span className="underline text-[#96969c] mb-4 inline-block">
                       Contact
                     </span>
-                    <p className="mb-1 text-xl font-medium hover:text-[#f50963] ease-out duration-300">
+                    <p className="mb-1 text-xl font-medium hover:text-[#B88E2F] ease-out duration-300">
                       <a href="mailto:location@website.com">furnito@mail.com</a>
                     </p>
-                    <p className="text-xl font-medium hover:text-[#f50963] ease-out duration-300">
+                    <p className="text-xl font-medium hover:text-[#B88E2F] ease-out duration-300">
                       <a href="tel:+1-123-456-7899">+1 (123) 456-7899</a>
                     </p>
                   </div>
@@ -71,7 +71,7 @@ const Contact = () => {
                     <span className="underline text-[#96969c] text-lg mb-3 inline-block">
                       Location
                     </span>
-                    <p className="mb-1 text-xl font-medium hover:text-[#f50963] ease-out duration-300">
+                    <p className="mb-1 text-xl font-medium hover:text-[#B88E2F] ease-out duration-300">
                       <a
                         href="https://maps.app.goo.gl/fXtCnmAtXWR3QgZU7"
                         target="_blank"
@@ -104,22 +104,22 @@ const Contact = () => {
                     <ul className="flex justify-center gap-4 mt-2 text-lg text-[#b9b9bf]">
                       <li>
                         <a href="#">
-                          <Facebook className="w-5 h-5 hover:text-[#f50963] ease-linear duration-300" />
+                          <Facebook className="w-5 h-5 hover:text-[#B88E2F] ease-linear duration-300" />
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <Twitter className="w-5 h-5 hover:text-[#f50963] ease-linear duration-300" />
+                          <Twitter className="w-5 h-5 hover:text-[#B88E2F] ease-linear duration-300" />
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <Linkedin className="w-5 h-5 hover:text-[#f50963] ease-linear duration-300" />
+                          <Linkedin className="w-5 h-5 hover:text-[#B88E2F] ease-linear duration-300" />
                         </a>
                       </li>
                       <li>
                         <a href="#">
-                          <Youtube className="w-5 h-5 hover:text-[#f50963] ease-linear duration-300" />
+                          <Youtube className="w-5 h-5 hover:text-[#B88E2F] ease-linear duration-300" />
                         </a>
                       </li>
                     </ul>

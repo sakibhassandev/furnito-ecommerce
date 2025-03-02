@@ -31,7 +31,7 @@ const WishListPage = () => {
             }`}
           >
             <Link
-              className="p-[16px_40px_18px] rounded-sm hover:bg-[#ddad3d] ease-out duration-300 bg-[#03041c] text-sm"
+              className="p-[16px_40px_18px] rounded-sm hover:bg-[#ddad3d] ease-out duration-300 bg-[#96732B] text-sm"
               href="/cart"
             >
               Go to Cart

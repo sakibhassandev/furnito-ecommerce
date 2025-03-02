@@ -63,7 +63,7 @@ const CartPage = () => {
               </ul>
               <Link
                 href={session.data?.user ? "/checkout" : "/login"}
-                className="p-[16px_40px_18px] rounded-sm hover:bg-[#ddad3d] text-white ease-out duration-300 bg-[#03041c] text-sm"
+                className="p-[16px_40px_18px] rounded-sm  text-white ease-out duration-300 bg-[#B88E2F] hover:bg-[#96732B] text-sm"
               >
                 Proceed to checkout
               </Link>

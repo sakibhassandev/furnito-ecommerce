@@ -84,7 +84,7 @@ export const ResetPassword = () => {
                             name="currentPassword"
                             id="currentPassword"
                             placeholder="Current Password"
-                            className="bg-white focus:border-[#f50963] rounded ease-out duration-300 outline-none border w-full text-sm border-[#eaeaef] pl-14 pr-12 h-14"
+                            className="bg-white focus:border-[#B88E2F] rounded ease-out duration-300 outline-none border w-full text-sm border-[#eaeaef] pl-14 pr-12 h-14"
                           />
                           <span className="absolute -translate-y-1/2 top-1/2 left-7">
                             <svg
@@ -193,7 +193,7 @@ export const ResetPassword = () => {
                             name="newPassword"
                             id="newPassword"
                             placeholder="New Password"
-                            className="bg-white focus:border-[#f50963] rounded ease-out duration-300 outline-none border w-full text-sm border-[#eaeaef] pl-14 pr-12 h-14"
+                            className="bg-white focus:border-[#B88E2F] rounded ease-out duration-300 outline-none border w-full text-sm border-[#eaeaef] pl-14 pr-12 h-14"
                           />
                           <span className="absolute -translate-y-1/2 top-1/2 left-7">
                             <svg
@@ -303,7 +303,7 @@ export const ResetPassword = () => {
                       <button
                         disabled={isSubmitting}
                         type="submit"
-                        className="relative disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
+                        className="relative disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#96732B] font-semibold bg-[#B88E2F] text-center p-[17px_30px]  w-full"
                       >
                         {isSubmitting ? (
                           <>
@@ -321,7 +321,7 @@ export const ResetPassword = () => {
                       Remember password? &nbsp;
                       <Link
                         href="/login"
-                        className="text-[#f50963] hover:text-[#03041c] ease-out duration-300 font-semibold"
+                        className="text-[#B88E2F] hover:text-[#96732B] ease-out duration-300 font-semibold"
                       >
                         Log in
                       </Link>
