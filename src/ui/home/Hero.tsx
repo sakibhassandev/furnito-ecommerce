@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const Hero = () => {
   return (
     <section
@@ -11,15 +13,15 @@ export const Hero = () => {
           Discover Our New Collection
         </h3>
         <p className="text-sm xsm:text-base max-w-[450px] md:max-w-[501px] mb-4 md:mb-7">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-          tellus, luctus nec ullamcorper mattis.
+          Discover our latest collection of luxury furniture designed to
+          transform your living space into a stylish and comfortable sanctuary.
         </p>
-        <a
+        <Link
           href="/shop"
           className="transition-all ease duration-300 inline-block px-6 py-2 md:px-10 md:py-4 font-semibold rounded-sm bg-[#B88E2F] hover:bg-[#ddad3d] text-white"
         >
           Buy Now
-        </a>
+        </Link>
       </div>
     </section>
   );

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Play, X, Sofa, Truck, Shield } from "lucide-react";
 import Image from "next/image";
 
-const VideoSection = () => {
+const GetInTouchVideo = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = () => {
@@ -121,4 +121,4 @@ const VideoSection = () => {
   );
 };
 
-export default VideoSection;
+export default GetInTouchVideo;

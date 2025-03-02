@@ -1,6 +1,5 @@
-import React from "react";
-import VideoSection from "@/ui/about/GetInTouchVideo";
-import FaqAccordion from "@/ui/about/GetInTouchAccordion";
+import GetInTouchVideo from "@/ui/about/GetInTouchVideo";
+import GetInTouchFaqAccordion from "@/ui/about/GetInTouchAccordion";
 
 const GetInTouchSection = () => {
   return (
@@ -16,8 +15,8 @@ const GetInTouchSection = () => {
           </p>
         </div>
         <div className="grid lg:grid-cols-2 gap-16 items-start">
-          <VideoSection />
-          <FaqAccordion />
+          <GetInTouchVideo />
+          <GetInTouchFaqAccordion />
         </div>
       </div>
     </section>

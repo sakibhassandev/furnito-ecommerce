@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import { Product } from "../product/Product";
 import { QuickView } from "@/ui/product/QuickView";
 import { ProductType } from "@/lib/definitions";
-import axios from "axios";
 import ProductSkeleton from "../skeleton/ProductSkeleton";
+import { fetchProducts } from "@/actions";
 
 export const HomePageProducts = () => {
   const [productLists, setProductLists] = useState<ProductType[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/get-products");
-        setProductLists(response.data.data);
+        const products = await fetchProducts();
+        setProductLists(products);
       } catch (error) {
         console.log(error);
       }

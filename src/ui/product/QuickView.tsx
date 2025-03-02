@@ -7,9 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { RootState } from "@/store";
 import { ProductType } from "@/lib/definitions";
+import Link from "next/link";
 
 // Icons
-import { Facebook, Linkedin, Twitter, Youtube, Link } from "lucide-react";
+import { Facebook, Linkedin, Twitter, Youtube, LinkIcon } from "lucide-react";
 
 export const QuickView = ({
   quickViewProduct,
@@ -427,12 +428,16 @@ export const QuickView = ({
                           Add To Wishlist
                         </span>
                       </button>
-                      <button className="relative group/product-detail flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#B88E2F] w-12 h-12">
-                        <Link className="text-2xl" />
+                      <Link
+                        href={`/product-details/${quickViewProduct?.id}`}
+                        target="_blank"
+                        className="relative group/product-detail flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#B88E2F] w-12 h-12"
+                      >
+                        <LinkIcon className="text-2xl" />
                         <span className="absolute group-hover/product-detail:-top-5 opacity-0 invisible group-hover/product-detail:visible group-hover/product-detail:opacity-100 ease-out duration-300 -translate-y-1/2 top-0 w-max left-1/2 -translate-x-1/2 bg-[#03041c] text-white py-1 px-2 text-xs z-10 inline-block leading-none after:content-[''] after:absolute after:bg-[#03041c] after:-bottom-1 after:-z-30 after:left-1/2 after:-translate-x-1/2 after:rotate-45 after:h-2 after:w-2 ">
                           Product Details
                         </span>
-                      </button>
+                      </Link>
                     </div>
                   </div>
                   <div className="product__details-sku product__details-more">
