@@ -15,7 +15,8 @@ import { useSession } from "next-auth/react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import ReviewModal from "./ReviewModal";
 
 interface OrderItem {
   product: ProductType;
@@ -41,20 +42,35 @@ const MyOrders = () => {
 
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
   const [order, setOrder] = useState<Order[]>([]);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+
+  const fetchOrders = useCallback(async () => {
+    if (!userId) return;
+    const order = await fetchUserOrder(userId);
+    setOrder(order.data);
+  }, [userId]);
 
   useEffect(() => {
-    const getOrders = async () => {
-      if (!userId) return;
-      const order = await fetchUserOrder(userId);
-      console.log(order);
-      setOrder(order.data);
-    };
+    fetchOrders();
+  }, [fetchOrders]);
 
-    getOrders();
-  }, [userId]);
+  const onReviewSubmitted = () => {
+    fetchOrders();
+  };
 
   const toggleOrderExpansion = (orderId: string) => {
     setExpandedOrder(expandedOrder === orderId ? null : orderId);
+  };
+
+  const openReviewModal = (orderId: string) => {
+    setSelectedOrderId(orderId);
+    setIsReviewModalOpen(true);
+  };
+
+  const closeReviewModal = () => {
+    setSelectedOrderId(null);
+    setIsReviewModalOpen(false);
   };
 
   const getStatusColor = (status: Order["status"]) => {
@@ -134,19 +150,30 @@ const MyOrders = () => {
                           key={crypto.randomUUID()}
                           className="py-4 flex items-center space-x-4"
                         >
-                          <Image
-                            src={
-                              item?.product?.images?.find(
-                                (img) => img.color === item?.color
-                              )?.url[0] || item?.product?.images[0]?.url[0]
-                            }
-                            alt={item.product.name}
-                            width={64}
-                            height={64}
-                            className="object-cover rounded"
-                          />
+                          <Link
+                            href={`/product-details/${item.product.id}`}
+                            target="_blank"
+                          >
+                            <Image
+                              src={
+                                item?.product?.images?.find(
+                                  (img) => img.color === item?.color
+                                )?.url[0] || item?.product?.images[0]?.url[0]
+                              }
+                              alt={item.product.name}
+                              width={64}
+                              height={64}
+                              className="object-cover rounded"
+                            />
+                          </Link>
                           <div className="flex-1">
-                            <h3 className="font-medium">{item.product.name}</h3>
+                            <Link
+                              className="w-max font-medium hover:text-[#96732B]"
+                              href={`/product-details/${item.product.id}`}
+                              target="_blank"
+                            >
+                              {item.product.name}
+                            </Link>
                             <p className="text-sm text-gray-600 capitalize">
                               Quantity: {item.quantity} | Color: {item.color} |
                               Size: {item.size}
@@ -208,6 +235,12 @@ const MyOrders = () => {
           </div>
         )}
       </div>
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={closeReviewModal}
+        orderId={selectedOrderId!}
+        onReviewSubmitted={onReviewSubmitted}
+      />
     </div>
   );
 };

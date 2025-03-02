@@ -43,6 +43,8 @@ const ProductDetails = ({
   // product details variables
   const { name, price, id } = singleProduct || {};
 
+  console.log(singleProduct?.reviews);
+
   useEffect(() => {
     if (imagesRef.current) {
       for (let i = 0; i < imagesRef.current.children.length; i++) {

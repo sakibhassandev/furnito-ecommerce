@@ -23,7 +23,6 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
     const getOrder = async () => {
       const order = await fetchOrder(orderId);
       setOrder(order.data);
-      console.log(order);
     };
 
     getOrder();
@@ -150,17 +149,23 @@ export default function OrderDetails({ orderId }: { orderId: string }) {
                         >
                           <td className="py-4 px-4">
                             <div className="flex items-center">
-                              <Image
-                                src={
-                                  item?.product?.images?.find(
-                                    (img) => img.color === item?.color
-                                  )?.url[0] || item?.product?.images[0]?.url[0]
-                                }
-                                alt={item.product?.name}
-                                width={64}
-                                height={64}
-                                className="object-cover rounded-md mr-4"
-                              />
+                              <Link
+                                href={`/product-details/${item.product?.id}`}
+                                target="_blank"
+                              >
+                                <Image
+                                  src={
+                                    item?.product?.images?.find(
+                                      (img) => img.color === item?.color
+                                    )?.url[0] ||
+                                    item?.product?.images[0]?.url[0]
+                                  }
+                                  alt={item.product?.name}
+                                  width={64}
+                                  height={64}
+                                  className="object-cover rounded-md mr-4"
+                                />
+                              </Link>
                               <span className="font-medium">
                                 Name: {item.product?.name} <br />
                                 <span className="text-sm capitalize">

@@ -64,8 +64,9 @@ model OrderItem {
 
 model Review {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
     message   String
-    rating    String
+    rating    Int
     authorId  String   @db.ObjectId
     author    User     @relation(fields: [authorId], references: [id])
     productId String   @db.ObjectId
