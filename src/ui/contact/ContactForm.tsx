@@ -47,7 +47,7 @@ const ContactForm = () => {
               type="text"
               name="name"
               id="name"
-              className="w-full focus:border-[#f50963] focus:bg-white ease-linear duration-300 h-[60px] text-sm border border-[#f5f5f8] outline-none text-[#03041c] px-6 bg-[#f5f5f8] rounded"
+              className="w-full focus:border-[#B88E2F] focus:bg-white ease-linear duration-300 h-[60px] text-sm border border-[#f5f5f8] outline-none text-[#03041c] px-6 bg-[#f5f5f8] rounded"
               placeholder="Enter your name"
             />
             <p className={`mt-1 text-sm text-red-500 error`}>
@@ -60,7 +60,7 @@ const ContactForm = () => {
               type="email"
               name="email"
               id="email"
-              className="w-full h-[60px] focus:border-[#f50963] focus:bg-white ease-linear duration-300 text-sm border border-[#f5f5f8] outline-none text-[#03041c] px-6 bg-[#f5f5f8] rounded"
+              className="w-full h-[60px] focus:border-[#B88E2F] focus:bg-white ease-linear duration-300 text-sm border border-[#f5f5f8] outline-none text-[#03041c] px-6 bg-[#f5f5f8] rounded"
               placeholder="Enter your email"
             />
             <p className="mt-1 text-sm text-red-500 error">
@@ -79,7 +79,7 @@ const ContactForm = () => {
               type="number"
               name="number"
               id="number"
-              className="w-full h-[60px] focus:border-[#f50963] focus:bg-white ease-linear duration-300 text-sm border border-[#f5f5f8] outline-none text-[#03041c] px-6 bg-[#f5f5f8] rounded"
+              className="w-full h-[60px] focus:border-[#B88E2F] focus:bg-white ease-linear duration-300 text-sm border border-[#f5f5f8] outline-none text-[#03041c] px-6 bg-[#f5f5f8] rounded"
               placeholder="Enter your phone number"
             />
             <p className="mt-1 text-sm text-red-500 error">
@@ -92,7 +92,7 @@ const ContactForm = () => {
               type="text"
               name="subject"
               id="subject"
-              className="w-full h-[60px] focus:border-[#f50963] focus:bg-white ease-linear duration-300 text-sm border border-[#f5f5f8] outline-none text-[#03041c] px-6 bg-[#f5f5f8] rounded"
+              className="w-full h-[60px] focus:border-[#B88E2F] focus:bg-white ease-linear duration-300 text-sm border border-[#f5f5f8] outline-none text-[#03041c] px-6 bg-[#f5f5f8] rounded"
               placeholder="Subject"
             />
             <p className="mt-1 text-sm text-red-500 error">
@@ -105,7 +105,7 @@ const ContactForm = () => {
                 {...register("message")}
                 name="message"
                 id="message"
-                className="resize-none focus:border-[#f50963] focus:bg-white ease-linear duration-300 p-[23px_25px] h-40 w-full bg-[#f5f5f8] border border-[#f5f5f8] outline-none text-[#03041c]"
+                className="resize-none focus:border-[#B88E2F] focus:bg-white ease-linear duration-300 p-[23px_25px] h-40 w-full bg-[#f5f5f8] border border-[#f5f5f8] outline-none text-[#03041c]"
                 placeholder="Your message"
               ></textarea>
             </div>
@@ -117,7 +117,7 @@ const ContactForm = () => {
             <button
               disabled={isSubmitting}
               type="submit"
-              className="relative disabled:opacity-50 p-[12px_35px] sm:p-[14px_47px] bg-[#f50963] cursor-pointer text-base text-white rounded hover:bg-[#03041c] ease-linear duration-300"
+              className="relative disabled:opacity-50 p-[12px_35px] sm:p-[14px_47px] bg-[#B88E2F] cursor-pointer text-base text-white rounded hover:bg-[#03041c] ease-linear duration-300"
             >
               {isSubmitting ? (
                 <>

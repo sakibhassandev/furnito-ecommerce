@@ -216,7 +216,7 @@ export const Verify = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="relative disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#03041c] font-semibold bg-[#f50963] text-center p-[17px_30px]  w-full"
+                        className="relative disabled:opacity-50 text-lg mb-5 cursor-pointer inline-block text-white rounded-sm ease-linear duration-300 hover:bg-[#96732B] font-semibold bg-[#B88E2F] text-center p-[17px_30px]  w-full"
                       >
                         {isSubmitting ? (
                           <>
@@ -237,7 +237,7 @@ export const Verify = () => {
                     <button
                       onClick={resendVerificationCode}
                       type="button"
-                      className="text-[#f50963] text-sm hover:text-[#03041c] ease-out duration-300 font-semibold"
+                      className="text-[#B88E2F] text-sm hover:text-[#96732B] ease-out duration-300 font-semibold"
                     >
                       Resend
                     </button>

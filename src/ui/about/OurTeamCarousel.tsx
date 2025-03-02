@@ -104,16 +104,12 @@ export const OurTeamCarousel = () => {
           <motion.button
             className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 p-3 bg-white rounded-full shadow-lg hover:bg-gray-50 hidden md:block"
             onClick={scrollPrev}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
           >
             <ChevronLeft size={24} />
           </motion.button>
           <motion.button
             className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 p-3 bg-white rounded-full shadow-lg hover:bg-gray-50 hidden md:block"
             onClick={scrollNext}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
           >
             <ChevronRight size={24} />
           </motion.button>

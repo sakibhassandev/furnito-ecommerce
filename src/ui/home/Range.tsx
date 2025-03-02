@@ -12,7 +12,7 @@ export const Range = () => {
       </div>
 
       <div className="flex flex-col justify-center gap-5 mx-8 max-sm:gap-8 max-sm:items-center sm:flex-row 2xl:justify-between">
-        <Link href="/" className="text-center">
+        <Link href="/shop" className="text-center">
           <Image
             src="/assets/images/range-section/dining-table.webp"
             alt="diningTableImg"
@@ -25,7 +25,7 @@ export const Range = () => {
           </h4>
         </Link>
 
-        <Link href="/" className="text-center">
+        <Link href="/shop" className="text-center">
           <Image
             src="/assets/images/range-section/living-room.webp"
             alt="livingRoomImg"
@@ -38,7 +38,7 @@ export const Range = () => {
           </h4>
         </Link>
 
-        <Link href="/" className="text-center">
+        <Link href="/shop" className="text-center">
           <Image
             src="/assets/images/range-section/bed-room.webp"
             alt="bedRoomImg"

@@ -142,7 +142,7 @@ const ProductDetails = ({
                                   );
                                 }
                               }}
-                              className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#f50963] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-28 lg:h-28`}
+                              className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#B88E2F] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-28 lg:h-28`}
                               key={i}
                             >
                               <Image
@@ -242,7 +242,7 @@ const ProductDetails = ({
                                 width={1200}
                                 height={900}
                                 title={`Select Color: ${color.name}`}
-                                className="relative w-[1.5rem] sm:w-[2rem] shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate] h-[1.5rem] sm:h-[2rem] p-[2px] border border-[#f50963] rounded-full cursor-pointer"
+                                className="relative w-[1.5rem] sm:w-[2rem] shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate] h-[1.5rem] sm:h-[2rem] p-[2px] border border-[#B88E2F] rounded-full cursor-pointer"
                               />
                             );
                           })}
@@ -272,7 +272,7 @@ const ProductDetails = ({
                               setQuantity((prev) => prev - 1);
                             }
                           }}
-                          className="w-4 xsm:w-6 h-4 xsm:h-6 hover:text-[#f50963] ease-out duration-300 p-1 rounded-full me-3"
+                          className="w-4 xsm:w-6 h-4 xsm:h-6 hover:text-[#B88E2F] ease-out duration-300 p-1 rounded-full me-3"
                           type="button"
                         >
                           <svg
@@ -296,12 +296,12 @@ const ProductDetails = ({
                             value={quantity}
                             onChange={() => ""}
                             id="product"
-                            className=" w-14 border focus:border-[#f50963] ease-out duration-300 text-center outline-none text-sm rounded-lg block px-2.5 py-1 "
+                            className=" w-14 border focus:border-[#B88E2F] ease-out duration-300 text-center outline-none text-sm rounded-lg block px-2.5 py-1 "
                           />
                         </div>
                         <button
                           onClick={() => setQuantity((prev) => prev + 1)}
-                          className="w-6 hover:text-[#f50963] ease-out duration-300 h-6 p-1 rounded-full ms-3"
+                          className="w-6 hover:text-[#B88E2F] ease-out duration-300 h-6 p-1 rounded-full ms-3"
                           type="button"
                         >
                           <svg
@@ -345,7 +345,7 @@ const ProductDetails = ({
                             });
                           }}
                           type="button"
-                          className="max-sm:w-full flex p-[9px_25px] xsm:p-[13px_35px] items-center gap-2 transition-all ease-out duration-300 hover:bg-[#f50963] text-white font-semibold bg-black"
+                          className="max-sm:w-full flex p-[9px_25px] xsm:p-[13px_35px] items-center gap-2 transition-all ease-out duration-300 bg-[#B88E2F] hover:bg-[#96732B] text-white font-semibold"
                         >
                           <svg
                             width={18}
@@ -403,7 +403,7 @@ const ProductDetails = ({
                                 theme: "light",
                               });
                             }}
-                            className="relative group/tooltip flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-10 xsm:w-12 h-10 xsm:h-12"
+                            className="relative group/tooltip flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#B88E2F] w-10 xsm:w-12 h-10 xsm:h-12"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -442,7 +442,7 @@ const ProductDetails = ({
                             <span key={i}>
                               <a
                                 href="#"
-                                className="hover:text-[#f50963] ease-out duration-300"
+                                className="hover:text-[#B88E2F] ease-out duration-300"
                               >
                                 {" "}
                                 {el?.toUpperCase()},
@@ -460,7 +460,7 @@ const ProductDetails = ({
                             <a
                               key={i}
                               href="#"
-                              className="text-sm leading-none text-[#525258] p-[2px_8px] xsm:p-[4px_12px] mb-2 inline-block border border-[#dadce0] hover:bg-[#f50963] hover:border-[#f50963] hover:text-white ease-out duration-300"
+                              className="text-sm leading-none text-[#525258] p-[2px_8px] xsm:p-[4px_12px] mb-2 inline-block border border-[#dadce0] hover:bg-[#B88E2F] hover:border-[#B88E2F] hover:text-white ease-out duration-300"
                             >
                               {el?.toUpperCase()}
                             </a>
@@ -476,28 +476,28 @@ const ProductDetails = ({
                           target="_blank"
                           className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                         >
-                          <Facebook className="hover:text-[#f50963] ease-linear duration-300" />
+                          <Facebook className="hover:text-[#B88E2F] ease-linear duration-300" />
                         </a>
                         <a
                           href="http://twitter.com"
                           target="_blank"
                           className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                         >
-                          <Twitter className="hover:text-[#f50963] ease-linear duration-300" />
+                          <Twitter className="hover:text-[#B88E2F] ease-linear duration-300" />
                         </a>
                         <a
                           href="https://www.linkedin.com/"
                           target="_blank"
                           className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                         >
-                          <Linkedin className="hover:text-[#f50963] ease-linear duration-300" />
+                          <Linkedin className="hover:text-[#B88E2F] ease-linear duration-300" />
                         </a>
                         <a
                           href="https://www.youtube.com/"
                           target="_blank"
                           className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                         >
-                          <Youtube className="hover:text-[#f50963] ease-linear duration-300" />
+                          <Youtube className="hover:text-[#B88E2F] ease-linear duration-300" />
                         </a>
                       </div>
                     </div>
@@ -536,7 +536,7 @@ const ProductDetails = ({
                                     key={index}
                                     className={
                                       index < review.rating
-                                        ? "text-[#f50963]"
+                                        ? "text-[#B88E2F]"
                                         : "text-[#dadce0]"
                                     }
                                   >

@@ -58,7 +58,7 @@ const About = () => {
         <div className="about-us-des py-28">
           <div className="w-full max-w-6xl gap-5 justify-between px-10 flex mx-auto">
             <div className="left-section">
-              <h3 className="about__text-title text-3xl font-semibold text-[#03041c] mb-6">
+              <h3 className="about__text-title text-3xl font-semibold text-[#96732B] mb-6">
                 It started with a <br /> bang now we are here.
               </h3>
             </div>

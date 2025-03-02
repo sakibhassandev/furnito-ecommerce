@@ -21,7 +21,7 @@ export const Footer = () => {
           <ul className="space-y-11">
             <li>
               <Link
-                href=""
+                href="/"
                 className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
               >
                 Home
@@ -30,7 +30,7 @@ export const Footer = () => {
 
             <li>
               <Link
-                href=""
+                href="/shop"
                 className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
               >
                 Shop
@@ -39,7 +39,7 @@ export const Footer = () => {
 
             <li>
               <Link
-                href=""
+                href="/about"
                 className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
               >
                 About
@@ -48,7 +48,7 @@ export const Footer = () => {
 
             <li>
               <Link
-                href=""
+                href="/contact"
                 className="font-medium relative before:content-[''] before:bottom-0 before:absolute before:w-0 hover:before:w-full  before:ease-in-out before:transition-all before:duration-300 before:bg-[#B88E2F] before:h-[2px]"
               >
                 Contact

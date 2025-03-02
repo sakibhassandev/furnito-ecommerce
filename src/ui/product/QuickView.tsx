@@ -106,7 +106,7 @@ export const QuickView = ({
           <div className="modal-wrapper">
             <button
               onClick={() => dispatch(isQuickViewOpen("closeQuickView"))}
-              className="absolute block space-y-1 duration-200 ease-linear hover:text-[#f50963] cursor-pointer top-5 right-5 hover:rotate-90"
+              className="absolute block space-y-1 duration-200 ease-linear hover:text-[#B88E2F] cursor-pointer top-5 right-5 hover:rotate-90"
             >
               <svg
                 stroke="currentColor"
@@ -160,7 +160,7 @@ export const QuickView = ({
                               );
                             }
                           }}
-                          className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#f50963] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-24 lg:h-24`}
+                          className={`after:content-[''] after:ease-linear after:duration-300 after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-transparent after:border after:border-[#B88E2F] relative w-24 h-24 mt-4 mb-3 sm:w-32 sm:h-32 lg:w-24 lg:h-24`}
                           key={i}
                         >
                           <Image
@@ -246,7 +246,7 @@ export const QuickView = ({
                             width={1200}
                             height={900}
                             title={`Select Color: ${color.name}`}
-                            className="relative w-[1.75rem] shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate] h-[1.75rem] p-[2px] border border-[#f50963] rounded-full cursor-pointer"
+                            className="relative w-[1.75rem] shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] animate-[swatch-pulse_1.2s_ease-in-out_infinite_alternate] h-[1.75rem] p-[2px] border border-[#B88E2F] rounded-full cursor-pointer"
                           />
                         );
                       })}
@@ -276,7 +276,7 @@ export const QuickView = ({
                           setQuantity((prev) => prev - 1);
                         }
                       }}
-                      className="w-6 h-6 hover:text-[#f50963] ease-out duration-300 p-1 rounded-full me-3"
+                      className="w-6 h-6 hover:text-[#B88E2F] ease-out duration-300 p-1 rounded-full me-3"
                       type="button"
                     >
                       <svg
@@ -300,12 +300,12 @@ export const QuickView = ({
                         value={quantity}
                         onChange={() => ""}
                         id="product"
-                        className=" w-14 border focus:border-[#f50963] ease-out duration-300 text-center outline-none text-sm rounded-lg block px-2.5 py-1 "
+                        className=" w-14 border focus:border-[#B88E2F] ease-out duration-300 text-center outline-none text-sm rounded-lg block px-2.5 py-1 "
                       />
                     </div>
                     <button
                       onClick={() => setQuantity((prev) => prev + 1)}
-                      className="w-6 hover:text-[#f50963] ease-out duration-300 h-6 p-1 rounded-full ms-3"
+                      className="w-6 hover:text-[#B88E2F] ease-out duration-300 h-6 p-1 rounded-full ms-3"
                       type="button"
                     >
                       <svg
@@ -339,6 +339,7 @@ export const QuickView = ({
                             discountPrice,
                             quantity,
                             size: quickViewProduct?.sizes?.[sizesIndex],
+                            color: quickViewProduct?.colors?.[colorIndex].name,
                           })
                         );
                         toast.success(`${name} added to cart`, {
@@ -348,7 +349,7 @@ export const QuickView = ({
                         });
                       }}
                       type="button"
-                      className="max-sm:w-full flex p-[13px_35px] items-center gap-2 transition-all ease-out duration-300 hover:bg-[#f50963] text-white font-semibold bg-black"
+                      className="max-sm:w-full flex p-[13px_35px] items-center gap-2 transition-all ease-out duration-300 bg-[#B88E2F] hover:bg-[#96732B] text-white font-semibold"
                     >
                       <svg
                         width={18}
@@ -406,7 +407,7 @@ export const QuickView = ({
                             theme: "light",
                           });
                         }}
-                        className="relative group/tooltip flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-12 h-12"
+                        className="relative group/tooltip flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#B88E2F] w-12 h-12"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -426,7 +427,7 @@ export const QuickView = ({
                           Add To Wishlist
                         </span>
                       </button>
-                      <button className="relative group/product-detail flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#f50963] w-12 h-12">
+                      <button className="relative group/product-detail flex items-center justify-center text-center hover:text-white bg-white shadow-[0px_0px_8px_-3px_rgba(0,0,0,0.4)] hover:bg-[#B88E2F] w-12 h-12">
                         <Link className="text-2xl" />
                         <span className="absolute group-hover/product-detail:-top-5 opacity-0 invisible group-hover/product-detail:visible group-hover/product-detail:opacity-100 ease-out duration-300 -translate-y-1/2 top-0 w-max left-1/2 -translate-x-1/2 bg-[#03041c] text-white py-1 px-2 text-xs z-10 inline-block leading-none after:content-[''] after:absolute after:bg-[#03041c] after:-bottom-1 after:-z-30 after:left-1/2 after:-translate-x-1/2 after:rotate-45 after:h-2 after:w-2 ">
                           Product Details
@@ -451,7 +452,7 @@ export const QuickView = ({
                         <span key={i}>
                           <a
                             href="#"
-                            className="hover:text-[#f50963] ease-out duration-300"
+                            className="hover:text-[#B88E2F] ease-out duration-300"
                           >
                             {el},
                           </a>
@@ -468,7 +469,7 @@ export const QuickView = ({
                         <a
                           key={i}
                           href="#"
-                          className="text-sm leading-none text-[#525258] p-[4px_12px] mb-2 inline-block border border-[#dadce0] hover:bg-[#f50963] hover:border-[#f50963] hover:text-white ease-out duration-300"
+                          className="text-sm leading-none text-[#525258] p-[4px_12px] mb-2 inline-block border border-[#dadce0] hover:bg-[#B88E2F] hover:border-[#B88E2F] hover:text-white ease-out duration-300"
                         >
                           {el}
                         </a>
@@ -484,28 +485,28 @@ export const QuickView = ({
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <Facebook className="hover:text-[#f50963] ease-linear duration-300" />
+                      <Facebook className="hover:text-[#B88E2F] ease-linear duration-300" />
                     </a>
                     <a
                       href="http://twitter.com"
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <Twitter className="hover:text-[#f50963] ease-linear duration-300" />
+                      <Twitter className="hover:text-[#B88E2F] ease-linear duration-300" />
                     </a>
                     <a
                       href="https://www.linkedin.com/"
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <Linkedin className="hover:text-[#f50963] ease-linear duration-300" />
+                      <Linkedin className="hover:text-[#B88E2F] ease-linear duration-300" />
                     </a>
                     <a
                       href="https://www.youtube.com/"
                       target="_blank"
                       className="inline-block mb-2 mr-3 text-[#525258] leading-none text-sm"
                     >
-                      <Youtube className="hover:text-[#f50963] ease-linear duration-300" />
+                      <Youtube className="hover:text-[#B88E2F] ease-linear duration-300" />
                     </a>
                   </div>
                 </div>
