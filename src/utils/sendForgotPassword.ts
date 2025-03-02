@@ -1,6 +1,7 @@
-import { resend } from "@/lib/resend";
 import ForgotPasswordEmail from "@/emails/ForgotPasswordEmail";
 import { ApiResponse } from "@/utils/ApiResponse";
+import { sendEmail } from "@/lib/brevo";
+import { render } from "@react-email/render";
 
 export async function sendForgotPasswordEmail(
   email: string,
@@ -8,11 +9,11 @@ export async function sendForgotPasswordEmail(
   name: string
 ): Promise<ApiResponse> {
   try {
-    await resend.emails.send({
-      from: "onboarding@resend.dev",
+    const emailHtml = await render(ForgotPasswordEmail({ token, name }));
+    sendEmail({
       to: email,
       subject: "Furnito | Reset Your Password",
-      react: ForgotPasswordEmail({ token, name }),
+      content: emailHtml,
     });
 
     return {
