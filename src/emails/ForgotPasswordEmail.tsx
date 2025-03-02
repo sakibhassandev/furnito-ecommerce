@@ -45,7 +45,7 @@ export default function ForgotPasswordEmail({
         </Row>
         <Row>
           <Button
-            href={`http://localhost:3000/reset-password?token=${token}`} //Todo: Change this with the actual URL
+            href={`${process.env.SITE_URL}/reset-password?token=${token}`}
             style={{
               color: "white",
               backgroundColor: "#B88E2F",

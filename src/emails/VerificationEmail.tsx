@@ -59,7 +59,7 @@ export default function VerificationEmail({
         </Row>
         <Row>
           <Button
-            href={`http://localhost:3000/verify?email=${email}`} //Todo: Change this with the actual URL
+            href={`${process.env.SITE_URL}/verify?email=${email}`}
             style={{
               color: "white",
               backgroundColor: "#B88E2F",
