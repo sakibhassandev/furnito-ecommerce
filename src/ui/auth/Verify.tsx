@@ -183,10 +183,10 @@ export const Verify = () => {
                                 maxLength={1}
                                 pattern="\d"
                                 className={`w-12 h-12 text-center text-2xl font-semibold border rounded-md
-                        focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500
+                        focus:outline-none focus:ring-2 focus:ring-[#B88E2F] focus:border-[#B88E2F]
                         ${
                           index === activeInput
-                            ? "ring-2 ring-pink-500 border-pink-500"
+                            ? "ring-2 ring-[#B88E2F] border-[#B88E2F]"
                             : ""
                         }
                         ${errors.code ? "border-red-500" : ""}

@@ -26,10 +26,13 @@ export async function POST(request: Request) {
     });
 
     if (existingUserByEmail) {
-      return Response.json(
-        new ApiError(400, false, "User already exists with this email"),
-        { status: 400 }
-      );
+      if (existingUserByEmail.isVerified) {
+        return Response.json(
+          new ApiError(400, false, "User already exists with this email"),
+          { status: 400 }
+        );
+      }
+      await prisma.user.delete({ where: { id: existingUserByEmail.id } });
     }
 
     const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
