@@ -16,6 +16,26 @@ import { signOut } from "next-auth/react";
 const AdminHeader = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const links = [
+    {
+      name: "Dashboard",
+      href: "/admin",
+      icon: <LayoutDashboard className="w-4 h-4 mr-2" />,
+      active: pathname === "/admin",
+    },
+    {
+      name: "Products",
+      href: "/admin/products",
+      icon: <Package className="w-4 h-4 mr-2" />,
+      active: pathname.startsWith("/admin/products"),
+    },
+    {
+      name: "Orders",
+      href: "/admin/orders",
+      icon: <ShoppingCart className="w-4 h-4 mr-2" />,
+      active: pathname.startsWith("/admin/orders"),
+    },
+  ];
 
   return (
     <nav className="bg-white shadow-md">
@@ -57,39 +77,20 @@ const AdminHeader = () => {
           </Link>
           {/* Desktop Navigation */}
           <div className="hidden md:ml-6 mx-auto md:flex justify-center w-full md:space-x-8">
-            <Link
-              href="/admin"
-              className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                pathname === "/admin"
-                  ? "border-[#B88E2F] text-gray-900"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-              }`}
-            >
-              <LayoutDashboard className="w-4 h-4 mr-2" />
-              Dashboard
-            </Link>
-            <Link
-              href="/admin/products"
-              className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                pathname === "/admin/products"
-                  ? "border-[#B88E2F] text-gray-900"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-              }`}
-            >
-              <Package className="w-4 h-4 mr-2" />
-              Products
-            </Link>
-            <Link
-              href="/admin/orders"
-              className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
-                pathname === "/admin/orders"
-                  ? "border-[#B88E2F] text-gray-900"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-              }`}
-            >
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              Orders
-            </Link>
+            {links.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  link.active
+                    ? "border-[#B88E2F] text-gray-900"
+                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                }`}
+              >
+                {link.icon}
+                {link.name}
+              </Link>
+            ))}
           </div>
           <div className="flex items-center">
             <button
@@ -123,45 +124,22 @@ const AdminHeader = () => {
       {/* Mobile menu */}
       <div className={`md:hidden ${isMobileMenuOpen ? "block" : "hidden"}`}>
         <div className="pt-2 pb-3 space-y-1">
-          <Link
-            href="/admin"
-            className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
-              pathname === "/admin"
-                ? "bg-[#B88E2F] bg-opacity-10 border-[#B88E2F] text-[#B88E2F]"
-                : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
-            }`}
-          >
-            <div className="flex items-center">
-              <LayoutDashboard className="w-4 h-4 mr-2" />
-              Dashboard
-            </div>
-          </Link>
-          <Link
-            href="/admin/products"
-            className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
-              pathname === "/admin/products"
-                ? "bg-[#B88E2F] bg-opacity-10 border-[#B88E2F] text-[#B88E2F]"
-                : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
-            }`}
-          >
-            <div className="flex items-center">
-              <Package className="w-4 h-4 mr-2" />
-              Products
-            </div>
-          </Link>
-          <Link
-            href="/admin/orders"
-            className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
-              pathname === "/admin/orders"
-                ? "bg-[#B88E2F] bg-opacity-10 border-[#B88E2F] text-[#B88E2F]"
-                : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
-            }`}
-          >
-            <div className="flex items-center">
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              Orders
-            </div>
-          </Link>
+          {links.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                link.active
+                  ? "bg-[#B88E2F] bg-opacity-10 border-[#B88E2F] text-[#B88E2F]"
+                  : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
+              }`}
+            >
+              <div className="flex items-center">
+                {link.icon}
+                {link.name}
+              </div>
+            </Link>
+          ))}
           <button
             className="block w-full text-left pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
             onClick={() =>

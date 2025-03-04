@@ -7,22 +7,16 @@ export const Range = () => {
       title: "Dining",
       image: "/assets/images/range-section/dining-table.webp",
       alt: "diningTableImg",
-      width: 380,
-      height: 480,
     },
     {
       title: "Living",
       image: "/assets/images/range-section/living-room.webp",
       alt: "livingRoomImg",
-      width: 380,
-      height: 480,
     },
     {
       title: "Bedroom",
       image: "/assets/images/range-section/bed-room.webp",
       alt: "bedRoomImg",
-      width: 380,
-      height: 480,
     },
   ];
 
@@ -41,8 +35,8 @@ export const Range = () => {
             <Image
               src={range.image}
               alt={range.alt}
-              width={range.width}
-              height={range.width}
+              width={380}
+              height={480}
               className="transition-all duration-300 ease-in-out rounded-md hover:scale-105"
             />
             <h4 className="mt-4 text-xl font-semibold md:text-2xl md:mt-7">
