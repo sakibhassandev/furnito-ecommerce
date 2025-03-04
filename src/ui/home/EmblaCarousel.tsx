@@ -10,7 +10,7 @@ import { DotButton, useDotButton } from "@/ui/home/EmblaCarouselDotButton";
 export const EmblaCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start" },
-    [Autoplay()]
+    [Autoplay()],
   );
 
   const scrollPrev = useCallback(() => {
@@ -22,71 +22,63 @@ export const EmblaCarousel = () => {
   }, [emblaApi]);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(
-    emblaApi as EmblaCarouselType
+    emblaApi as EmblaCarouselType,
   );
+
+  const carouselImages = [
+    {
+      id: 1,
+      image: "/assets/images/carousel-section/carousel1.webp",
+      title: "Bed Room",
+      description: "Inner Peace",
+    },
+    {
+      id: 2,
+      image: "/assets/images/carousel-section/carousel2.webp",
+    },
+    {
+      id: 3,
+      image: "/assets/images/carousel-section/carousel3.webp",
+    },
+    {
+      id: 4,
+      image: "/assets/images/carousel-section/carousel4.webp",
+    },
+    {
+      id: 5,
+      image: "/assets/images/carousel-section/carousel5.webp",
+    },
+  ];
 
   return (
     <div className="relative overflow-hidden embla" ref={emblaRef}>
       <div className="flex gap-6 embla__container">
-        <div className="min-w-0 lg:max-w-[400px] max-w-[320px] flex-[0_0_80%] lg:flex-[0_0_45%] embla__slide">
-          <Image
-            src="/assets/images/carousel-section/carousel1.webp"
-            alt="carousel1"
-            className="w-full"
-            width={404}
-            height={582}
-          />
-          <div className="absolute p-5 xsm:p-8 bottom-6 left-6 rounded backdrop-blur bg-[#FFFFFFB8] w-max">
-            <p className="text-sm xsm:text-base text-[#616161]">
-              01{" "}
-              <span className="after:content-[''] after:w-6 xsm:after:w-8 after:absolute relative after:-translate-y-1/2 after:right-1/2 after:translate-x-1/2 after:top-1/2 mr-5 mx-4 xsm:mx-6 xsm:mr-7 after:h-[2px] after:bg-[#616161]"></span>{" "}
-              Bed Room
-            </p>
-            <p className="mt-2 text-lg xsm:text-2xl font-semibold text-[#3A3A3A]">
-              Inner Peace
-            </p>
+        {carouselImages.map((image) => (
+          <div
+            key={image.id}
+            className="min-w-0 lg:max-w-[400px] max-w-[320px] flex-[0_0_80%] lg:flex-[0_0_45%] embla__slide last:mr-6"
+          >
+            <Image
+              src={image.image}
+              alt={`carousel${image.id}`}
+              className="w-full"
+              width={404}
+              height={582}
+            />
+            {image.title && (
+              <div className="absolute p-5 xsm:p-8 bottom-6 left-6 rounded backdrop-blur bg-[#FFFFFFB8] w-max">
+                <p className="text-sm xsm:text-base text-[#616161]">
+                  01{" "}
+                  <span className="after:content-[''] after:w-6 xsm:after:w-8 after:absolute relative after:-translate-y-1/2 after:right-1/2 after:translate-x-1/2 after:top-1/2 mr-5 mx-4 xsm:mx-6 xsm:mr-7 after:h-[2px] after:bg-[#616161]"></span>{" "}
+                  {image.title}
+                </p>
+                <p className="mt-2 text-lg xsm:text-2xl font-semibold text-[#3A3A3A]">
+                  {image.description}
+                </p>
+              </div>
+            )}
           </div>
-        </div>
-
-        <div className="min-w-0 lg:max-w-[400px] max-w-[320px] flex-[0_0_80%] lg:flex-[0_0_45%] embla__slide">
-          <Image
-            src="/assets/images/carousel-section/carousel2.webp"
-            alt="carousel2"
-            className="w-full"
-            width={564}
-            height={799}
-          />
-        </div>
-
-        <div className="min-w-0 lg:max-w-[400px] max-w-[320px] flex-[0_0_80%] lg:flex-[0_0_45%] embla__slide">
-          <Image
-            src="/assets/images/carousel-section/carousel3.webp"
-            alt="carousel3"
-            className="w-full"
-            width={295}
-            height={392}
-          />
-        </div>
-
-        <div className="min-w-0 lg:max-w-[400px] max-w-[320px] flex-[0_0_80%] lg:flex-[0_0_45%] embla__slide">
-          <Image
-            src="/assets/images/carousel-section/carousel4.webp"
-            alt="carousel4"
-            className="w-full"
-            width={372}
-            height={486}
-          />
-        </div>
-
-        <div className="min-w-0 mr-6 lg:max-w-[400px] max-w-[320px] flex-[0_0_80%] lg:flex-[0_0_45%] embla__slide">
-          <Image
-            src="/assets/images/carousel-section/carousel5.webp"
-            alt="carousel5"
-            className="w-full"
-            width={736}
-            height={981}
-          />
-        </div>
+        ))}
       </div>
 
       <div className="embla__controls">
@@ -128,7 +120,7 @@ export const EmblaCarousel = () => {
               className={"embla__dot after:content-[''] after:w-[10px] after:h-[10px] xsm:after:w-3 xsm:after:h-3 after:rounded-full after:flex after:items-center after:bg-[#B88E2F] appearance-none bg-transparent touch-manipulation cursor-pointer outline-2 w-5 h-5 xsm:w-7 xsm:h-7 flex justify-center items-center rounded-full".concat(
                 index === selectedIndex
                   ? " embla__dot--selected border-[#B88E2F] border"
-                  : ""
+                  : "",
               )}
             />
           ))}
