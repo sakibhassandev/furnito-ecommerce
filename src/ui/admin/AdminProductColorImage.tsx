@@ -42,108 +42,99 @@ const AdminAddEditProductDetail = ({
   product,
   setColors,
 }: AdminProductColorImageProps) => {
+  const inputs = [
+    {
+      name: "name",
+      label: "Product Name",
+      type: "text",
+      placeholder: "Enter product name",
+      required: true,
+      defaultValue: product?.name,
+    },
+    {
+      name: "sku",
+      label: "SKU",
+      type: "text",
+      placeholder: "Enter SKU",
+      required: true,
+      defaultValue: product?.sku,
+    },
+    {
+      name: "description",
+      label: "Description",
+      type: "textarea",
+      placeholder: "Enter description",
+      required: true,
+      defaultValue: product?.description,
+      parentClass: "md:col-span-2",
+    },
+    {
+      name: "price",
+      label: "Price",
+      type: "number",
+      placeholder: "Enter price",
+      required: true,
+      defaultValue: product?.price,
+    },
+    {
+      name: "discount",
+      label: "Discount (%)",
+      type: "number",
+      placeholder: "Enter discount",
+      defaultValue: product?.hasDiscount,
+    },
+    {
+      name: "categories",
+      label: "Categories",
+      type: "text",
+      placeholder: "Separate with commas",
+      defaultValue: product?.categories?.join(", "),
+    },
+    {
+      name: "tags",
+      label: "Tags",
+      type: "text",
+      placeholder: "Separate with commas",
+      defaultValue: product?.tags?.join(", "),
+    },
+    {
+      name: "sizes",
+      label: "Sizes",
+      type: "text",
+      placeholder: "Separate with commas",
+      required: true,
+      defaultValue: product?.sizes?.join(", "),
+      parentClass: "md:col-span-2",
+    },
+  ];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Product Name
-        </label>
-        <input
-          type="text"
-          name="name"
-          defaultValue={product?.name}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          SKU
-        </label>
-        <input
-          name="sku"
-          type="text"
-          defaultValue={product?.sku}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-        />
-      </div>
-
-      <div className="md:col-span-2">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Description
-        </label>
-        <textarea
-          rows={4}
-          name="description"
-          defaultValue={product?.description}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-        ></textarea>
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Price
-        </label>
-        <input
-          type="number"
-          name="price"
-          step="0.01"
-          defaultValue={product?.price}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Discount (%)
-        </label>
-        <input
-          type="number"
-          name="discount"
-          defaultValue={product?.hasDiscount}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Categories
-        </label>
-        <input
-          type="text"
-          name="categories"
-          defaultValue={product?.categories?.join(", ")}
-          placeholder="Separate with commas"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Tags
-        </label>
-        <input
-          type="text"
-          name="tags"
-          defaultValue={product?.tags?.join(", ")}
-          placeholder="Separate with commas"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-        />
-      </div>
-
-      <div className="md:col-span-2">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Sizes
-        </label>
-        <input
-          type="text"
-          placeholder="Separate with commas"
-          defaultValue={product?.sizes?.join(", ")}
-          name="sizes"
-          required
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
-        />
-      </div>
+      {inputs.map((input) => (
+        <div key={input.name} className={input.parentClass}>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {input.label}
+          </label>
+          {input.type === "textarea" ? (
+            <textarea
+              rows={4}
+              name={input.name}
+              placeholder={input.placeholder}
+              required={input.required}
+              defaultValue={input.defaultValue}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
+            ></textarea>
+          ) : (
+            <input
+              type={input.type}
+              name={input.name}
+              defaultValue={input.defaultValue}
+              placeholder={input.placeholder}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B88E2F]"
+            />
+          )}
+        </div>
+      ))}
 
       {/* Product Colors and Images Component */}
       <AdminProductColorImage
@@ -191,7 +182,7 @@ const AdminProductColorImage = ({
       colorImages,
       setColorImages,
       selectedColor,
-      setSelectedColor
+      setSelectedColor,
     );
   };
 
@@ -201,7 +192,7 @@ const AdminProductColorImage = ({
 
   const handleSwatchImageChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    colorName: string
+    colorName: string,
   ) => {
     if (e.target.files && e.target.files[0]) {
       await handleUploadSwatchImage(e.target.files[0], colorName);
@@ -209,13 +200,13 @@ const AdminProductColorImage = ({
   };
 
   const handleProductImageChange = async (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (e.target.files && selectedColor) {
       const currentImages = colorImages[selectedColor] || [];
       const filesArray = Array.from(e.target.files).slice(
         0,
-        4 - currentImages.length
+        4 - currentImages.length,
       );
       await handleUploadProductImages(filesArray, selectedColor);
     }
@@ -223,13 +214,13 @@ const AdminProductColorImage = ({
 
   const handleUploadProductImages = async (
     files: File[],
-    colorName: string
+    colorName: string,
   ) => {
     await handleProductImageUpload(
       files,
       colorName,
       setColorImages,
-      setIsUploading
+      setIsUploading,
     );
   };
 
@@ -242,7 +233,7 @@ const AdminProductColorImage = ({
       colorName,
       colorSwatches,
       setColorSwatches,
-      setIsUploading
+      setIsUploading,
     );
   };
 

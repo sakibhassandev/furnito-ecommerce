@@ -45,7 +45,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               email: true,
               password: true,
               isVerified: true,
-              role: true, // Add role to select
+              role: true,
             },
           });
 
